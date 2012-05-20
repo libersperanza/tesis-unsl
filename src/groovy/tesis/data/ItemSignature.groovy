@@ -15,11 +15,11 @@ class ItemSignature
 	long itemPosition;
 	
 
-	public ItemSignature(String itemTitle, ItemDto []pivotes)
+	public ItemSignature(String itemTitle, List pivotes)
 	{
-		dists = new int[pivotes.length]
+		dists = new int[pivotes.size()]
 		
-		for(int i=0; i< pivotes.length; i++)
+		for(int i=0; i< pivotes.size(); i++)
 		{
 			dists[i] = EditDistance.editDistance(itemTitle, pivotes[i].getItemTitle())
 		}

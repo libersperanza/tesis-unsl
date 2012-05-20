@@ -7,26 +7,17 @@
 </head>
 <body>
   <div class="body">
-  <h1>Opciones de la implementacion basica</h1>
-  <h2>Llenado del Hash de Categorias</h2>
-  <g:form controller="basicImplementation" action="fillCategs">
-	<div><label for="file_name_cat">Nombre de Archivo:</label><input type="text" id="file_name_cat" name="file_name" value="../../test_data/categs.csv"/></div>
-  	<div><label for="separator_cat">Separador de campos:</label><input type="text" id="separator_cat" name="separator" value=";" /></div>
-  	<g:submitButton name="cargar" value="Cargar Archivo"></g:submitButton><g:link controller="basicImplementation" action="listCategs">Listar</g:link>
-  </g:form>
-  <h2>Inicializacion de pivotes</h2>
-  <g:form controller="basicImplementation" action="fillPivotes">
-	<div><label for="file_name_piv">Nombre de Archivo:</label><input type="text" id="file_name_piv" name="file_name" value="../../test_data/Pivotes001.csv"/></div>
-  	<div><label for="separator_piv">Separador de campos:</label><input type="text" id="separator_piv" name="separator" value=";" /></div>
+  <h1>Parametrización del índice</h1>
+  <g:form controller="basicImplementation" action="initIndex">
+	<div><label for="file_name_cat">Nombre de Archivo de Categorías:</label><input type="text" id="file_name_cat" name="file_name_cat" lenght="100" value="./test_data/categs.csv"/></div>
+	<div><label for="file_name_piv">Nombre de Archivo de Pivotes:</label><input type="text" id="file_name_piv" name="file_name_piv" lenght="100" value="./test_data/Pivotes001.csv"/></div>
   	<div><label for="cant_piv">Cantidad de pivotes:</label><input type="text" id="cant_piv" name="cant" /></div>
-	<g:submitButton name="cargar" value="Cargar Archivo"></g:submitButton><g:link controller="basicImplementation" action="listPivotes">Listar</g:link>
+	<div><label for="file_name_it">Nombre de Archivo de Items:</label><input type="text" id="file_name_it" name="file_name_it" lenght="100" value="./test_data/Items001.csv"/></div>
+  	<div><label for="separator">Separador de campos para todos los archivos:</label><input type="text" id="separator" name="separator" value=";" /></div>
+	<g:submitButton name="calcular" value="Inicializar"></g:submitButton>
   </g:form>
-  <h2>Calculo de firmas y Creacion de archivo de ITems</h2>
-  <g:form controller="basicImplementation" action="createSignatures">
-	<div><label for="file_name_it">Nombre de Archivo:</label><input type="text" id="file_name_it" name="file_name" value="../../test_data/Items001.csv"/></div>
-  	<div><label for="separator_it">Separador de campos:</label><input type="text" id="separator_it" name="separator" value=";" /></div>
-	<g:submitButton name="calcular" value="Calcular Firmas"></g:submitButton>
-  </g:form>
+  <g:link controller="basicImplementation" action="listCategs">Listar Categorías</g:link>
+  <g:link controller="basicImplementation" action="listPivotes">Listar Pivotes</g:link>
   </div>
 </body>
 </html>
