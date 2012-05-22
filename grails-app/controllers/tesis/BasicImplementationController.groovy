@@ -2,6 +2,8 @@ package tesis
 
 import java.util.ArrayList;
 
+import org.apache.commons.validator.routines.LongValidator;
+
 import tesis.data.CategDto;
 import tesis.data.ItemDto;
 import tesis.file.manager.RandomAccessFileManager;
@@ -43,5 +45,24 @@ class BasicImplementationController
 	def listPivotes =
 	{
 		render(view:"list", model:[tit:"Pivotes", lista:session.mgr.pivots.values()])
+	}
+
+	def listItmesCateg =
+	{
+		CategsHash categs = session.mgr.categs
+		def signatures = categs.hash?.find{it.categName == String.valueOf (params.categ)}
+		def itemsFound = null
+		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
+		if (signatures?.signatures ){
+			if (rfm.openFile("rw")){
+				itemsFound = new ArrayList()
+				signatures?.signatures.each{
+					itemsFound.add( rfm.getItem(it.itemPosition,it.itemSize))
+				}
+				rfm.closeFile()
+			}
+			
+		}
+		render(view:"searchItems", model:[tit:"Items", lista:session.firmas,itemsFound:itemsFound])
 	}
 }

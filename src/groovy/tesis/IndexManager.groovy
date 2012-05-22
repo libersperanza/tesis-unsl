@@ -139,6 +139,7 @@ class IndexManager
 				{
 					ItemSignature sig = new ItemSignature(curItem.getItemTitle(), getPivotsForCateg(curItem.getCateg()))
 					sig.setItemPosition(rfm.insertItem(curItem))
+					sig.setItemSize(curItem.toString().length())
 					int pos = categs.search(new CategDto(categName:curItem.getCateg()))
 					categs.get(pos).getSignatures().add(sig)
 				}
@@ -165,4 +166,7 @@ class IndexManager
 		}
 		return ret
 	}
+	
+	def searchItemsByCateg(){
+		}
 }
