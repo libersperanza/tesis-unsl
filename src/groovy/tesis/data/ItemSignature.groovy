@@ -25,8 +25,6 @@ class ItemSignature
 			dists[i] = EditDistance.editDistance(itemTitle, pivotes[i].getItemTitle())
 		}
 	}
-
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -34,5 +32,9 @@ class ItemSignature
 	public String toString()
 	{
 		return "[dists=" + dists + ", itemPosition=" + itemPosition + ", size= ${itemSize}]";
+	}
+	@Override
+	public boolean equals(ItemSignature obj){
+		return (this.dists.equals(obj.dists) && this.itemPosition.equals(obj.itemPosition) && this.itemSize.equals(obj.itemSize))
 	}
 }

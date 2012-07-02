@@ -31,9 +31,10 @@ class IndexManager
 	 * Inicializa la estructura de acuerdo
 	 * a los parámetros configurados por defecto
 	 * */
-	public IndexManager()
+	public IndexManager(CategsHash categs,Map pivots )
 	{
-		//TODO: Implementar la config
+		this.categs = categs
+		this.pivots = pivots
 	}
 
 	public IndexManager(String categsFilePath, String itemsSourceFilePath,
@@ -125,7 +126,7 @@ class IndexManager
 		
 	}
 	private createSignatures()
-	{
+	{   def noCateg=0
 		String res
 		SimpleFileManager fm = new SimpleFileManager(itemsSourceFilePath, dataSeparator);
 		RandomAccessFileManager rfm = new RandomAccessFileManager(itemsDataFilePath)
@@ -137,14 +138,18 @@ class IndexManager
 				ItemDto curItem
 				while(curItem = fm.nextItem())
 				{
-					ItemSignature sig = new ItemSignature(curItem.getItemTitle(), getPivotsForCateg(curItem.getCateg()))
-					sig.setItemPosition(rfm.insertItem(curItem))
-					sig.setItemSize(curItem.toString().length())
-					int pos = categs.search(new CategDto(categName:curItem.getCateg()))
-					categs.get(pos).getSignatures().add(sig)
-				}
-				
+					ItemSignature sig = new ItemSignature(curItem.getItemTitle(), getPivotsForCateg(curItem.getCateg()))					
+					int pos = categs.search(new CategDto(categName:curItem.categ,signatures:new ArrayList<ItemSignature>()))
+					if (!categs?.get(pos).equals(categs.virgin)|| categs?.get(pos).equals(categs.used)){
+						sig.setItemPosition(rfm.insertItem(curItem))
+						sig.setItemSize(curItem.toString().length())
+						categs?.get(pos)?.getSignatures()?.add(sig)
+					}else{
+						noCateg++
+					}
+				}				
 				println "Items almacenados en el archivo ${rfm.f.getCanonicalPath()}"
+				println "Items no almacenados por categoria invalida: " + noCateg
 			}
 			else
 			{
@@ -167,6 +172,33 @@ class IndexManager
 		return ret
 	}
 	
-	def searchItemsByCateg(){
+	def searchItemsByCateg(params,session){
+		ItemSignature sig = new ItemSignature(params?.itemTitle, getPivotsForCateg(params.categ))
+		session.query = sig
+		Integer value
+		ItemSignature candidato
+		ArrayList<ItemSignature> candidatos = new ArrayList<ItemSignature>()
+		def i
+		Integer radio = new Integer(params?.radio)
+		int pos = categs.search(new CategDto(categName:params?.categ,signatures:new ArrayList<ItemSignature>()))
+		def categ = categs.get(pos)
+		categ?.each {
+			it?.signatures?.each {
+				candidato = it
+				i=0
+				it?.dists?.each { 
+					value = (sig?.dists[i] - it).abs()
+					if (value > radio){
+						candidato=null
+						return false
+					}
+					i++
+				}				
+			}
+			if(candidato){
+				candidatos.add(candidato)
+			}
 		}
+		session?.candidatos = candidatos
+	}
 }
