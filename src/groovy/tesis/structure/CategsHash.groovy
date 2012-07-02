@@ -5,6 +5,8 @@ package tesis.structure
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 import tesis.data.CategDto;
 import tesis.data.ItemSignature;
@@ -20,20 +22,20 @@ class CategsHash
 
 	private int size;
 	private int elemCount;
-	private CategDto []hash;
-	private final CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:new ArrayList<ItemSignature>());
-	private final CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:new ArrayList<ItemSignature>());
+	private ArrayList<CategDto> hash;
+	public final CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:new ArrayList<ItemSignature>());
+	public final CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:new ArrayList<ItemSignature>());
 	
 	public CategsHash(int n, double loadFactor)
 	{
-		size = (int)((loadFactor * n)-1);
+		size = (int)((n/ loadFactor)-1);
 		hash = new CategDto[size];
 		initHash();
 	}
 
 	private void initHash()
 	{
-		for(int i=0; i < hash.length; i++)
+		for(int i=0; i < hash.size; i++)
 		{
 			hash[i] = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:new ArrayList<ItemSignature>());
 		}
@@ -53,14 +55,14 @@ class CategsHash
 	public int search(CategDto dto)
 	{
 		
-		int pos = dto.hashCode()%size;
-		
+		int pos = Integer.valueOf(hashCode(dto.categName)).abs()%size;
+		def h = hash[pos]
 		if(hash[pos].equals(dto))
 		{
 			return pos;
 		}
 		
-		boolean found = true;
+		boolean found = false;
 		int firstFree=-1;
 		
 		while(!found)
@@ -106,6 +108,7 @@ class CategsHash
 			elemCount++;
 			return pos;
 		}
+		
 	}
 	
 	public int remove(CategDto dto)
@@ -145,4 +148,27 @@ class CategsHash
 		}
 		return list;
 	}
+	public int hashCode(String str) {
+//		Pattern p = Pattern.compile("[A-Za-z]+");
+//		Matcher m
+//		int length = str.length()
+//		String value = ""
+//		for(int i=0; i< length; i++){
+//			m = p.matcher(str.charAt(i).toString());
+//			if (m.find()){
+//				value +=str.charAt(i).toString()
+//			}
+//		}
+		int b = 378551;
+		int a = 63689;
+		int hash = 0;
+  
+		for(int i = 0; i < str.length(); i++)
+		{
+		   hash = hash * a + str.charAt(i);
+		   a    = a * b;
+		}
+  
+		return hash;
+	  }
 }
