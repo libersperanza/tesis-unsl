@@ -57,39 +57,40 @@ class BasicImplementationController
 	}
 	def listItmesCateg =
 	{	
-		CategsHash categs = session.categs
-		int pos = categs.search(new CategDto(categName:String.valueOf(params.categ),signatures:new ArrayList<ItemSignature>()))
-		def signatures = categs.hash[pos]
-		def itemsFound = null
-		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
-		if (signatures?.signatures){
-			if (rfm.openFile("rw")){
-				itemsFound = new ArrayList()
-				signatures?.signatures?.each{
-					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-					itemsFound.add(rfm.getItem(it.itemPosition,it.itemSize))
-				}
-				rfm.closeFile()
-			}
-		}
-		render(view:"searchItems", model:[tit:"Items", lista:session.firmas,itemsFound:itemsFound])
-//		IndexManager mgr = new IndexManager(session.categs,session.pivots)
-//		mgr.searchItemsByCateg(params,session)
-//		def signatures = session?.candidatos
+//		CategsHash categs = session.categs
+//		int pos = categs.search(new CategDto(categName:String.valueOf(params.categ),signatures:new ArrayList<ItemSignature>()))
+//		def signatures = categs.hash[pos]
 //		def itemsFound = null
 //		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
-//		if (signatures){
+//		if (signatures?.signatures){
 //			if (rfm.openFile("rw")){
 //				itemsFound = new ArrayList()
-//				signatures.each{
+//				signatures?.signatures?.each{
 //					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-//					if(EditDistance.editDistance(params?.itemTitle, item?.itemTitle)< params?.radio){
-//						itemsFound.add(item)
-//					}
+//					itemsFound.add(rfm.getItem(it.itemPosition,it.itemSize))
 //				}
 //				rfm.closeFile()
-//			}			
+//			}
 //		}
-//		render(view:"searchItems", model:[tit:"Items", lista:session.firmas,itemsFound:itemsFound])
+		//render(view:"searchItems", model:[tit:"Items", lista:session.firmas,itemsFound:itemsFound])
+		IndexManager mgr = new IndexManager(session.categs,session.pivots)
+		mgr.searchItemsByCateg(params,session)
+		def signatures = session?.candidatos
+		def itemsFound = null
+		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
+		if (signatures){
+			if (rfm.openFile("rw")){
+				itemsFound = new ArrayList()
+				signatures.each{
+					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
+					def g = EditDistance.editDistance(params?.itemTitle, item?.itemTitle)
+					if(EditDistance.editDistance(params?.itemTitle, item?.itemTitle)< Integer.valueOf(params?.radio)){
+						itemsFound.add(item)
+					}
+				}
+				rfm.closeFile()
+			}			
+		}
+		render(view:"searchItems", model:[tit:"Items", lista:session.firmas,itemsFound:itemsFound])
 	}
 }

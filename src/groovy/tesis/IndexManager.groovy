@@ -178,27 +178,25 @@ class IndexManager
 		Integer value
 		ItemSignature candidato
 		ArrayList<ItemSignature> candidatos = new ArrayList<ItemSignature>()
-		def i
+
 		Integer radio = new Integer(params?.radio)
 		int pos = categs.search(new CategDto(categName:params?.categ,signatures:new ArrayList<ItemSignature>()))
 		def categ = categs.get(pos)
-		categ?.each {
-			it?.signatures?.each {
-				candidato = it
-				i=0
-				it?.dists?.each { 
-					value = (sig?.dists[i] - it).abs()
+		categ?.signatures?.each {
+				candidato = it				
+				for (int i = 0;i<it?.dists.size();i++){
+					value = (sig?.dists[i] - it.dists[i]).abs()
 					if (value > radio){
 						candidato=null
 						return false
 					}
-					i++
-				}				
+				}			
+				if(candidato){
+					candidatos.add(candidato)
 			}
-			if(candidato){
-				candidatos.add(candidato)
-			}
+		
 		}
+		
 		session?.candidatos = candidatos
 	}
 }
