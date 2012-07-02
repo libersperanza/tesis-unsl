@@ -12,7 +12,8 @@ import com.sun.xml.internal.bind.v2.util.EditDistance
 class ItemSignature
 {
 	def dists//Array de distancias
-	long itemPosition;
+	long itemPosition
+	long itemSize
 	
 
 	public ItemSignature(String itemTitle, List pivotes)
@@ -24,14 +25,16 @@ class ItemSignature
 			dists[i] = EditDistance.editDistance(itemTitle, pivotes[i].getItemTitle())
 		}
 	}
-
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString()
 	{
-		return "ItemSignature [dists=" + dists + ", itemPosition=" + itemPosition + "]";
+		return "[dists=" + dists + ", itemPosition=" + itemPosition + ", size= ${itemSize}]";
+	}
+	@Override
+	public boolean equals(ItemSignature obj){
+		return (this.dists.equals(obj.dists) && this.itemPosition.equals(obj.itemPosition) && this.itemSize.equals(obj.itemSize))
 	}
 }

@@ -100,13 +100,15 @@ class SimpleFileManager
 	public ItemDto nextItem()
 	{
 		ItemDto dto = null;
+		def categ
 		try
 		{
 			String linea;
 			if((linea = bf.readLine()) != null)
 			{
 				String[] arLinea = linea.split(lineSeparator);
-				dto = new ItemDto(itemId:Long.parseLong(arLinea[0]),categ:arLinea[1],itemTitle:arLinea[2],mainDescription:arLinea[3],secDescription:arLinea[4]);
+				categ = (arLinea[1]?.indexOf('"')!=-1)?arLinea[1].substring(1,arLinea[1]?.length()-1):arLinea[1]
+				dto = new ItemDto(itemId:Long.parseLong(arLinea[0]),categ:categ,itemTitle:arLinea[2],mainDescription:arLinea[3],secDescription:arLinea[4]);
 			}
 			else
 			{

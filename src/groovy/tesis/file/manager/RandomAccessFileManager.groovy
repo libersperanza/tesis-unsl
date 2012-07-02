@@ -44,12 +44,14 @@ class RandomAccessFileManager
 		long pos=-1;
 		try
 		{
-			pos = itemFile.getFilePointer();
-			itemFile.writeLong(dto.getItemId());
-			itemFile.writeChars(dto.getCateg());
-			itemFile.writeChars(dto.getItemTitle());
-			itemFile.writeChars(dto.getMainDescription());
-			itemFile.writeChars(dto.getSecDescription());
+			pos = itemFile.length() //itemFile.getFilePointer();
+			itemFile.seek (pos)
+			itemFile.writeBytes(dto.toString())
+//			itemFile.writeLong(dto.getItemId());
+//			itemFile.writeChars(dto.getCateg());
+//			itemFile.writeChars(dto.getItemTitle());
+//			itemFile.writeChars(dto.getMainDescription());
+//			itemFile.writeChars(dto.getSecDescription());
 		}
 		catch (IOException e)
 		{
@@ -58,9 +60,13 @@ class RandomAccessFileManager
 		return pos;
 	}
 	
-	public ItemDto getItem(long pos)
+	public  String getItem(long pos,itemSize) //ItemDto
 	{
-		return null;
+		itemFile.seek(pos)
+		byte[] data = new byte[itemSize]
+		itemFile.read(data)
+		return new String(data)
+
 	}
 	
 	public boolean closeFile()
@@ -76,5 +82,7 @@ class RandomAccessFileManager
 		}
 		return true;
 	}
-
+	def seek(pos){
+		itemFile.seek(pos)
+	}
 }

@@ -18,6 +18,8 @@
   </g:form>
   <g:link controller="basicImplementation" action="listCategs">Listar Categorías</g:link>
   <g:link controller="basicImplementation" action="listPivotes">Listar Pivotes</g:link>
+  <g:link controller="basicImplementation" action="listItems">Listar items de una categoria</g:link>
+  
   </div>
 </body>
 </html>
