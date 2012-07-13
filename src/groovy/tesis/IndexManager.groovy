@@ -172,17 +172,15 @@ class IndexManager
 		return ret
 	}
 	
-	def searchItemsByCateg(params,session){
-		ItemSignature sig = new ItemSignature(params?.itemTitle, getPivotsForCateg(params.categ))
-		session.query = sig
+	def searchItemsByCateg(String itemTitle, String categ,int radio){
+		ItemSignature sig = new ItemSignature(itemTitle, getPivotsForCateg(categ))
 		Integer value
 		ItemSignature candidato
 		ArrayList<ItemSignature> candidatos = new ArrayList<ItemSignature>()
 
-		Integer radio = new Integer(params?.radio)
-		int pos = categs.search(new CategDto(categName:params?.categ,signatures:new ArrayList<ItemSignature>()))
-		def categ = categs.get(pos)
-		categ?.signatures?.each {
+		int pos = categs.search(new CategDto(categName:categ,signatures:null))
+		
+		categs.get(pos)?.signatures?.each {
 				candidato = it				
 				for (int i = 0;i<it?.dists.size();i++){
 					value = (sig?.dists[i] - it.dists[i]).abs()
@@ -197,6 +195,6 @@ class IndexManager
 		
 		}
 		
-		session?.candidatos = candidatos
+		return candidatos
 	}
 }

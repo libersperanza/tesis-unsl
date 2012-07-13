@@ -149,16 +149,6 @@ class CategsHash
 		return list;
 	}
 	public int hashCode(String str) {
-//		Pattern p = Pattern.compile("[A-Za-z]+");
-//		Matcher m
-//		int length = str.length()
-//		String value = ""
-//		for(int i=0; i< length; i++){
-//			m = p.matcher(str.charAt(i).toString());
-//			if (m.find()){
-//				value +=str.charAt(i).toString()
-//			}
-//		}
 		int b = 378551;
 		int a = 63689;
 		int hash = 0;
