@@ -107,8 +107,8 @@ class SimpleFileManager
 			if((linea = bf.readLine()) != null)
 			{
 				String[] arLinea = linea.split(lineSeparator);
-				categ = (arLinea[1]?.indexOf('"')!=-1)?arLinea[1].substring(1,arLinea[1]?.length()-1):arLinea[1]
-				dto = new ItemDto(itemId:Long.parseLong(arLinea[0]),categ:categ,itemTitle:arLinea[2],mainDescription:arLinea[3],secDescription:arLinea[4]);
+				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
+				dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2],mainDescription:arLinea[3],secDescription:arLinea[4]);
 			}
 			else
 			{
