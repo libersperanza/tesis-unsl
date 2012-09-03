@@ -20,7 +20,7 @@ class BasicImplementationController
 {
 	def index =
 	{
-	}
+	} 
 
 	def initIndex =
 	{
