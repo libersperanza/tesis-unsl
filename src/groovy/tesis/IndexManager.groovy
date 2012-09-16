@@ -102,7 +102,7 @@ class IndexManager
 			{
 				def pivs = []
 				(1..cant).each
-				{
+				{  
 					pivs.add(fm.nextItem())
 					Random rand = new Random()
 					(1..rand.nextInt(5)).each

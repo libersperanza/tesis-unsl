@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher
+import java.util.regex.Pattern;
 
 import tesis.data.CategDto;
 import tesis.data.ItemDto;
@@ -24,7 +26,7 @@ class SimpleFileManager
 	String lineSeparator;
 	FileReader fr;
 	BufferedReader bf;
-	
+	private static Pattern pattern = Pattern.compile("^([0-9])*\$")
 	public SimpleFileManager(String filePath, String separator)
 	{
 		f = new File(filePath);
@@ -101,14 +103,27 @@ class SimpleFileManager
 	{
 		ItemDto dto = null;
 		def categ
+		def itemId
+		String[] arLinea
 		try
 		{
 			String linea;
 			if((linea = bf.readLine()) != null)
 			{
-				String[] arLinea = linea.split(lineSeparator);
-				categ = (arLinea[1]?.indexOf('"')!=-1)?arLinea[1].substring(1,arLinea[1]?.length()-1):arLinea[1]
-				dto = new ItemDto(itemId:Long.parseLong(arLinea[0]),categ:categ,itemTitle:arLinea[2],mainDescription:arLinea[3],secDescription:arLinea[4]);
+				arLinea = linea.split(lineSeparator);
+				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
+				try{
+					def md = arLinea[3]!=null&&arLinea[3]!=""&&arLinea[3]!=" "?arLinea[3]:"No description"
+					def sd = arLinea[4]!=null&&arLinea[4]!=""&&arLinea[4]!=" "?arLinea[4]:"No description"
+					
+					dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2],mainDescription:md,secDescription:"No description");
+				}catch(Exception e){
+					 println arLinea
+					 def md = arLinea[3]!=null&&arLinea[3]!=""&&arLinea[3]!=" "?arLinea[3]:"No description"
+					 def sd = arLinea[4]!=null&&arLinea[4]!=""&&arLinea[4]!=" "?arLinea[4]:"No description"
+					 categ = (arLinea[1]?.indexOf('"')!=-1)?arLinea[1].substring(1,arLinea[1]?.length()-1):arLinea[1]
+					 dto = new ItemDto(itemId:Long.parseLong(arLinea[0]),categ:categ,itemTitle:arLinea[2],mainDescription:md,secDescription:"No description");
+				}
 			}
 			else
 			{
@@ -118,6 +133,12 @@ class SimpleFileManager
 		catch (IOException e)
 		{
 			e.printStackTrace();
+			return null;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			println arLinea
 			return null;
 		}
 		return dto;

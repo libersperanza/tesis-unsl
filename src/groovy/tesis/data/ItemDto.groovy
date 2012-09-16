@@ -17,7 +17,7 @@ class ItemDto implements Serializable
 	String mainDescription
 	String secDescription
 
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
