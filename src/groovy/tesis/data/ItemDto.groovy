@@ -24,6 +24,6 @@ class ItemDto implements Serializable
 	@Override
 	public String toString()
 	{
-		return '{"itemId":' + itemId + ', "categ":' + categ + ', "itemTitle":' + itemTitle+ ', "mainDescription":' + (mainDescription?:"-") + ', "secDescription":'+ (secDescription?:"-") + '}';
+		return '{"itemId":"' + itemId + '", "categ":"' + categ + '", "itemTitle":"' + itemTitle+ '", "mainDescription":"' + (mainDescription?:"-") + '", "secDescription":"'+ (secDescription?:"-") + '"}';
 	}
 }
