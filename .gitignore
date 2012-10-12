@@ -2,6 +2,10 @@
 *.orig
 *.class
 *closure
+*.dat
+*.csv
+*.xlsx
+*.xls
 target
 target/
 target/classes
