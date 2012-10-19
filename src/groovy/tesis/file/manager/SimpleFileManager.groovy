@@ -32,7 +32,7 @@ class SimpleFileManager
 		f = new File(filePath);
 		lineSeparator = separator;
 	}
-	
+
 	public boolean openFile(int skipLines)
 	{
 		try
@@ -59,7 +59,7 @@ class SimpleFileManager
 		}
 		return true;
 	}
-	
+
 	public boolean closeFile()
 	{
 		try
@@ -74,7 +74,7 @@ class SimpleFileManager
 		}
 		return true;
 	}
-	
+
 	public CategDto nextCateg()
 	{
 		CategDto dto = null;
@@ -103,34 +103,33 @@ class SimpleFileManager
 	{
 		ItemDto dto = null;
 		def categ
-		def itemId
-		String[] arLinea
+		String linea;
 		try
 		{
-			String linea;
+
 			if((linea = bf.readLine()) != null)
 			{
-				arLinea = linea.split(lineSeparator);
+				String[] arLinea = linea.split(lineSeparator);
 				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
-				try{
-					def md = arLinea[3]!=null&&arLinea[3]!=""&&arLinea[3]!=" "?arLinea[3]:"No description"
-					def sd = arLinea[4]!=null&&arLinea[4]!=""&&arLinea[4]!=" "?arLinea[4]:"No description"
-					
-					dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2],mainDescription:md,secDescription:"No description");
-				}catch(Exception e){
-					 println arLinea
-					 def md = arLinea[3]!=null&&arLinea[3]!=""&&arLinea[3]!=" "?arLinea[3]:"No description"
-					 def sd = arLinea[4]!=null&&arLinea[4]!=""&&arLinea[4]!=" "?arLinea[4]:"No description"
-					 categ = (arLinea[1]?.indexOf('"')!=-1)?arLinea[1].substring(1,arLinea[1]?.length()-1):arLinea[1]
-					 dto = new ItemDto(itemId:Long.parseLong(arLinea[0]),categ:categ,itemTitle:arLinea[2],mainDescription:md,secDescription:"No description");
+
+				dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2]);
+				if (arLinea.size()==5)
+				{
+					dto.mainDescription = arLinea[3]
+					dto.secDescription = arLinea[4];
 				}
+				if (arLinea.size()==4)
+				{
+					dto.mainDescription = arLinea[3]
+				}
+				
 			}
 			else
 			{
 				return null;
 			}
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 			return null;
@@ -143,5 +142,4 @@ class SimpleFileManager
 		}
 		return dto;
 	}
-
 }
