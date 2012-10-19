@@ -30,7 +30,7 @@ class SimpleFileManager
 		f = new File(filePath);
 		lineSeparator = separator;
 	}
-	
+
 	public boolean openFile(int skipLines)
 	{
 		try
@@ -57,7 +57,7 @@ class SimpleFileManager
 		}
 		return true;
 	}
-	
+
 	public boolean closeFile()
 	{
 		try
@@ -72,7 +72,7 @@ class SimpleFileManager
 		}
 		return true;
 	}
-	
+
 	public CategDto nextCateg()
 	{
 		CategDto dto = null;
@@ -101,26 +101,37 @@ class SimpleFileManager
 	{
 		ItemDto dto = null;
 		def categ
+		String linea;
 		try
 		{
-			String linea;
+
 			if((linea = bf.readLine()) != null)
 			{
 				String[] arLinea = linea.split(lineSeparator);
 				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
-				dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2],mainDescription:arLinea[3],secDescription:arLinea[4]);
+
+				dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2]);
+				if (arLinea.size()==5)
+				{
+					dto.mainDescription = arLinea[3]
+					dto.secDescription = arLinea[4];
+				}
+				if (arLinea.size()==4)
+				{
+					dto.mainDescription = arLinea[3]
+				}
+				
 			}
 			else
 			{
 				return null;
 			}
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 			return null;
 		}
 		return dto;
 	}
-
 }

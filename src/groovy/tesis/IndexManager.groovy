@@ -65,7 +65,7 @@ class IndexManager
 		SimpleFileManager fm = new SimpleFileManager(categsFilePath, dataSeparator);
 		StringBuilder errors = new StringBuilder()
 		
-		if(fm.openFile(1))
+		if(fm.openFile(0))
 		{
 			ArrayList<CategDto> list=new ArrayList<CategDto>()
 			CategDto dto;
@@ -98,7 +98,7 @@ class IndexManager
 		String res;
 		if(cant <= 50)
 		{
-			if(fm.openFile(1))
+			if(fm.openFile(0))
 			{
 				def pivs = []
 				(1..cant).each
@@ -131,7 +131,7 @@ class IndexManager
 		SimpleFileManager fm = new SimpleFileManager(itemsSourceFilePath, dataSeparator);
 		RandomAccessFileManager rfm = new RandomAccessFileManager(itemsDataFilePath)
 		
-		if(fm.openFile(1))
+		if(fm.openFile(0))
 		{
 			if(rfm.openFile("rw"))
 			{
