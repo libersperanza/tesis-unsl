@@ -8,6 +8,7 @@
 *.xls
 target
 target/
+test_data/
 target/classes
 target/classes/
 classpath
