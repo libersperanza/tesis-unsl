@@ -14,6 +14,7 @@ class ItemDto implements Serializable
 	long itemId
 	String categ
 	String itemTitle
+	String searchTitle
 	String mainDescription
 	String secDescription
 
@@ -24,6 +25,6 @@ class ItemDto implements Serializable
 	@Override
 	public String toString()
 	{
-		return '{"itemId":' + itemId + ', "categ":' + categ + ', "itemTitle":' + itemTitle+ ', "mainDescription":' + (mainDescription?:"-") + ', "secDescription":'+ (secDescription?:"-") + '}';
+		return '{"itemId":' + itemId + ',"categ":' + categ + ',"itemTitle":' + itemTitle +',"searchTitle":' + searchTitle+ ',"mainDescription":' + (mainDescription?:"") + ',"secDescription":'+ (secDescription?:"") + '}';
 	}
 }
