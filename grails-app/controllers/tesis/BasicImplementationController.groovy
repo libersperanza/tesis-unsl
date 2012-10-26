@@ -65,12 +65,12 @@ class BasicImplementationController
 					if(dist < radio)
 					{
 						itemsFound.add(item)
-					}
-					println item
+					}					
 				}
 				rfm.closeFile()
 			}
 		}
+		println "Total de cadidatos: ${signatures.size()}"
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
 	}
 
@@ -128,6 +128,7 @@ class BasicImplementationController
 				rfm.closeFile()
 			}
 		}
+		println "Total de items en la categ ${params.categ} : ${itemsFound.size()}"
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
