@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher
+import java.util.regex.Pattern;
 
 import tesis.data.CategDto;
 import tesis.data.ItemDto;
@@ -24,7 +26,7 @@ class SimpleFileManager
 	String lineSeparator;
 	FileReader fr;
 	BufferedReader bf;
-	
+	private static Pattern pattern = Pattern.compile("^([0-9])*\$")
 	public SimpleFileManager(String filePath, String separator)
 	{
 		f = new File(filePath);
@@ -130,6 +132,12 @@ class SimpleFileManager
 		catch (Exception e)
 		{
 			e.printStackTrace();
+			return null;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			println arLinea
 			return null;
 		}
 		return dto;

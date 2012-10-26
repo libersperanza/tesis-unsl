@@ -2,16 +2,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta name="layout" content="main"/>
+<meta name="layout" content="layouts"/>
 <title>Lista de estructuras</title>
 </head>
 <body>
   <div class="body">
   <g:link controller="basicImplementation" action="index">Volver al Menu</g:link>
-  <div>${tit}</div>
+  <h1>${tit}</h1>
+  <hr>
   <g:each var="elem" in="${lista?}">
 	<div>${elem}</div>
   </g:each>
+  <hr>
   <g:link controller="basicImplementation" action="index">Volver al Menu</g:link>
   </div>
 </body>
