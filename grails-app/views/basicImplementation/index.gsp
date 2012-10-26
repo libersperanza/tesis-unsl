@@ -23,7 +23,8 @@
 <hr>
   <g:link controller="basicImplementation" action="listCategs">Listar Categorías </g:link>|
   <g:link controller="basicImplementation" action="listPivotes">Listar Pivotes </g:link>|
-  <g:link controller="basicImplementation" action="listItems">Listar items de una categoria </g:link>|
+  <g:link controller="basicImplementation" action="listItemCategForm">Listar items de una categoria </g:link>|
+  <g:link controller="basicImplementation" action="listItems">Busqueda secuencial </g:link>|
   <g:link controller="basicImplementation" action="searchItems">Buscar items de una categoria </g:link> 
   
   </div>  

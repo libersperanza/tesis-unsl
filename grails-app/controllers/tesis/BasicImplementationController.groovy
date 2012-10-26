@@ -1,6 +1,10 @@
 package tesis
 
 import org.codehaus.groovy.grails.web.json.JSONObject
+
+import com.sun.xml.internal.bind.v2.util.EditDistance;
+
+import tesis.data.CategDto
 import tesis.file.manager.RandomAccessFileManager
 
 class BasicImplementationController
@@ -75,7 +79,8 @@ class BasicImplementationController
 		
 		IndexManager mgr = new IndexManager(session.categs,session.pivots)
 		int radio = Integer.valueOf(params.radio)
-		def signatures =  mgr.searchItemsByCateg(params.itemTitle, params.categ, radio)
+		int pos = session.categs.search(new CategDto(categName:params.categ,signatures:null))
+		def signatures = session.categs.get(pos)?.signatures
 		def itemsFound = null
 		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
 		if (signatures){
@@ -85,39 +90,45 @@ class BasicImplementationController
 				signatures.each
 				{
 					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-					itemsFound.add(item)
-					println item
+					def dist = EditDistance.editDistance(params.itemTitle, item.itemTitle)
+					if(dist < radio)
+					{
+						itemsFound.add(item)
+					}
+								
 				}
 				rfm.closeFile()
 			}
 		}
 		render(view:"sequentialSearch", model:[tit:"Items",itemsFound:itemsFound])
-//		StringBuilder stats = new StringBuilder();
-//		def itemsFound = new ArrayList()
-//		int radio
-//		if(params.categ)
-//		{
-//			radio = Integer.valueOf(params.radio)
-//			int pos = session.categs.search(new CategDto(categName:params.categ,signatures:null))
-//			RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
-//			if (rfm.openFile("rw"))
-//			{
-//				stats.append("Cantidad de items en categ: ${session.categs.get(pos)?.signatures?.size()} ")
-//				def signatures = session.categs.get(pos)?.signatures
-//				signatures.each
-//				{
-//					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-//					def dist = EditDistance.editDistance(params.itemTitle, item.itemTitle)
-//					if( dist < radio)
-//					{
-//						itemsFound.add(item)
-//					}
-//					println item
-//				}
-//				rfm.closeFile()
-//				stats.append("Cantidad de items que matchean la busqueda: ${itemsFound.size()}")
-//			}
-//		}
-//		render(view:"sequentialSearch", model:[tit:"Items", info:stats.toString(),itemsFound:itemsFound])
+
+	}
+	def listItemCategForm = {
+		render (view:"listItemsCateg")
+		}
+	def listItemCateg =
+	{
+		
+		IndexManager mgr = new IndexManager(session.categs,session.pivots)
+	
+		int pos = session.categs.search(new CategDto(categName:params.categ,signatures:null))
+		def signatures = session.categs.get(pos)?.signatures
+		def itemsFound = null
+		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
+		if (signatures){
+			if (rfm.openFile("rw"))
+			{
+				itemsFound = new ArrayList()
+				signatures.each
+				{
+					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))							
+					itemsFound.add(item)					
+								
+				}
+				rfm.closeFile()
+			}
+		}
+		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
+
 	}
 }
