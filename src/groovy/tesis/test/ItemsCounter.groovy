@@ -1,76 +1,65 @@
-import tesis.data.ItemDto;
-
 package tesis.test
 
 import tesis.data.CategDto;
 import tesis.file.manager.SimpleFileManager;
+import tesis.data.ItemDto;
 
-class ItemsCounter {
+class ItemsCounter
+{
 
-	static main(args) {
-		
+	static main(args)
+	{
+
 		//Leo todas las categs
 		def categs = getCategs();
 		//Voy leyendo el archivo y actualizando el contador
-		def noCateg=0
 		String res
 		SimpleFileManager fm = new SimpleFileManager("/home/lsperanza/items.csv", ";");
-		
+
 		if(fm.openFile(0))
 		{
 			ItemDto curItem
-				while(curItem = fm.nextItem())
-				{
-					categs.get(curItem.categ).
-					
-					int pos = categs.search(new CategDto(categName:,signatures:null))
-					if (!categs?.get(pos).equals(categs.virgin)|| categs?.get(pos).equals(categs.used)){
-						sig.setItemPosition(rfm.insertItem(curItem))
-						sig.setItemSize(curItem.toString().length())
-						categs?.get(pos)?.getSignatures()?.add(sig)
-					}else{
-						noCateg++
-					}
-				}
-				println "Items almacenados en el archivo ${rfm.f.getCanonicalPath()}"
-				println "Items no almacenados por categoria invalida: " + noCateg
-			}
-			else
+			while(curItem = fm.nextItem())
 			{
-				throw new Exception("Error al abrir el archivo para lectura/escritura")
+				if(categs.get(curItem.categ))
+				{
+					categs.put(curItem.categ,categs.get(curItem.categ)+1)
+				}
+				else
+				{
+					println "NO ESTA EN EL ARCHIVO: $curItem.categ"
+					categs.put(curItem.categ,1)
+				}
 			}
 		}
 		else
 		{
-			throw new Exception("Error al abrir el archivo $itemsSourceFilePath")
+			throw new Exception("Error al abrir el archivo para lectura/escritura")
 		}
 		//Imprimo el map
-		println categs
-	
+		categs.sort{it.value}.each { key, value -> println "$key;$value" }
+
 	}
-	
-	def getCategs()
+
+	static getCategs()
 	{
 		SimpleFileManager fm = new SimpleFileManager("./test_data/categs.csv", ";");
-		
+
 		def map = [:]
-		
+
 		if(fm.openFile(0))
 		{
-			ArrayList<CategDto> list=new ArrayList<CategDto>()
 			CategDto dto;
 			while((dto = fm.nextCateg()))
 			{
-				map.put(["categ":dto.getCategName(),"count":0])
+				map.put(dto.getCategName(),0)
 			}
 			fm.closeFile();
 			return map
-			
 		}
 		else
 		{
 			throw new Exception("Error al abrir el archivo")
 		}
 	}
-
 }
