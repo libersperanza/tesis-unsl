@@ -2,6 +2,7 @@ package tesis.test
 
 import tesis.data.CategDto;
 import tesis.file.manager.SimpleFileManager;
+import tesis.utils.Utils;
 import tesis.data.ItemDto;
 
 class ItemsCounter
@@ -19,7 +20,7 @@ class ItemsCounter
 		if(fm.openFile(0))
 		{
 			ItemDto curItem
-			while(curItem = fm.nextItem())
+			while(curItem = Utils.removeSpecialCharacters(fm.nextItem()))
 			{
 				if(categs.get(curItem.categ))
 				{

@@ -6,6 +6,7 @@ import com.sun.xml.internal.bind.v2.util.EditDistance;
 
 import tesis.data.CategDto
 import tesis.file.manager.RandomAccessFileManager
+import tesis.utils.Utils;
 
 class BasicImplementationController
 {
@@ -50,8 +51,8 @@ class BasicImplementationController
 	def searchItemsCateg =
 	{
 		IndexManager mgr = new IndexManager(session.categs,session.pivots)
-		int radio = Integer.valueOf(params.radio)
-		def signatures = mgr.searchItemsByCateg(params.itemTitle, params.categ, radio)
+		int radio = Integer.valueOf(params.radio?:"5")
+		def signatures = mgr.searchItemsByCateg(Utils.removeSpecialCharacters(params.itemTitle), params.categ, radio)
 		def itemsFound = null
 		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
 		if (signatures){
@@ -61,7 +62,7 @@ class BasicImplementationController
 				signatures.each
 				{
 					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-					def dist = EditDistance.editDistance(params.itemTitle, item.itemTitle)
+					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle), item.searchTitle)
 					if(dist < radio)
 					{
 						itemsFound.add(item)
@@ -78,7 +79,7 @@ class BasicImplementationController
 	{
 		
 		IndexManager mgr = new IndexManager(session.categs,session.pivots)
-		int radio = Integer.valueOf(params.radio)
+		int radio = Integer.valueOf(params.radio?:"5")
 		int pos = session.categs.search(new CategDto(categName:params.categ,signatures:null))
 		def signatures = session.categs.get(pos)?.signatures
 		def itemsFound = null
@@ -90,7 +91,8 @@ class BasicImplementationController
 				signatures.each
 				{
 					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-					def dist = EditDistance.editDistance(params.itemTitle, item.itemTitle)
+				
+					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle), item.searchTitle)
 					if(dist < radio)
 					{
 						itemsFound.add(item)
@@ -128,7 +130,7 @@ class BasicImplementationController
 				rfm.closeFile()
 			}
 		}
-		println "Total de items en la categ ${params.categ} : ${itemsFound.size()}"
+		println "Total de items en la categ ${params.categ} : ${itemsFound?.size()}"
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
