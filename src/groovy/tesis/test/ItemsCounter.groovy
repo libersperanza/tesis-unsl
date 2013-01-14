@@ -5,62 +5,69 @@ import tesis.file.manager.SimpleFileManager;
 import tesis.utils.Utils;
 import tesis.data.ItemDto;
 
-class ItemsCounter
-{
+class ItemsCounter {
 
-	static main(args)
-	{
+	static main(args) {
 
 		//Leo todas las categs
-		def categs = getCategs();
+		def categs = [:]//getCategs();
 		//Voy leyendo el archivo y actualizando el contador
 		String res
-		SimpleFileManager fm = new SimpleFileManager("/home/lsperanza/items.csv", ";");
+		File f = new File("/Users/lsperanza/Documents/Personal/Tesis/Implementacion/LotesDeDatos/items.clean.csv")
+		FileReader fr = new FileReader(f);
+		BufferedReader bf = new BufferedReader(fr);
 
-		if(fm.openFile(0))
+		String linea
+		String lineaPrev
+		try
 		{
-			ItemDto curItem
-			while(curItem = Utils.removeSpecialCharacters(fm.nextItem()))
+			while(linea = bf.readLine())
 			{
-				if(categs.get(curItem.categ))
+
+				String[] arLinea = linea.split(";");
+				//categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
+				String categ = arLinea[0]
+				if(categs.get(categ))
 				{
-					categs.put(curItem.categ,categs.get(curItem.categ)+1)
+					categs.put(categ,categs.get(categ)+1)
 				}
 				else
 				{
-					println "NO ESTA EN EL ARCHIVO: $curItem.categ"
-					categs.put(curItem.categ,1)
+					//println "NO ESTA EN EL ARCHIVO: $curItem.categ"
+					categs.put(categ,1)
 				}
+				lineaPrev = linea
 			}
+
+			//Imprimo el map
+			categs.sort{it.value}.each { key, value -> println "$key;$value" }
 		}
-		else
+		catch(Exception e)
 		{
-			throw new Exception("Error al abrir el archivo para lectura/escritura")
+			println lineaPrev
+			println linea
+			e.printStackTrace()
 		}
-		//Imprimo el map
-		categs.sort{it.value}.each { key, value -> println "$key;$value" }
 
 	}
 
-	static getCategs()
-	{
-		SimpleFileManager fm = new SimpleFileManager("./test_data/categs.csv", ";");
-
-		def map = [:]
-
-		if(fm.openFile(0))
-		{
-			CategDto dto;
-			while((dto = fm.nextCateg()))
-			{
-				map.put(dto.getCategName(),0)
-			}
-			fm.closeFile();
-			return map
-		}
-		else
-		{
-			throw new Exception("Error al abrir el archivo")
-		}
-	}
+	/*static getCategs()
+	 {
+	 SimpleFileManager fm = new SimpleFileManager("./test_data/categs.csv", ";");
+	 def map = [:]
+	 if(fm.openFile(0))
+	 {
+	 CategDto dto;
+	 while((dto = fm.nextCateg()))
+	 {
+	 map.put(dto.getCategName(),0)
+	 }
+	 fm.closeFile();
+	 return map
+	 }
+	 else
+	 {
+	 throw new Exception("Error al abrir el archivo")
+	 }
+	 }*/
 }
