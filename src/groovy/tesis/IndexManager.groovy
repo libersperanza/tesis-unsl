@@ -71,7 +71,7 @@ class IndexManager
 			CategDto dto;
 			while((dto = fm.nextCateg()))
 			{
-				list.add(dto)
+				if(dto){list.add(dto)}
 			}
 			fm.closeFile();
 			categs = new CategsHash(list.size(), 0.4)
@@ -138,7 +138,7 @@ class IndexManager
 				ItemDto curItem
 				while(curItem = fm.nextItem())
 				{
-					ItemSignature sig = new ItemSignature(curItem.getItemTitle(), getPivotsForCateg(curItem.getCateg()))					
+					ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))					
 					int pos = categs.search(new CategDto(categName:curItem.categ,signatures:new ArrayList<ItemSignature>()))
 					if (!categs?.get(pos).equals(categs.virgin)|| categs?.get(pos).equals(categs.used)){
 						sig.setItemPosition(rfm.insertItem(curItem))
@@ -158,7 +158,7 @@ class IndexManager
 		}
 		else
 		{
-			throw new Exception("Error al abrir el archivo $itemsSourceFilePath")
+			throw new Exception("Error al abrir el archivo ${itemsSourceFilePath}")
 		}
 	}
 	
@@ -179,20 +179,20 @@ class IndexManager
 		ArrayList<ItemSignature> candidatos = new ArrayList<ItemSignature>()
 
 		int pos = categs.search(new CategDto(categName:categ,signatures:null))
-		
-		categs.get(pos)?.signatures?.each {
-				candidato = it				
-				for (int i = 0;i<it?.dists.size();i++){
-					value = (sig?.dists[i] - it.dists[i]).abs()
+		def signatures = categs.get(pos)?.signatures
+
+		signatures?.each {
+				candidato = it		
+				for (int i = 0;i<it?.dists?.size();i++){
+					value = (sig?.dists[i] - candidato.dists[i]).abs()
 					if (value > radio){
-						candidato=null
-						return false
+						i = candidato?.dists?.size()
+						candidato=null					
 					}
 				}			
 				if(candidato){
 					candidatos.add(candidato)
-			}
-		
+				}		
 		}
 		
 		return candidatos

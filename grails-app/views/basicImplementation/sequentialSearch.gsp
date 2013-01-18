@@ -11,11 +11,11 @@
   <hr>
   ${info}
   <g:if test="${itemsFound}">
-    <g:each var="elem" in="${itemsFound?}">
+    <g:each var="elem" in="${itemsFound}">
 	<p><label><b>Id: </b></label>${elem?.itemId}; <label><b>Title: </b></label>${elem?.itemTitle}</p>
   </g:each>
   <hr>
-  <g:link controller="basicImplementation" action="index">Volver al Menu</g:link>
+  <g:link controller="basicImplementation" action="listItems">Volver al Menu</g:link>
 
   </g:if>
   <g:else>

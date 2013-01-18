@@ -10,7 +10,7 @@
   <g:link controller="basicImplementation" action="index">Volver al Menu</g:link>
   <h1>${tit}</h1>
   <hr>
-  <g:each var="elem" in="${lista?}">
+  <g:each var="elem" in="${lista}">
 	<div>${elem}</div>
   </g:each>
   <hr>

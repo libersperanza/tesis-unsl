@@ -113,7 +113,7 @@ class SimpleFileManager
 				String[] arLinea = linea.split(lineSeparator);
 				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
 
-				dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2],searchTitle:arLinea[2]);
+				dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2],searchTitle:arLinea[2]?.toUpperCase());
 				if (arLinea.size()==5)
 				{
 					dto.mainDescription = arLinea[3]

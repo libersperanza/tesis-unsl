@@ -22,7 +22,7 @@ class CategDto implements Serializable
 	@Override
 	public String toString()
 	{
-		return "[categName=" + categName + ", signatures=" + signatures + "]";
+		return '{"categName":"' + categName + '", "signatures":"' + signatures + '"}';
 	}
 	@Override
 	public boolean equals(CategDto obj){
