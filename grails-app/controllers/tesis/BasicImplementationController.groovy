@@ -10,8 +10,10 @@ import tesis.utils.Utils;
 
 class BasicImplementationController
 {
-	def index =
-	{
+	SessionService sessionService
+	
+	def index =	{
+		render(view:"index") 
 	} 
 
 	def initIndex =
@@ -21,8 +23,10 @@ class BasicImplementationController
 		try
 		{
 			String result = mgr.initIndex(Integer.parseInt(params.cant))
-			session.categs = mgr.categs
-			session.pivots = mgr.pivots
+			sessionService.init()
+			sessionService.setCategs(mgr.categs)
+			sessionService.setPivots(mgr.pivots)
+				
 			if(!result)
 			{
 				result = "INICIALIZACION CORRECTA"
@@ -37,12 +41,12 @@ class BasicImplementationController
 	}
 	def listCategs =
 	{
-		render(view:"list", model:[tit:"Categorias",lista:session.categs.getValues()])
+		render(view:"list", model:[tit:"Categorias",lista:sessionService.getCategs().getValues()])
 	}
 
 	def listPivotes =
 	{
-		render(view:"list", model:[tit:"Pivotes", lista:session.pivots.values()])
+		render(view:"list", model:[tit:"Pivotes", lista:sessionService.getPivots()])
 	}
 	def searchItems =
 	{ render(view:"searchItems") }
@@ -50,55 +54,60 @@ class BasicImplementationController
 	{ render(view:"sequentialSearch") }
 	def searchItemsCateg =
 	{
-		IndexManager mgr = new IndexManager(session.categs,session.pivots)
+		IndexManager mgr = new IndexManager(sessionService.getCategs(),sessionService.getPivots())
 		int radio = Integer.valueOf(params.radio?:"5")
-		def signatures = mgr.searchItemsByCateg(Utils.removeSpecialCharacters(params.itemTitle), params.categ, radio)
+	
+		def signatures = mgr.searchItemsByCateg(Utils.removeSpecialCharacters(params.itemTitle)?.toUpperCase(), params.categ, radio)
 		def itemsFound = null
 		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
+	
 		if (signatures){
 			if (rfm.openFile("rw"))
 			{
 				itemsFound = new ArrayList()
+
 				signatures.each
 				{
 					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle), item.searchTitle)
+					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle)?.toUpperCase(), item.searchTitle)					
 					if(dist < radio)
-					{
+					{ 
 						itemsFound.add(item)
 					}					
 				}
 				rfm.closeFile()
 			}
 		}
-		println "Total de cadidatos: ${signatures.size()}"
+		println "Total de cadidatos: ${signatures?.size()}"
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
 	}
 
 	def sequentialSearch=
 	{
 		
-		IndexManager mgr = new IndexManager(session.categs,session.pivots)
+		IndexManager mgr = new IndexManager(sessionService.getCategs(),sessionService.getPivots())
 		int radio = Integer.valueOf(params.radio?:"5")
-		int pos = session.categs.search(new CategDto(categName:params.categ,signatures:null))
-		def signatures = session.categs.get(pos)?.signatures
+		int pos = sessionService.getCategs().search(new CategDto(categName:params.categ,signatures:null))
+		def signatures = sessionService.getCategs().get(pos)?.signatures
 		def itemsFound = null
 		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
 		if (signatures){
 			if (rfm.openFile("rw"))
 			{
 				itemsFound = new ArrayList()
+			
 				signatures.each
 				{
 					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
 				
-					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle), item.searchTitle)
+					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle)?.toUpperCase(), item.searchTitle)
 					if(dist < radio)
-					{
+					{	
 						itemsFound.add(item)
 					}
 								
 				}
+			
 				rfm.closeFile()
 			}
 		}
@@ -111,10 +120,10 @@ class BasicImplementationController
 	def listItemCateg =
 	{
 		
-		IndexManager mgr = new IndexManager(session.categs,session.pivots)
+		IndexManager mgr = new IndexManager(sessionService.getCategs(),sessionService.getPivots())
 	
-		int pos = session.categs.search(new CategDto(categName:params.categ,signatures:null))
-		def signatures = session.categs.get(pos)?.signatures
+		int pos = sessionService.getCategs().search(new CategDto(categName:params.categ,signatures:null))
+		def signatures = sessionService.getCategs().get(pos)?.signatures
 		def itemsFound = null
 		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
 		if (signatures){

@@ -12,7 +12,9 @@
     <g:each var="elem" in="${itemsFound?}">
 	<div>${elem}</div>
   </g:each>
+  <g:link controller="basicImplementation" action="index">Volver al Menu</g:link>
   </g:if>
+  
   <g:else>
       <h1>Buscar Items</h1>
       <hr>
