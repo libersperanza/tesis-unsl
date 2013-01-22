@@ -11,7 +11,9 @@
   <h1>Parametrización del índice</h1>
   <hr>
   <g:form controller="basicImplementation" action="initIndex">
-	<p class="ch-form-row ch-form-required"><label for="file_name_cat">Nombre de Archivo de Categorías:</label><input type="text" id="file_name_cat" name="file_name_cat" lenght="100" value="./test_data/categs.csv"/></p>
+	<p class="ch-form-row ch-form-required"><label for="file_name_cat">Nombre de Archivo de Categorías:</label><input type="text" id="file_name_cat" name="file_name_cat" lenght="100" value="./test_data/categs.csv"/>
+	<g:checkBox name="categFile" id="categFile"></g:checkBox> Usar categorias pre-calculadas
+	</p>
 	<p class="ch-form-row ch-form-required"><label for="file_name_piv">Nombre de Archivo de Pivotes:</label><input type="text" id="file_name_piv" name="file_name_piv" lenght="100" value="./test_data/pivotes.csv"/></p>
   	<p class="ch-form-row ch-form-required"><label for="cant_piv">Cantidad de pivotes:</label><input type="text" id="cant_piv" name="cant" /></p>
 	<p class="ch-form-row ch-form-required"><label for="file_name_it">Nombre de Archivo de Items:</label><input type="text" id="file_name_it" name="file_name_it" lenght="100" value="./test_data/items.csv"/></p>
@@ -27,6 +29,11 @@
   <g:link controller="basicImplementation" action="listItems">Busqueda secuencial </g:link>|
   <g:link controller="basicImplementation" action="searchItems">Buscar items de una categoria </g:link> 
   
-  </div>  
+  </div>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+  <script type="text/javascript">
+ 
+	  
+  </script>  
 </body>
 </html>

@@ -1,10 +1,15 @@
 package tesis
 
+import java.util.ArrayList;
+
+import tesis.file.manager.SimpleFileManager;
+
 import org.codehaus.groovy.grails.web.json.JSONObject
 
 import com.sun.xml.internal.bind.v2.util.EditDistance;
 
 import tesis.data.CategDto
+import tesis.data.ItemSignature;
 import tesis.file.manager.RandomAccessFileManager
 import tesis.utils.Utils;
 
@@ -22,6 +27,7 @@ class BasicImplementationController
 				"./test_data/Items.dat", params.file_name_piv, params.separator);
 		try
 		{
+			println params
 			String result = mgr.initIndex(Integer.parseInt(params.cant))
 			sessionService.init()
 			sessionService.setCategs(mgr.categs)
@@ -124,6 +130,7 @@ class BasicImplementationController
 	
 		int pos = sessionService.getCategs().search(new CategDto(categName:params.categ,signatures:null))
 		def signatures = sessionService.getCategs().get(pos)?.signatures
+		println  sessionService.getCategs().get(pos)
 		def itemsFound = null
 		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
 		if (signatures){
@@ -143,4 +150,49 @@ class BasicImplementationController
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
+	def saveSignatures = {
+		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/signatures.dat")
+		def categs = sessionService.getCategs()
+		if(rfm.openFile("rw"))
+		{
+			rfm.resetFile()
+			categs.getValues().each{				
+				rfm.insertCategs(it)				
+			}			
+		}
+	}
+	
+	def getSignatures = {
+		def start = System.currentTimeMillis()
+		SimpleFileManager fm = new SimpleFileManager("./test_data/signatures.dat", "\n");
+		ArrayList categs = new ArrayList<CategDto>()
+		ArrayList signatures
+		if(fm.openFile(0))
+		{
+			String currentObj
+			def obj
+			CategDto categ
+			ItemSignature signature
+			while(currentObj = fm.nextLine()){
+				obj = new JSONObject(currentObj)
+				signatures = new ArrayList<ItemSignature>()
+				obj?.signatures?.each{
+//					def dist = it?.dists
+//					def x = new int[dist.size()]
+//					for(int i= 0; i<dist.size(); i++){
+//						x[i]=dist[i]
+//					}			
+					signature = new ItemSignature( it?.dists, Long.valueOf(it.itemPosition), it?.size)
+					signatures.add(signature)
+				}				
+				categ = new CategDto(obj.categName,signatures)
+				categs.add(categ)				
+			}
+			sessionService.setCategs(categs)
+			fm.closeFile()
+		}
+		println "Tiempo total de procesamiento de archivo: "+ System.currentTimeMillis() - start
+	}
 }
+	
+

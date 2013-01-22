@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import tesis.data.CategDto;
 import tesis.data.ItemDto;
+import tesis.data.ItemSignature;
 
 /**
  * @author lsperanza
@@ -17,7 +19,7 @@ import tesis.data.ItemDto;
 class RandomAccessFileManager
 {
 
-	RandomAccessFile itemFile;
+	RandomAccessFile objFile;
 	File f;
 	
 	public RandomAccessFileManager(String filePath)
@@ -29,7 +31,7 @@ class RandomAccessFileManager
 	{
 		try
 		{
-			itemFile = new RandomAccessFile(f,mode);
+			objFile = new RandomAccessFile(f,mode);
 		}
 		catch (FileNotFoundException e)
 		{
@@ -44,14 +46,9 @@ class RandomAccessFileManager
 		long pos=-1;
 		try
 		{
-			pos = itemFile.length() //itemFile.getFilePointer();
-			itemFile.seek (pos)
-			itemFile.writeBytes(dto.toString())
-//			itemFile.writeLong(dto.getItemId());
-//			itemFile.writeChars(dto.getCateg());
-//			itemFile.writeChars(dto.getItemTitle());
-//			itemFile.writeChars(dto.getMainDescription());
-//			itemFile.writeChars(dto.getSecDescription());
+			pos = objFile.length()
+			objFile.seek (pos)
+			objFile.writeBytes(dto.toString())
 		}
 		catch (IOException e)
 		{
@@ -62,9 +59,9 @@ class RandomAccessFileManager
 	
 	public  String getItem(long pos,itemSize) //ItemDto
 	{
-		itemFile.seek(pos)
+		objFile.seek(pos)
 		byte[] data = new byte[itemSize]
-		itemFile.read(data)
+		objFile.read(data)
 		return new String(data)
 
 	}
@@ -73,7 +70,7 @@ class RandomAccessFileManager
 	{
 		try
 		{
-			itemFile.close();
+			objFile.close();
 		}
 		catch (IOException e)
 		{
@@ -83,6 +80,24 @@ class RandomAccessFileManager
 		return true;
 	}
 	def seek(pos){
-		itemFile.seek(pos)
+		objFile.seek(pos)
+	}
+	def resetFile(){
+		objFile.setLength(0)
+	}
+	public long insertCategs(CategDto dto)
+	{
+		long pos=-1;
+		try
+		{
+			pos = objFile.length()
+			objFile.seek (pos)
+			objFile.writeBytes(dto.toString()+"\n")
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return pos;
 	}
 }

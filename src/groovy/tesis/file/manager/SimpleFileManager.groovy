@@ -140,4 +140,24 @@ class SimpleFileManager
 		}
 		return dto;
 	}
+	public String nextLine()
+	{	
+		try
+		{
+			fr = new FileReader(f);
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		bf = new BufferedReader(fr);	
+		try{
+			return  bf.readLine()
+		}catch (IOException e){
+			e.printStackTrace();
+			return null;
+		}		
+	}
+
 }

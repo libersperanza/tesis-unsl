@@ -16,13 +16,17 @@ class CategDto implements Serializable
 	String categName
 	ArrayList<ItemSignature> signatures
 
+	public CategDto(categName,signatures){
+		this.categName = categName
+		this.signatures = signatures
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
+	@Override	
 	public String toString()
 	{
-		return '{"categName":"' + categName + '", "signatures":"' + signatures + '"}';
+		return '{"categName":"' + categName + '", "signatures":' + signatures.toString() + '}';
 	}
 	@Override
 	public boolean equals(CategDto obj){

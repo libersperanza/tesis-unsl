@@ -49,10 +49,13 @@ class IndexManager
 	
 	public String initIndex(int cantPivots)
 	{
+		def start = System.currentTimeMillis()
+		
 		fillCategsHash();
 		fillPivots("ALL",cantPivots);
 		createSignatures();
 		
+		println "Tiempo total de procesamiento: "+ System.currentTimeMillis() - start
 	}
 	
 	public void initIndex(Map cantPivotsByCateg)
@@ -130,11 +133,12 @@ class IndexManager
 		String res
 		SimpleFileManager fm = new SimpleFileManager(itemsSourceFilePath, dataSeparator);
 		RandomAccessFileManager rfm = new RandomAccessFileManager(itemsDataFilePath)
-		
+
 		if(fm.openFile(0))
 		{
 			if(rfm.openFile("rw"))
-			{
+			{	
+				rfm.resetFile();
 				ItemDto curItem
 				while(curItem = fm.nextItem())
 				{
@@ -147,7 +151,8 @@ class IndexManager
 					}else{
 						noCateg++
 					}
-				}				
+				}			
+				rfm.closeFile()	
 				println "Items almacenados en el archivo ${rfm.f.getCanonicalPath()}"
 				println "Items no almacenados por categoria invalida: " + noCateg
 			}
@@ -155,6 +160,7 @@ class IndexManager
 			{
 				throw new Exception("Error al abrir el archivo para lectura/escritura")
 			}
+			fm.closeFile()
 		}
 		else
 		{
