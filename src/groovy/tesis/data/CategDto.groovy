@@ -16,6 +16,8 @@ class CategDto implements Serializable
 	String categName
 	ArrayList<ItemSignature> signatures
 
+	public CategDto(){
+	}
 	public CategDto(categName,signatures){
 		this.categName = categName
 		this.signatures = signatures
