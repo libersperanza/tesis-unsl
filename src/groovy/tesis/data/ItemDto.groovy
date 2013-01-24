@@ -11,7 +11,7 @@ import java.io.Serializable
  */
 class ItemDto implements Serializable
 {
-	long itemId
+	String itemId
 	String categ
 	String itemTitle
 	String searchTitle
