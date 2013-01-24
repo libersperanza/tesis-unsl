@@ -158,7 +158,8 @@ class BasicImplementationController
 			rfm.resetFile()
 			categs.getValues().each{				
 				rfm.insertCategs(it)				
-			}			
+			}
+			rfm.closeFile()
 		}
 	}
 	
@@ -182,7 +183,7 @@ class BasicImplementationController
 //					for(int i= 0; i<dist.size(); i++){
 //						x[i]=dist[i]
 //					}			
-					signature = new ItemSignature( it?.dists, Long.valueOf(it.itemPosition), it?.size)
+					signature = new ItemSignature( it?.dists, Long.valueOf(it.itemPosition), it?.itemSize)
 					signatures.add(signature)
 				}				
 				categ = new CategDto(obj.categName,signatures)
