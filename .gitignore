@@ -9,7 +9,7 @@
 *.xls
 target
 target/
-test_data/
+items.csv
 target/classes
 target/classes/
 classpath
