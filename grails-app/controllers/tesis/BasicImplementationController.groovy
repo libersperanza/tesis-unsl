@@ -151,15 +151,15 @@ class BasicImplementationController
 
 	}
 	def saveSignatures = {
-		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/signatures.dat")
+		SimpleFileManager fm = new SimpleFileManager("./test_data/signatures.dat","\n")
 		def categs = sessionService.getCategs()
-		if(rfm.openFile("rw"))
+		if(fm.openFileW())
 		{
-			rfm.resetFile()
+			//rfm.resetFile()
 			categs.getValues().each{				
-				rfm.insertCategs(it)				
+				fm.insertCategs(it)				
 			}
-			rfm.closeFile()
+			fm.closeFileW()
 		}
 	}
 	
@@ -175,19 +175,21 @@ class BasicImplementationController
 			CategDto categ
 			ItemSignature signature
 			while(currentObj = fm.nextLine()){
+				try{
 				obj = new JSONObject(currentObj)
+				//println obj
 				signatures = new ArrayList<ItemSignature>()
-				obj?.signatures?.each{
-//					def dist = it?.dists
-//					def x = new int[dist.size()]
-//					for(int i= 0; i<dist.size(); i++){
-//						x[i]=dist[i]
-//					}			
-					signature = new ItemSignature( it?.dists, Long.valueOf(it.itemPosition), it?.itemSize)
+				for(o in obj?.signatures){
+	
+					signature = new ItemSignature( o?.dists, Long.valueOf(o.itemPosition), o?.itemSize)
 					signatures.add(signature)
 				}				
 				categ = new CategDto(obj.categName,signatures)
-				categs.add(categ)				
+				
+				categs.add(categ)		
+				}catch(Exception e){
+				
+				}		
 			}
 			sessionService.setCategs(categs)
 			fm.closeFile()

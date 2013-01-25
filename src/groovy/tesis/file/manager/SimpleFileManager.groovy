@@ -26,6 +26,8 @@ class SimpleFileManager
 	File f;
 	String lineSeparator;
 	FileReader fr;
+	FileWriter fw;
+	PrintWriter pw;
 	BufferedReader bf;
 	private static Pattern pattern = Pattern.compile("^([0-9])*\$")
 	public SimpleFileManager(String filePath, String separator)
@@ -60,7 +62,21 @@ class SimpleFileManager
 		}
 		return true;
 	}
+	public boolean openFileW()
+	{
+		try
+		{
+			fw = new FileWriter(f);
+            pw = new PrintWriter(fw);
 
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 	public boolean closeFile()
 	{
 		try
@@ -75,7 +91,20 @@ class SimpleFileManager
 		}
 		return true;
 	}
-
+	public boolean closeFileW()
+	{
+		try
+		{
+			fw.close();
+			pw.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 	public CategDto nextCateg()
 	{
 		CategDto dto = null;
@@ -142,22 +171,27 @@ class SimpleFileManager
 	}
 	public String nextLine()
 	{	
-		try
-		{
-			fr = new FileReader(f);
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-			return false;
-		}
-		bf = new BufferedReader(fr);	
 		try{
 			return  bf.readLine()
 		}catch (IOException e){
 			e.printStackTrace();
 			return null;
 		}		
+	}
+//	def resetFile(){
+//		objFile.setLength(0)
+//	}
+	public long insertCategs(CategDto dto)
+	{
+		
+		try
+		{ pw.print(dto.toString()+"\n")
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return 1
 	}
 
 }
