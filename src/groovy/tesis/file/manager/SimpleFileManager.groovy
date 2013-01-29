@@ -142,7 +142,7 @@ class SimpleFileManager
 				String[] arLinea = linea.split(lineSeparator);
 				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
 
-				dto = new ItemDto(itemId:Long.parseLong(arLinea[1]),categ:categ,itemTitle:arLinea[2],searchTitle:arLinea[2]?.toUpperCase());
+				dto = new ItemDto(itemId:arLinea[1],categ:categ,itemTitle:arLinea[2],searchTitle:arLinea[2]?.toUpperCase());
 				if (arLinea.size()==5)
 				{
 					dto.mainDescription = arLinea[3]
@@ -161,12 +161,6 @@ class SimpleFileManager
 			e.printStackTrace();
 			return null;
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			println arLinea
-			return null;
-		}
 		return dto;
 	}
 	public String nextLine()
@@ -181,7 +175,7 @@ class SimpleFileManager
 //	def resetFile(){
 //		objFile.setLength(0)
 //	}
-	public long insertCategs(CategDto dto)
+	public long insertObject(dto)
 	{
 		
 		try

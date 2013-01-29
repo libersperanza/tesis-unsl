@@ -9,6 +9,7 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 import com.sun.xml.internal.bind.v2.util.EditDistance;
 
 import tesis.data.CategDto
+import tesis.data.ItemDto
 import tesis.data.ItemSignature;
 import tesis.file.manager.RandomAccessFileManager
 import tesis.utils.Utils;
@@ -127,8 +128,9 @@ class BasicImplementationController
 	{
 		
 		IndexManager mgr = new IndexManager(sessionService.getCategs(),sessionService.getPivots())
-	
+	println params.categ
 		int pos = sessionService.getCategs().search(new CategDto(categName:params.categ,signatures:null))
+		println pos
 		def signatures = sessionService.getCategs().get(pos)?.signatures
 		println  sessionService.getCategs().get(pos)
 		def itemsFound = null
@@ -150,20 +152,27 @@ class BasicImplementationController
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
-	def saveSignatures = {
+	def saveData = {
 		SimpleFileManager fm = new SimpleFileManager("./test_data/signatures.dat","\n")
 		def categs = sessionService.getCategs()
+		def pivots = sessionService.getPivots()
 		if(fm.openFileW())
 		{
-			//rfm.resetFile()
 			categs.getValues().each{				
-				fm.insertCategs(it)				
+				fm.insertObject(it)				
+			}
+			fm.closeFileW()
+		}
+		fm = new SimpleFileManager("./test_data/pivotes.dat","\n")
+		if(fm.openFileW()){
+			pivots?.ALL?.each { 
+				fm.insertObject(it)
 			}
 			fm.closeFileW()
 		}
 	}
 	
-	def getSignatures = {
+	def getData = {
 		def start = System.currentTimeMillis()
 		SimpleFileManager fm = new SimpleFileManager("./test_data/signatures.dat", "\n");
 		ArrayList categs = new ArrayList<CategDto>()
@@ -188,10 +197,34 @@ class BasicImplementationController
 				
 				categs.add(categ)		
 				}catch(Exception e){
-				
+				println e.getMessage()
+				fm.closeFile()
+				return
 				}		
 			}
 			sessionService.setCategs(categs)
+			fm.closeFile()
+		}
+		fm = new SimpleFileManager("./test_data/pivotes.dat", "\n");
+		def pivs = []
+		if(fm.openFile(0))
+		{
+			String currentObj
+			def obj
+			CategDto categ
+			ItemSignature signature
+			while(currentObj = fm.nextLine()){
+				try{
+				obj = new JSONObject(currentObj)
+				pivs.add(new ItemDto(itemId:obj.itemId,categ:obj.categ,itemTitle:obj.itemTitle,searchTitle:obj.searchTitle))
+				}catch(Exception e){
+				println e.getMessage()
+				fm.closeFile()
+				return
+				}
+			}
+			sessionService.setPivots(["ALL":pivs])	
+			println sessionService.getPivots()
 			fm.closeFile()
 		}
 		println "Tiempo total de procesamiento de archivo: "+ System.currentTimeMillis() - start
