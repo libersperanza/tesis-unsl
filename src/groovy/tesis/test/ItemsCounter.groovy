@@ -12,15 +12,19 @@ class ItemsCounter
 	{
 
 		//Leo todas las categs
-		def categs = getCategs();
+		//def categs = getCategs();
 		//Voy leyendo el archivo y actualizando el contador
 		String res
-		SimpleFileManager fm = new SimpleFileManager("/home/lsperanza/items.csv", ";");
+		SimpleFileManager fm = new SimpleFileManager("./test_data/items.csv", ";");
 
 		if(fm.openFile(0))
 		{
-			ItemDto curItem
-			while(curItem = Utils.removeSpecialCharacters(fm.nextItem()))
+
+			while(fm.nextItem())
+			{
+			}
+			print "*"
+			/*while(curItem = Utils.removeSpecialCharacters(fm.nextItem()))
 			{
 				if(categs.get(curItem.categ))
 				{
@@ -31,14 +35,14 @@ class ItemsCounter
 					println "NO ESTA EN EL ARCHIVO: $curItem.categ"
 					categs.put(curItem.categ,1)
 				}
-			}
+			}*/
 		}
 		else
 		{
 			throw new Exception("Error al abrir el archivo para lectura/escritura")
 		}
 		//Imprimo el map
-		categs.sort{it.value}.each { key, value -> println "$key;$value" }
+		//categs.sort{it.value}.each { key, value -> println "$key;$value" }
 
 	}
 
