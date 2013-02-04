@@ -21,8 +21,7 @@ import tesis.utils.Utils;
  * @author lsperanza
  *
  */
-class SimpleFileManager
-{
+class SimpleFileManager {
 	File f;
 	String lineSeparator;
 	FileReader fr;
@@ -30,162 +29,132 @@ class SimpleFileManager
 	PrintWriter pw;
 	BufferedReader bf;
 	private static Pattern pattern = Pattern.compile("^([0-9])*\$")
-	public SimpleFileManager(String filePath, String separator)
-	{
+	public SimpleFileManager(String filePath, String separator) {
 		f = new File(filePath);
 		lineSeparator = separator;
 	}
 
-	public boolean openFile(int skipLines)
-	{
-		try
-		{
+	public boolean openFile(int skipLines) {
+		try {
 			fr = new FileReader(f);
 		}
-		catch (FileNotFoundException e)
-		{
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}
 		bf = new BufferedReader(fr);
-		for(int i=0; i< skipLines; i++)
-		{
-			try
-			{
+		for(int i=0; i< skipLines; i++) {
+			try {
 				bf.readLine();
 			}
-			catch (IOException e)
-			{
+			catch (IOException e) {
 				e.printStackTrace();
 				return false;
 			}
 		}
 		return true;
 	}
-	public boolean openFileW()
-	{
-		try
-		{
+	public boolean openFileW() {
+		try {
 			fw = new FileWriter(f);
-            pw = new PrintWriter(fw);
-
+			pw = new PrintWriter(fw);
 		}
-		catch (FileNotFoundException e)
-		{
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-	public boolean closeFile()
-	{
-		try
-		{
+	public boolean closeFile() {
+		try {
 			fr.close();
 			bf.close();
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-	public boolean closeFileW()
-	{
-		try
-		{
+	public boolean closeFileW() {
+		try {
 			fw.close();
 			pw.close();
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-	public CategDto nextCateg()
-	{
+	public CategDto nextCateg() {
 		CategDto dto = null;
-		try
-		{
+		try {
 			String linea;
-			if((linea = Utils.removeSpecialCharacters( bf.readLine())) != null)
-			{
+			if((linea = Utils.removeSpecialCharacters( bf.readLine())) != null) {
 				String[] arLinea = linea.split(lineSeparator);
 				dto = new CategDto(categName:arLinea[0],signatures:new ArrayList<ItemSignature>());
 			}
-			else
-			{
+			else {
 				return null;
 			}
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return dto;
 	}
 
-	public ItemDto nextItem()
-	{
+	public ItemDto nextItem() {
 		ItemDto dto = null;
 		def categ
 		String linea;
-		try
-		{
+		String[] arLinea;
+		try {
 
-			if((linea = Utils.removeSpecialCharacters(bf.readLine())) != null)
-			{
-				String[] arLinea = linea.split(lineSeparator);
+			if((linea = bf.readLine()) != null) {
+				linea = Utils.removeSpecialCharacters(linea)
+				arLinea = linea.split(lineSeparator);
 				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
 
 				dto = new ItemDto(itemId:arLinea[1],categ:categ,itemTitle:arLinea[2],searchTitle:arLinea[2]?.toUpperCase());
-				if (arLinea.size()==5)
-				{
+				if (arLinea.size()==5) {
 					dto.mainDescription = arLinea[3]
-					dto.secDescription = arLinea[4]				}
-				if (arLinea.size()==4)
-				{
+					dto.secDescription = arLinea[4]
+				}
+				if (arLinea.size()==4) {
 					dto.mainDescription = arLinea[3]
 				}
-				
 			}else {
 				return null;
 			}
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
+			println linea
+			println arLinea
 			e.printStackTrace();
 			return null;
 		}
 		return dto;
 	}
-	public String nextLine()
-	{	
+	public String nextLine() {
 		try{
 			return  bf.readLine()
 		}catch (IOException e){
 			e.printStackTrace();
 			return null;
-		}		
-	}
-//	def resetFile(){
-//		objFile.setLength(0)
-//	}
-	public long insertObject(dto)
-	{
-		
-		try
-		{ pw.print(dto.toString()+"\n")
 		}
-		catch (IOException e)
-		{
+	}
+
+	public long insertObject(dto) {
+
+		try {
+			pw.print(dto.toString()+"\n")
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		return 1
 	}
-
 }
