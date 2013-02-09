@@ -177,6 +177,7 @@ class BasicImplementationController
 		SimpleFileManager fm = new SimpleFileManager("./test_data/signatures.dat", "\n");
 		ArrayList categs = new ArrayList<CategDto>()
 		ArrayList signatures
+		def i = 0
 		if(fm.openFile(0))
 		{
 			String currentObj
@@ -197,15 +198,15 @@ class BasicImplementationController
 				
 				categs.add(categ)		
 				}catch(Exception e){
-				println e.getMessage()
-				fm.closeFile()
-				return
+				i++
 				}		
 			}
+			println "categ con error: " + i
 			sessionService.setCategs(categs)
 			fm.closeFile()
 		}
 		fm = new SimpleFileManager("./test_data/pivotes.dat", "\n");
+		i = 0
 		def pivs = []
 		if(fm.openFile(0))
 		{
@@ -218,11 +219,10 @@ class BasicImplementationController
 				obj = new JSONObject(currentObj)
 				pivs.add(new ItemDto(itemId:obj.itemId,categ:obj.categ,itemTitle:obj.itemTitle,searchTitle:obj.searchTitle))
 				}catch(Exception e){
-				println e.getMessage()
-				fm.closeFile()
-				return
+					i++
 				}
 			}
+			println "pivotes con error: " + i
 			sessionService.setPivots(["ALL":pivs])	
 			println sessionService.getPivots()
 			fm.closeFile()
