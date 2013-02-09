@@ -144,10 +144,10 @@ class IndexManager
 				{
 					ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))					
 					int pos = categs.search(new CategDto(categName:curItem.categ,signatures:new ArrayList<ItemSignature>()))
-					if (!categs?.get(pos).equals(categs.virgin)|| categs?.get(pos).equals(categs.used)){
+					if (!categs.get(pos).equals(categs.virgin)|| categs.get(pos).equals(categs.used)){
 						sig.setItemPosition(rfm.insertItem(curItem))
 						sig.setItemSize(curItem.toString().length())
-						categs?.get(pos)?.getSignatures()?.add(sig)
+						categs.get(pos).getSignatures().add(sig)
 					}else{
 						noCateg++
 					}
@@ -179,20 +179,23 @@ class IndexManager
 	}
 	
 	def searchItemsByCateg(String itemTitle, String categ,int radio){
+		//calculamos la firma para q
 		ItemSignature sig = new ItemSignature(itemTitle, getPivotsForCateg(categ))
+		
 		Integer value
 		ItemSignature candidato
 		ArrayList<ItemSignature> candidatos = new ArrayList<ItemSignature>()
 
 		int pos = categs.search(new CategDto(categName:categ,signatures:null))
-		def signatures = categs.get(pos)?.signatures
+		
+		def signatures = categs.get(pos).signatures
 
-		signatures?.each {
+		signatures.each {
 				candidato = it		
-				for (int i = 0;i<it?.dists?.size();i++){
-					value = (sig?.dists[i] - candidato.dists[i]).abs()
+				for (int i = 0;i<it.dists.size();i++){
+					value = (sig.dists[i] - candidato.dists[i]).abs()
 					if (value > radio){
-						i = candidato?.dists?.size()
+						i = candidato.dists.size()
 						candidato=null					
 					}
 				}			
