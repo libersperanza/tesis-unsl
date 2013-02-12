@@ -1,7 +1,7 @@
 package tesis.utils
 
 class Utils {
-	public static def removeSpecialCharacters(str){
+	public static String removeSpecialCharacters(str){
 		if(str == null){
 			return null;
 		}
@@ -11,6 +11,9 @@ class Utils {
 		for (int i=0; i<original.length(); i++) {
 			output = output.replace(original.charAt(i), ascii.charAt(i));
 		}
-		return output
+		return output.replaceAll("\\s+", " ")
 	}
+	public static String parseString(str){
+		str?.replaceAll("\\s+", " ")?.replaceAll("\"","'")
+	}	
 }

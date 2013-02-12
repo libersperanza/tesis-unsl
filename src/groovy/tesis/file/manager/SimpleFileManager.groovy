@@ -91,7 +91,7 @@ class SimpleFileManager {
 		CategDto dto = null;
 		try {
 			String linea;
-			if((linea = Utils.removeSpecialCharacters( bf.readLine())) != null) {
+			if((linea = Utils.parseString(bf.readLine())) != null) {
 				String[] arLinea = linea.split(lineSeparator);
 				dto = new CategDto(categName:arLinea[0],signatures:new ArrayList<ItemSignature>());
 			}
@@ -113,12 +113,11 @@ class SimpleFileManager {
 		String[] arLinea;
 		try {
 
-			if((linea = bf.readLine()) != null) {
-				linea = Utils.removeSpecialCharacters(linea)
+			if((linea = Utils.parseString(bf.readLine())) != null) {
 				arLinea = linea.split(lineSeparator);
 				categ = (arLinea[0]?.indexOf('"')!=-1)?arLinea[0].substring(1,arLinea[0]?.length()-1):arLinea[0]
 
-				dto = new ItemDto(itemId:arLinea[1],categ:categ,itemTitle:arLinea[2],searchTitle:arLinea[2]?.toUpperCase());
+				dto = new ItemDto(itemId:arLinea[1],categ:categ,itemTitle:arLinea[2],searchTitle:Utils.removeSpecialCharacters(arLinea[2])?.toUpperCase());
 				if (arLinea.size()==5) {
 					dto.mainDescription = arLinea[3]
 					dto.secDescription = arLinea[4]
