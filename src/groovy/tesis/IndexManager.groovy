@@ -201,7 +201,7 @@ class IndexManager
 					
 					if (categs.get(pos).equals(catForSearch)){
 						sig.setItemPosition(rfm.insertItem(curItem))
-						sig.setItemSize(curItem.toString().length())
+						sig.setItemSize(curItem.toJSON().toString().length())
 						categs.get(pos).getSignatures().add(sig)
 					}else{
 						//listCategsNoFound.add(catForSearch.categName)
