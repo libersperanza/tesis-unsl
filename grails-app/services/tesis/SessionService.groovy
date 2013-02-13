@@ -9,28 +9,19 @@ class SessionService {
 	}
 	
 	def init (){
-		getSession().categs = null
-		getSession().pivots = null	
+		getSession().index = null
 	}
 	
 	def getId(){
 		getSession().id
 	}	
 	
-	def setCategs(categs){
-		getSession().categs = categs
+	def setIndex(index){
+		getSession().index = index
 	}
 	
-	def setPivots(pivots){
-		getSession().pivots = pivots
-	}
-	
-	def getCategs(){
-		getSession().categs
-	}
-	
-	def getPivots(){
-		getSession().pivots
+	def getIndex(){
+		getSession().index
 	}
 
 }

@@ -5,26 +5,32 @@ package tesis.data
 
 import java.io.Serializable
 
+import org.codehaus.groovy.grails.web.json.JSONObject;
+
 /**
  * @author lsperanza
  *
  */
-class ItemDto implements Serializable
+class ItemDto extends PivotDto implements Serializable
 {
-	String itemId
-	String categ
 	String itemTitle
-	String searchTitle
 	String mainDescription
 	String secDescription
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString()
 	{
-		return '{"itemId":' + itemId + ',"categ":"' + categ + '","itemTitle":"' + itemTitle +'","searchTitle":"' + searchTitle+ '","mainDescription":"' + (mainDescription?:"-") + '","secDescription":"'+ (secDescription?:"-") + '"}';
+		return "ItemDto [itemId=" + itemId + ", categ=" + categ + ", itemTitle=" + itemTitle + ", searchTitle=" + searchTitle + ", mainDescription="+ mainDescription + ", secDescription=" + secDescription + "]";
+	}
+	public toJSON()
+	{
+		JSONObject json = new JSONObject()
+		json.put("itemId", itemId)
+		json.put("categ", categ)
+		json.put("itemTitle", itemTitle)
+		json.put("searchTitle", searchTitle)
+		json.put("mainDescription", mainDescription)
+		json.put("secDescription", secDescription)
+		return json
 	}
 }

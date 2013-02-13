@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import org.codehaus.groovy.grails.web.json.JSONObject
 
 import tesis.data.CategDto;
 import tesis.data.ItemDto;
@@ -48,7 +49,7 @@ class RandomAccessFileManager
 		{
 			pos = objFile.length()
 			objFile.seek (pos)
-			objFile.writeBytes(dto.toString())
+			objFile.writeBytes(dto.toJSON().toString())
 		}
 		catch (IOException e)
 		{
@@ -57,12 +58,12 @@ class RandomAccessFileManager
 		return pos;
 	}
 	
-	public  String getItem(long pos,itemSize) //ItemDto
+	public String getItem(long pos,itemSize) 
 	{
 		objFile.seek(pos)
 		byte[] data = new byte[itemSize]
 		objFile.read(data)
-		return new String(data)
+		return new JSONObject(new String(data))
 
 	}
 	

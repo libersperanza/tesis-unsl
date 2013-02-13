@@ -148,6 +148,20 @@ class CategsHash
 		}
 		return list;
 	}
+	
+	public void printValues()
+	{
+		//ArrayList<CategDto> list = new ArrayList<CategDto>();
+		for(int i=0;i < size; i++)
+		{
+			if((!hash[i].equals(virgin))&&(!hash[i].equals(virgin)))
+			{
+				println hash[i].toString()
+				//list.add(hash[i]);
+			}
+		}
+		//return list;
+	}
 	public int hashCode(String str) {
 		int b = 378551;
 		int a = 63689;

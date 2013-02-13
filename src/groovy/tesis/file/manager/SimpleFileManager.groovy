@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import tesis.data.CategDto;
 import tesis.data.ItemDto;
 import tesis.data.ItemSignature;
+import tesis.data.PivotDto
 import tesis.utils.Utils;
 
 /**
@@ -28,7 +29,7 @@ class SimpleFileManager {
 	FileWriter fw;
 	PrintWriter pw;
 	BufferedReader bf;
-	private static Pattern pattern = Pattern.compile("^([0-9])*\$")
+	
 	public SimpleFileManager(String filePath, String separator) {
 		f = new File(filePath);
 		lineSeparator = separator;
@@ -115,9 +116,14 @@ class SimpleFileManager {
 
 			if((linea = bf.readLine()) != null) {
 				arLinea = linea.split(lineSeparator);
-				categ = arLinea[0]
-
-				dto = new ItemDto(itemId:arLinea[1],categ:categ,itemTitle:arLinea[2],searchTitle:Utils.removeSpecialCharacters(arLinea[2].toUpperCase()));
+				
+				dto = new ItemDto()
+				def map = getCommonData(arLinea)
+				dto.categ = map.categ
+				dto.itemId = map.itemId
+				dto.searchTitle = map.searchTitle
+				
+				dto.itemTitle = arLinea[2]
 				if (arLinea.size()==5) {
 					dto.mainDescription = arLinea[3]
 					dto.secDescription = arLinea[4]
@@ -137,6 +143,39 @@ class SimpleFileManager {
 		}
 		return dto;
 	}
+	
+	
+	public PivotDto nextPivot() {
+		PivotDto dto = null;
+		String linea;
+		String[] arLinea;
+		try {
+
+			if((linea = bf.readLine()) != null) {
+				arLinea = linea.split(lineSeparator);
+				
+				dto = new PivotDto();
+				def map = getCommonData(arLinea)
+				dto.categ = map.categ
+				dto.itemId = map.itemId
+				dto.searchTitle = map.searchTitle
+			}else {
+				return null;
+			}
+		}
+		catch (Exception e) {
+			println linea
+			println arLinea
+			e.printStackTrace();
+			return null;
+		}
+		return dto;
+	}
+
+	private getCommonData(String[] arLinea) {
+		return [itemId:arLinea[1],categ:arLinea[0],searchTitle:Utils.removeSpecialCharacters(arLinea[2].toUpperCase())]
+	}
+	
 	public String nextLine() {
 		try{
 			return  bf.readLine()
@@ -146,14 +185,8 @@ class SimpleFileManager {
 		}
 	}
 
-	public long insertObject(dto) {
-
-		try {
-			pw.print(dto.toString()+"\n")
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		return 1
+	public void insertObject(dto) 
+	{
+		pw.print(dto.toString()+lineSeparator)
 	}
 }
