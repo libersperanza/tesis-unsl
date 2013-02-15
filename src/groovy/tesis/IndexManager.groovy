@@ -13,7 +13,11 @@ import tesis.data.PivotDto
 import tesis.file.manager.RandomAccessFileManager;
 import tesis.file.manager.SimpleFileManager;
 import tesis.structure.CategsHash;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import org.codehaus.groovy.grails.web.json.JSONArray
 import org.codehaus.groovy.grails.web.json.JSONObject
 
 /**
@@ -22,6 +26,7 @@ import org.codehaus.groovy.grails.web.json.JSONObject
  */
 class IndexManager
 {
+	Log log = LogFactory.getLog(IndexManager.class.getName())
 	CategsHash categs = null;
 	//Contiene la categoria y la lista de pivotes asociada.
 	//Si se utiliza el mismo conjunto de pivotes p/todas
@@ -50,47 +55,12 @@ class IndexManager
 	public IndexManager()
 	{
 		long startTime = System.currentTimeMillis()
-		SimpleFileManager fm = new SimpleFileManager(ConfigurationHolder.config.categsFileName,"\n")
-		ArrayList categsList = new ArrayList<CategDto>()
-		
-		if(fm.openFile(0))
-		{
-			String currentObj
-			def obj
-			CategDto categ
-			ItemSignature signature
-			while(currentObj = fm.nextLine())
-			{
-				obj = new JSONObject(currentObj)
-					ArrayList signatures = new ArrayList<ItemSignature>()
-					for(o in obj.signatures){
-		
-						signature = new ItemSignature( o.dists, Long.valueOf(o.itemPosition), o.itemSize)
-						signatures.add(signature)
-					}				
-					categ = new CategDto(obj.categName,signatures)
-					
-					categsList.add(categ)				
-			}
-			fm.closeFile()
-			createCategsHash(categsList)
-		}
-		else
-		{
-			throw new Exception("Error al abrir el archivo para lectura ${ConfigurationHolder.config.categsFileName}")
-		}
-		
-		fm = new SimpleFileManager(ConfigurationHolder.config.pivotsFileName,"\n")
+		SimpleFileManager fm = new SimpleFileManager(ConfigurationHolder.config.pivotsFileName,"\n")
 		pivots = [:]
 		if(fm.openFile(0))
 		{
-			String currentObj
 			JSONObject pivotMap
-			CategDto categ
-			ItemSignature signature
-			while(currentObj = fm.nextLine()){
-				pivotMap = new JSONObject(currentObj)
-			}
+			pivotMap = new JSONObject(fm.nextLine())
 			fm.closeFile()
 			pivotMap.each
 			{
@@ -103,13 +73,43 @@ class IndexManager
 		{
 			throw new Exception("Error al abrir el archivo para escritura ${ConfigurationHolder.config.pivotsFileName}")
 		}
-		println "Creacion de indice desde archivo: ${System.currentTimeMillis()-startTime} ms"
+		log.info("Archivo de pivots leido con exito")
+
+		fm = new SimpleFileManager(ConfigurationHolder.config.categsFileName,"\n")
+		
+		if(fm.openFile(0))
+		{
+			ArrayList<CategDto> categsList = new ArrayList<CategDto>()
+			String categLine
+			while(categLine = fm.nextLine())
+			{
+				JSONObject jsonCateg = new JSONObject(categLine)
+				
+				JSONArray jsonSigs = new JSONArray(jsonCateg.signatures)
+				
+				ArrayList signatures = new ArrayList<ItemSignature>()
+				for(JSONObject s in jsonSigs){
+					signatures.add(new ItemSignature(s.dists, s.itemPosition, s.itemSize))
+				}
+					
+				categsList.add(new CategDto(jsonCateg.categName,signatures))				
+			}
+			fm.closeFile()
+			createCategsHash(categsList)
+		}
+		else
+		{
+			throw new Exception("Error al abrir el archivo para lectura ${ConfigurationHolder.config.categsFileName}")
+		}
+		
+		
+		log.info "Creacion de indice desde archivo: ${System.currentTimeMillis()-startTime} ms"
 	}
 	
 	private createCategListFromFile()
 	{
 		long startTime = System.currentTimeMillis()
-		SimpleFileManager fm = new SimpleFileManager(ConfigurationHolder.config.categsFileName, ConfigurationHolder.config.textDataSeparator);
+		SimpleFileManager fm = new SimpleFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		ArrayList<CategDto> list=new ArrayList<CategDto>()
 		
 		if(fm.openFile(0))
@@ -125,7 +125,7 @@ class IndexManager
 		{
 			throw new Exception("Error al abrir el archivo")
 		}
-		println "Lectura de categorias desde archivo: ${System.currentTimeMillis()-startTime} ms"
+		log.info "Lectura de categorias desde archivo: ${System.currentTimeMillis()-startTime} ms"
 		return list
 	}
 	
@@ -137,10 +137,10 @@ class IndexManager
 		{
 			if(categs.add(c)==-1)
 			{
-				println "No se pudo agregar la categoria: ${c.getCategName()}"
+				log.info "No se pudo agregar la categoria: ${c.getCategName()}"
 			}
 		}
-		println "Cargado de categorias en el hash: ${System.currentTimeMillis()-startTime} ms"
+		log.info "Cargado de categorias en el hash: ${System.currentTimeMillis()-startTime} ms"
 	}
 	private void createPivots(int cant)
 	{
@@ -164,7 +164,7 @@ class IndexManager
 				}
 				fm.closeFile()
 				pivots.put("ALL",pivs)
-				println "${cant} pivotes cargados con exito"
+				log.info "${cant} pivotes cargados con exito"
 			}
 			else
 			{
@@ -175,14 +175,14 @@ class IndexManager
 		{
 			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
 		}
-		println "Creacion de pivotes: ${System.currentTimeMillis()-startTime} ms"
+		log.info "Creacion de pivotes: ${System.currentTimeMillis()-startTime} ms"
 	}
 	
 	private void createSignatures()
 	{
 		long startTime = System.currentTimeMillis()
 		def noCateg=0
-		//def listCategsNoFound = []
+		
 		String res
 		SimpleFileManager fm = new SimpleFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName)
@@ -204,13 +204,13 @@ class IndexManager
 						sig.setItemSize(curItem.toJSON().toString().length())
 						categs.get(pos).getSignatures().add(sig)
 					}else{
-						//listCategsNoFound.add(catForSearch.categName)
+						
 						noCateg++
 					}
 				}
 				rfm.closeFile()
-				println "Items no almacenados por categoria invalida: " + noCateg
-				//println (listCategsNoFound as Set)
+				log.info "Items no almacenados por categoria invalida: " + noCateg
+				
 			}
 			else
 			{
@@ -223,7 +223,7 @@ class IndexManager
 			throw new Exception("Error al abrir el archivo ${ConfigurationHolder.config.itemsBaseFileName}")
 		}
 		
-		println "Creacion de firmas: ${System.currentTimeMillis()-startTime} ms"
+		log.info "Creacion de firmas: ${System.currentTimeMillis()-startTime} ms"
 	}
 	
 	def getPivotsForCateg(String categName)
@@ -244,9 +244,17 @@ class IndexManager
 		
 		if(fm.openFileW())
 		{
-			categs.getValues().each
+			CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:null);
+			CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:null);
+
+			def listCategs = categs.getValues()
+
+			for(int i=0;i < listCategs.size; i++)
 			{
-				fm.insertObject(it.toJSON())
+				if((!listCategs[i].equals(virgin))&&(!listCategs[i].equals(used)))
+				{
+					fm.insertObject(listCategs[i].toJSON())
+				}
 			}
 			fm.closeFileW()
 		}
@@ -272,6 +280,6 @@ class IndexManager
 		{
 			throw new Exception("Error al abrir el archivo para escritura ${ConfigurationHolder.config.pivotsFileName}")
 		}
-		println "Creacion de archivos de categs y pivots: ${System.currentTimeMillis()-startTime} ms"
+		log.info "Creacion de archivos de categs y pivots: ${System.currentTimeMillis()-startTime} ms"
 	}
 }

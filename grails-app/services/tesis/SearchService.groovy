@@ -66,7 +66,7 @@ class SearchService {
 			}
 			rfm.closeFile()
 		}
-		println "Total de items en la categ ${categ} : ${itemsFound.size()}"
+		log.info "Total de items en la categ ${categ} : ${itemsFound.size()}"
 		return itemsFound
 	}
 	

@@ -67,12 +67,11 @@ environments {
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    def mypattern = new org.apache.log4j.EnhancedPatternLayout(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss} %c{2} %m%n %throwable')
+  
+	appenders {
+		console name: "stdout", layout:pattern(conversionPattern: "%d{dd MMM yyyy HH:mm:ss,SSS} %c{2} %m%n")
+	}
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -87,12 +86,15 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
+	root {
+		info "stdout"
+	  }
 }
 VIRGIN_CELL = "*"
 USED_CELL = "-"
 categsFileName = "./test_data/categs.dat"
 pivotsFileName = "./test_data/pivotes.dat"
-categsFileName = "./test_data/categs.csv"
+categsBaseFileName = "./test_data/categs.csv"
 itemsBaseFileName = "./test_data/items.csv"
 itemsDataFileName = "./test_data/items.dat"
 textDataSeparator = ";"

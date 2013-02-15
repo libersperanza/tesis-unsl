@@ -5,6 +5,7 @@ package tesis.data
 
 import com.sun.xml.internal.bind.v2.util.EditDistance
 import org.codehaus.groovy.grails.web.json.JSONObject
+import org.codehaus.groovy.grails.web.json.JSONArray
 
 /**
  * @author lsperanza
@@ -12,12 +13,12 @@ import org.codehaus.groovy.grails.web.json.JSONObject
  */
 class ItemSignature
 {
-	def dists//Array de distancias
+	List dists//Array de distancias
 	long itemPosition
 	long itemSize
 	
 
-	public ItemSignature(def dists,def itemPosition, def itemSize){
+	public ItemSignature(List dists,long itemPosition, long itemSize){
 		this.dists = dists
 		this.itemPosition = itemPosition
 		if(itemSize){
@@ -48,7 +49,7 @@ class ItemSignature
 	public JSONObject toJSON()
 	{
 		JSONObject json = new JSONObject()
-		json.put("dists",dists)
+		json.put("dists", new JSONArray(dists))
 		json.put("itemPosition",itemPosition)
 		json.put("itemSize",itemSize)
 		return json

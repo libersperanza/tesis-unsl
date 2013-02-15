@@ -17,6 +17,8 @@ import tesis.data.ItemDto;
 import tesis.data.ItemSignature;
 import tesis.data.PivotDto
 import tesis.utils.Utils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory
 
 /**
  * @author lsperanza
@@ -29,6 +31,8 @@ class SimpleFileManager {
 	FileWriter fw;
 	PrintWriter pw;
 	BufferedReader bf;
+	
+	Log log = LogFactory.getLog(SimpleFileManager.class.getName())
 	
 	public SimpleFileManager(String filePath, String separator) {
 		f = new File(filePath);
@@ -136,8 +140,8 @@ class SimpleFileManager {
 			}
 		}
 		catch (Exception e) {
-			println linea
-			println arLinea
+			log.info linea
+			log.info arLinea
 			e.printStackTrace();
 			return null;
 		}
@@ -164,8 +168,8 @@ class SimpleFileManager {
 			}
 		}
 		catch (Exception e) {
-			println linea
-			println arLinea
+			log.info linea
+			log.info arLinea
 			e.printStackTrace();
 			return null;
 		}
