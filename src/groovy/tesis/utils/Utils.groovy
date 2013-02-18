@@ -24,4 +24,13 @@ class Utils {
 		}
 		return ret.toString().trim()
 	}
+	public static def firtsFree(listD){
+		int i = 0
+		for(i=0;i<listD?.size();i++){
+			if(listD[i]==-1){
+				return i
+			}
+		}
+		return i
+	}
 }

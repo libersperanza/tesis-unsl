@@ -5,14 +5,16 @@ package tesis
 
 import grails.converters.JSON
 import java.util.Map;
-
+import java.util.List;
 import tesis.data.CategDto;
+import tesis.data.ElementsPairs
 import tesis.data.ItemDto;
 import tesis.data.ItemSignature;
 import tesis.data.PivotDto
 import tesis.file.manager.RandomAccessFileManager;
 import tesis.file.manager.SimpleFileManager;
 import tesis.structure.CategsHash;
+import tesis.utils.Utils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +22,7 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.codehaus.groovy.grails.web.json.JSONArray
 import org.codehaus.groovy.grails.web.json.JSONObject
 
+import com.sun.xml.internal.bind.v2.util.EditDistance;
 /**
  * @author lsperanza
  *
@@ -44,10 +47,8 @@ class IndexManager
 		else if ("BY_CATEG_RND".equals(pivotStrategy))
 		{
 			//TODO: Implementar random por categoría
-		}
-		else
-		{
-			//TODO: la otra implementacion
+		}else{
+			createPivotsIncr(cantPivots,ConfigurationHolder.config.elementsPairs,ConfigurationHolder.config.sizeSample)//TODO: la otra implementacion
 		}
 		
 		createSignatures()
@@ -177,6 +178,56 @@ class IndexManager
 		}
 		log.info "Creacion de pivotes: ${System.currentTimeMillis()-startTime} ms"
 	}
+	private void createPivotsIncr(pivotsQty,aQty,nQty){
+		pivots = [:]
+		ArrayList<ElementsPairs> elemPairs
+		long startTime = System.currentTimeMillis()
+		SimpleFileManager fm = new SimpleFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
+		String res;
+		def pCandidate
+		def max, min	
+		
+		if(pivotsQty <= 50)
+		{
+			if(fm.openFile(0))
+			{
+				def pivs = []
+				/** el primer pivot es elegido al azar*/
+				pCandidate = getRandomPivot(fm)
+				pivs.add(pCandidate)
+				elemPairs = getElementsPairs(aQty,pivotsQty,pCandidate,fm)
+				
+				max = getMediaD(elemPairs,pivs, null)
+				
+				while(pivs.size() < pivotsQty){
+					pCandidate = getRandomPivot(fm)
+					while(pivs?.find{it.itemId == pCandidate.itemId}){						
+						pCandidate = getRandomPivot(fm)
+					}
+					min = getMediaD(elemPairs,pivs,pCandidate)
+					if(min>max){
+						max=min
+						for (e in elemPairs){
+							e.addDistance(pCandidate)
+						}
+						pivs.add(pCandidate)
+					}
+				}				
+				fm.closeFile()
+				pivots.put("ALL",pivs)
+				log.info "${pivotsQty} pivotes cargados con exito"
+			}
+			else
+			{
+				throw new Exception("Error al abrir el archivo")
+			}
+		}
+		else
+		{
+			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
+		}
+		log.info "Creacion de pivotes: ${System.currentTimeMillis()-startTime} ms"
+	}
 	
 	private void createSignatures()
 	{
@@ -282,4 +333,56 @@ class IndexManager
 		}
 		log.info "Creacion de archivos de categs y pivots: ${System.currentTimeMillis()-startTime} ms"
 	}
+	
+	def getRandomPivot(fm){
+		Random rand = new Random()
+		(1..rand.nextInt(5)).each
+		{
+			fm.nextPivot()
+		}
+		return fm.nextPivot()
+	}
+	
+	def getElementsPairs(pairsQty,pivotsQty,pivot,file){
+		ArrayList<ElementsPairs> pairs = new ArrayList<ElementsPairs>(pairsQty)
+		ElementsPairs pair
+		for (int i=0; i<pairsQty;i++){
+			pair = new ElementsPairs()
+			pair.a = getRandomPivot(file)
+			pair.b = getRandomPivot(file)
+			while (pair.a.itemId == pair.b.itemId){
+				pair.b = getRandomPivot(file)
+				log.info "mismo random en el par"
+			}
+			pair.initDist(pivotsQty,pivot)			
+			pairs.add(pair)
+		}
+		return pairs
+	}
+	def getMediaD(pairs,pivots,pivotCandidate){
+		def max
+		def value
+		def media = 0
+		List a
+		List b
+		for (pair in pairs){
+			a = pair.aDists.clone()
+			b = pair.bDists.clone()
+			if(pivotCandidate){
+				a[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.a.searchTitle, pivotCandidate.searchTitle)
+				b[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.b.searchTitle, pivotCandidate.searchTitle)
+			}
+			max = (a[0]-b[0]).abs()
+			for(int i=1; i< a.size() && a[i]!=-1; i++){
+				value = (a[i]-b[i]).abs()
+				if(value>max){
+					max=value
+				}
+			}
+			media += max			
+		}		
+		return media/pairs.size()
+	}
 }
+
+

@@ -67,8 +67,11 @@ environments {
 
 // log4j configuration
 log4j = {
-    def mypattern = new org.apache.log4j.EnhancedPatternLayout(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss} %c{2} %m%n %throwable')
   
+	def mypattern = new org.apache.log4j.EnhancedPatternLayout(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss} %c{2} %m%n %throwable')
+		
+//	rollingFile name:'stdout', file:"/tmp/log/tesis/app-catalina.log", maxFileSize:'300MB', layout: mypattern
+	
 	appenders {
 		console name: "stdout", layout:pattern(conversionPattern: "%d{dd MMM yyyy HH:mm:ss,SSS} %c{2} %m%n")
 	}
@@ -87,7 +90,7 @@ log4j = {
 
     warn   'org.mortbay.log'
 	root {
-		info "stdout"
+		info 'stdout'
 	  }
 }
 VIRGIN_CELL = "*"
@@ -98,3 +101,5 @@ categsBaseFileName = "./test_data/categs.csv"
 itemsBaseFileName = "./test_data/items.csv"
 itemsDataFileName = "./test_data/items.dat"
 textDataSeparator = ";"
+elementsPairs = 10
+sizeSample = 1000

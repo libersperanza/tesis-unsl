@@ -26,7 +26,7 @@ class BasicImplementationController
 	{
 		int cant = Integer.valueOf(params.cant?:"5")
 		//TODO: tomar la estrategia de seleccion de pivotes desde los parámetros
-		IndexManager mgr = new IndexManager("RANDOM", cant);
+		IndexManager mgr = new IndexManager(params.pivotStrategy, cant);
 		try
 		{
 			sessionService.init()
