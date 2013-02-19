@@ -79,7 +79,7 @@ class IndexManager
 		
 		if(fm.openFile(0))
 		{
-			ArrayList<CategDto> categsList = new ArrayList<CategDto>()
+			ArrayList<CategDto> categsList = new ArrayList<CategDto>(13071)
 			String categLine
 			while(categLine = fm.nextLine())
 			{
@@ -87,7 +87,7 @@ class IndexManager
 				
 				JSONArray jsonSigs = new JSONArray(jsonCateg.signatures)
 				
-				ArrayList signatures = new ArrayList<ItemSignature>()
+				ArrayList signatures = new ArrayList<ItemSignature>(jsonSigs.size())
 				for(JSONObject s in jsonSigs){
 					signatures.add(new ItemSignature(s.dists, s.itemPosition, s.itemSize))
 				}
