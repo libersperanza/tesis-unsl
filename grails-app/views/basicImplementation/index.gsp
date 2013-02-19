@@ -19,7 +19,10 @@
   </p>
 	  <div id="init" class="ch-hide">
 		<p class="ch-form-row ch-form-required"><label for="cant_piv">Cantidad de pivotes:</label><input type="text" id="cant_piv" name="cant" value="10"/></p>
-		<p class="ch-form-actions">	
+		
+		<p class="ch-form-row ch-form-required">	<label>Estrategia de selección de pivots: </label>
+		<select name="pivotStrategy" id="pivotStrategy"><option id="RANDOM" selected>RANDOM</option>
+		<option id="INCREMENTAL">INCREMENTAL</option></select>
 		</p>
 	</div>
 		<g:submitButton class="ch-btn" name="calcular" value="Inicializar"></g:submitButton>

@@ -119,6 +119,7 @@ class SimpleFileManager {
 		try {
 
 			if((linea = bf.readLine()) != null) {
+				linea = linea?.replaceAll("\\s+", " ")?.replaceAll("\"","'")
 				arLinea = linea.split(lineSeparator);
 				
 				dto = new ItemDto()
@@ -191,6 +192,6 @@ class SimpleFileManager {
 
 	public void insertObject(dto) 
 	{
-		pw.print(dto.toString()+lineSeparator)
+		pw.print(dto+lineSeparator)
 	}
 }

@@ -15,7 +15,7 @@ class SearchService {
 
     def sequentialSearch(String itemTitle, String categ,int radio, IndexManager mgr)
 	{
-		int pos = mgr.categs.search(new CategDto(categName:params.categ,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
 		return getItemsFromFile(signatures, itemTitle, radio)
