@@ -2,10 +2,20 @@ package tesis.data
 
 import org.codehaus.groovy.grails.web.json.JSONObject;
 
-class PivotDto
+class PivotDto implements Serializable
 {
+	private static final long serialVersionUID = -4811553982963135234L
+	/**
+	 * @serial
+	 */
 	String itemId
+	/**
+	 * @serial
+	 */
 	String categ
+	/**
+	 * @serial
+	 */
 	String searchTitle
 
 	@Override

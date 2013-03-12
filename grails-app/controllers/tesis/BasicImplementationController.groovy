@@ -2,7 +2,7 @@ package tesis
 
 import java.util.ArrayList;
 
-import tesis.file.manager.SimpleFileManager;
+import tesis.file.manager.TextFileManager;
 
 import org.codehaus.groovy.grails.web.json.JSONObject
 

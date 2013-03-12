@@ -95,8 +95,8 @@ log4j = {
 }
 VIRGIN_CELL = "*"
 USED_CELL = "-"
-categsFileName = "./test_data/categs.dat"
-pivotsFileName = "./test_data/pivotes.dat"
+categsFileName = "./test_data/categs.ser"
+pivotsFileName = "./test_data/pivotes.ser"
 categsBaseFileName = "./test_data/categs.csv"
 itemsBaseFileName = "./test_data/items.csv"
 itemsDataFileName = "./test_data/items.dat"

@@ -14,8 +14,16 @@ import org.codehaus.groovy.grails.web.json.JSONObject;
  */
 class CategDto implements Serializable
 {
+	private static final long serialVersionUID = 4264549437270341254L
+	/**
+	 * @serial
+	 */
 	String categName
+	/**
+	 * @serial
+	 */
 	ArrayList<ItemSignature> signatures
+	
 
 	public CategDto(){
 	}

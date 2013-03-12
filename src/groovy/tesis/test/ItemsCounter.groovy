@@ -1,7 +1,7 @@
 package tesis.test
 
 import tesis.data.CategDto;
-import tesis.file.manager.SimpleFileManager;
+import tesis.file.manager.TextFileManager;
 import tesis.utils.Utils;
 import tesis.data.ItemDto;
 
@@ -15,7 +15,7 @@ class ItemsCounter
 		def categs = [:]//getCategs();
 		//Voy leyendo el archivo y actualizando el contador
 		String res
-		SimpleFileManager fm = new SimpleFileManager("./test_data/items.csv", ";");
+		TextFileManager fm = new TextFileManager("./test_data/items.csv", ";");
 
 		if(fm.openFile(0))
 		{
@@ -56,7 +56,7 @@ class ItemsCounter
 
 	static getCategs()
 	{
-		SimpleFileManager fm = new SimpleFileManager("./test_data/categs.csv", ";");
+		TextFileManager fm = new TextFileManager("./test_data/categs.csv", ";");
 
 		def map = [:]
 

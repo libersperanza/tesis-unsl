@@ -7,7 +7,7 @@ import com.javamex.classmexer.MemoryUtil;
 import com.javamex.classmexer.MemoryUtil.VisibilityFilter;
 import tesis.data.CategDto
 import tesis.data.ItemSignature
-import tesis.file.manager.SimpleFileManager
+import tesis.file.manager.TextFileManager
 
 class TestObjectSize {
 
@@ -36,7 +36,7 @@ class TestObjectSize {
 
 	static CategDto getCategDto()
 	{
-		SimpleFileManager fm = new SimpleFileManager("./test_data/categs.dat","\n")
+		TextFileManager fm = new TextFileManager("./test_data/categs.dat","\n")
 		
 		if(fm.openFile(0))
 		{

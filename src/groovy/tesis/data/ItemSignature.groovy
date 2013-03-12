@@ -11,10 +11,20 @@ import org.codehaus.groovy.grails.web.json.JSONArray
  * @author lsperanza
  *
  */
-class ItemSignature
+class ItemSignature implements Serializable
 {
-	List dists//Array de distancias
+	private static final long serialVersionUID = 7208542815446741112L
+	/**
+	 * @serial
+	 */
+	int[] dists//Array de distancias
+	/**
+	 * @serial
+	 */
 	long itemPosition
+	/**
+	 * @serial
+	 */
 	long itemSize
 	
 
