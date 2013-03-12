@@ -4,6 +4,7 @@
 *.class
 *closure
 *.dat
+*.ser
 *.csv
 *.xlsx
 *.xls
@@ -14,6 +15,7 @@ target/classes
 target/classes/
 classpath
 .settings
+.groovy
 *stacktrace
 .classpath
 .project
