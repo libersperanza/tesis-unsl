@@ -15,16 +15,22 @@ class SearchService {
 
     def sequentialSearch(String itemTitle, String categ,int radio, IndexManager mgr)
 	{
+		long startTime = System.currentTimeMillis()
 		int pos = mgr.categs.search(new CategDto(categName:categ,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
-		return getItemsFromFile(signatures, itemTitle, radio)
+		def items =  getItemsFromFile(signatures, itemTitle, radio)
+		log.info "Tiempo busqueda secuencial: ${System.currentTimeMillis()-startTime} ms"
+		return items
     }
 	
 	def simpleSearch(String itemTitle, String categ,int radio, IndexManager mgr)
 	{
+		long startTime = System.currentTimeMillis()
 		def signatures = getCandidates(itemTitle,categ,radio,mgr)
-		return getItemsFromFile(signatures, itemTitle, radio)
+		def items = getItemsFromFile(signatures, itemTitle, radio)
+		log.info "Tiempo busqueda usando el indice: ${System.currentTimeMillis()-startTime} ms"
+		return items
 	}
 
 	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, int radio) {

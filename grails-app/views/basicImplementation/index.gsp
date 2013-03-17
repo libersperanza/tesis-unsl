@@ -12,10 +12,10 @@
   <hr>
   <g:form controller="basicImplementation" action="initIndex">
  <p class="ch-form-row">
- 	<g:radio name="menuOption" value="precalculados"></g:radio><label> Usar datos precalculados</label>
+ 	<g:radio name="initMode" value="load"></g:radio><label> Usar datos precalculados</label>
  </p>
  <p class="ch-form-row">
-  <g:radio  name="menuOption" value="calcular"></g:radio><label> Inicializar datos</label>
+  <g:radio  name="initMode" value="create"></g:radio><label> Inicializar datos</label>
   </p>
 	  <div id="init" class="ch-hide">
 		<p class="ch-form-row ch-form-required"><label for="cant_piv">Cantidad de pivotes:</label><input type="text" id="cant_piv" name="cant" value="10"/></p>
@@ -37,8 +37,8 @@
   </div>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
   <script type="text/javascript">
- $("input[name='menuOption']").bind("click",function(){
-	 if($(this).val()=='calcular'){		 
+ $("input[name='initMode']").bind("click",function(){
+	 if($(this).val()=='create'){		 
 		 $("#init").removeClass("ch-hide");		
 	 }else{
 		 $("#init").addClass("ch-hide");

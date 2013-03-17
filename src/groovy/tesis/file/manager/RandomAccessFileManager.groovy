@@ -48,7 +48,7 @@ class RandomAccessFileManager
 		try
 		{
 			pos = objFile.length()
-			objFile.seek (pos)
+			objFile.seek(pos)
 			objFile.writeBytes(dto.toJSON().toString())
 		}
 		catch (IOException e)
@@ -63,7 +63,8 @@ class RandomAccessFileManager
 		objFile.seek(pos)
 		byte[] data = new byte[itemSize]
 		objFile.read(data)
-		return new JSONObject(new String(data))
+		String json = new String(data)
+		return new JSONObject(json)
 
 	}
 	

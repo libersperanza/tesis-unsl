@@ -24,14 +24,22 @@ class BasicImplementationController
 
 	def initIndex =
 	{
-		int cant = Integer.valueOf(params.cant?:"5")
-		//TODO: tomar la estrategia de seleccion de pivotes desde los parámetros
-		IndexManager mgr = new IndexManager(params.pivotStrategy, cant);
+		IndexManager mgr
+		log.info("Creando indice con parametros: $params")
 		try
 		{
+			if("load".equals(params.initMode))
+			{
+				mgr = new IndexManager();
+			}
+			else
+			{
+				int cant = Integer.valueOf(params.cant?:"5")
+				mgr = new IndexManager(params.pivotStrategy, cant);
+			}
 			sessionService.init()
 			sessionService.setIndex(mgr)
-			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA"])
+			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA - MODO: $params.initMode"])
 		}
 		catch(Exception e)
 		{
@@ -89,7 +97,7 @@ class BasicImplementationController
 	}
 	
 	def getData = {
-		IndexManager mgr = new IndexManager();
+		
 	}
 }
 	

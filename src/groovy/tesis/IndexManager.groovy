@@ -11,11 +11,11 @@ import tesis.data.ElementsPairs
 import tesis.data.ItemDto;
 import tesis.data.ItemSignature;
 import tesis.data.PivotDto
-import tesis.file.manager.ObjectFileManager
 import tesis.file.manager.RandomAccessFileManager;
 import tesis.file.manager.TextFileManager;
 import tesis.structure.CategsHash;
 import tesis.utils.Utils;
+import java.io.File;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,33 +57,21 @@ class IndexManager
 	public IndexManager()
 	{
 		long startTime = System.currentTimeMillis()
-		ObjectFileManager fm = new ObjectFileManager(ConfigurationHolder.config.categsFileName)
-		
-		if(fm.openFile("R"))
-		{
-			//TODO: Leer la cantidad de categs del archivo
-			ArrayList<CategDto> categsList = new ArrayList<CategDto>(13071)
+		File file = new File(ConfigurationHolder.config.categsFileName)
+		//TODO: Leer la cantidad de categs del archivo
+		ArrayList<CategDto> categsList = new ArrayList<CategDto>(13071)
+		file.withObjectInputStream(getClass().classLoader){ ois ->
 			for(int i=0;i < 13071;i++)
 			{
-				categsList.add((CategDto)fm.readObject())
-			}
-			fm.closeFile()
-			createCategsHash(categsList)
+    			categsList.add((CategDto)ois.readObject())
+    		}
 		}
-		else
-		{
-			throw new Exception("Error al abrir el archivo para lectura ${ConfigurationHolder.config.categsFileName}")
-		}
+		log.info("Archivo de categs leido con exito")
+		createCategsHash(categsList)
 
-		fm = new ObjectFileManager(ConfigurationHolder.config.pivotsFileName)
-		if(fm.openFile("R"))
-		{
-			pivots = (HashMap<String,PivotDto>)fm.readObject()
-			fm.closeFile()			
-		}
-		else
-		{
-			throw new Exception("Error al abrir el archivo para escritura ${ConfigurationHolder.config.pivotsFileName}")
+		File file2 = new File(ConfigurationHolder.config.pivotsFileName)
+		file2.withObjectInputStream(getClass().classLoader){ ois ->
+    		pivots = (HashMap<String,PivotDto>)ois.readObject()
 		}
 		log.info("Archivo de pivots leido con exito")
 		
@@ -232,7 +220,6 @@ class IndexManager
 					ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
 					CategDto catForSearch = new CategDto(categName:curItem.categ,signatures:null)
 					int pos = categs.search(catForSearch)
-					
 					if (categs.get(pos).equals(catForSearch)){
 						sig.itemPosition = rfm.insertItem(curItem)
 						sig.itemSize = curItem.toJSON().toString().length()
@@ -244,7 +231,6 @@ class IndexManager
 				}
 				rfm.closeFile()
 				log.info "Items no almacenados por categoria invalida: " + noCateg
-				
 			}
 			else
 			{
@@ -273,39 +259,27 @@ class IndexManager
 	def createIndexFiles()
 	{
 		long startTime = System.currentTimeMillis()
-		
-		ObjectFileManager fm = new ObjectFileManager(ConfigurationHolder.config.categsFileName)
-		
-		if(fm.openFile("W"))
-		{
-			CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:null);
-			CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:null);
 
-			List<CategDto> listCategs = categs.getValues()
+		CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:null);
+		CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:null);
+		List<CategDto> listCategs = categs.getValues()
 
+		File file = new File(ConfigurationHolder.config.categsFileName)
+		file.withObjectOutputStream { oos ->
 			for(int i=0;i < listCategs.size; i++)
 			{
 				if((!listCategs[i].equals(virgin))&&(!listCategs[i].equals(used)))
 				{
-					fm.writeObject(listCategs[i])
+					oos.writeObject(listCategs[i])
 				}
 			}
-			fm.closeFile()
 		}
-		else
-		{
-			throw new Exception("Error al abrir el archivo para escritura ${ConfigurationHolder.config.categsFileName}")
+
+		File file2 = new File(ConfigurationHolder.config.pivotsFileName)
+		file2.withObjectOutputStream { oos ->
+			oos.writeObject(pivots)
 		}
-		fm = new ObjectFileManager(ConfigurationHolder.config.pivotsFileName)
-		if(fm.openFile("W")){
-			
-			fm.writeObject(pivots)
-			fm.closeFile()
-		}
-		else
-		{
-			throw new Exception("Error al abrir el archivo para escritura ${ConfigurationHolder.config.pivotsFileName}")
-		}
+
 		log.info "Creacion de archivos de categs y pivots: ${System.currentTimeMillis()-startTime} ms"
 	}
 	
@@ -359,5 +333,3 @@ class IndexManager
 		return media/pairs.size()
 	}
 }
-
-
