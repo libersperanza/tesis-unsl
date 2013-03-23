@@ -8,6 +8,7 @@
 *.csv
 *.xlsx
 *.xls
+*.log
 target
 target/
 items.csv

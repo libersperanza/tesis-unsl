@@ -22,28 +22,43 @@ class CategDto implements Serializable
 	/**
 	 * @serial
 	 */
+	int itemQty
+	/**
+	 * @serial
+	 */
 	ArrayList<ItemSignature> signatures
 	
 
-	public CategDto(){
+	public CategDto()
+	{
 	}
-	public CategDto(categName,signatures){
-		this.categName = categName
-		this.signatures = signatures
+	
+	public CategDto(String categName, int itemQty, ArrayList<ItemSignature> signatures)
+	{
+		this.categName = categName;
+		this.itemQty = itemQty;
+		this.signatures = signatures;
+	}
+
+
+
+	public toJSON()
+	{
+		JSONObject json = new JSONObject()
+		json.put("categName", categName)
+		json.put("itemQty", itemQty)
+		json.put("signatures", signatures.collect{it.toJSON()})
+		return json
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "CategDto [categName=" + categName + ", signatures=" + signatures + "]";
+		return "CategDto [categName=" + categName + ", itemQty=" + itemQty + ", signatures=" + signatures + "]";
 	}
-	public toJSON()
-	{
-		JSONObject json = new JSONObject()
-		json.put("categName", categName)
-		json.put("signatures", signatures.collect{it.toJSON()})
-		return json
-	}
+
+
+
 	@Override
 	public boolean equals(CategDto obj){
 		return (this.categName.equals(obj.categName))

@@ -75,7 +75,7 @@ class TextFileManager {
 			String linea;
 			if((linea =  bf.readLine()) != null) {
 				String[] arLinea = linea.split(lineSeparator);
-				dto = new CategDto(categName:arLinea[0],signatures:new ArrayList<ItemSignature>());
+				dto = new CategDto(categName:arLinea[0],itemQty:Integer.parseInt(arLinea[1]),signatures:new ArrayList<ItemSignature>());
 			}
 			else {
 				return null;

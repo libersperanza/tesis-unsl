@@ -7,20 +7,24 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.codehaus.groovy.grails.web.json.JSONObject
 import tesis.utils.Utils
 import com.sun.xml.internal.bind.v2.util.EditDistance;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 class SearchService {
 
-    static transactional = true
+	Log log1 = LogFactory.getLog("tesis.SearchService")
+
+    static transactional = false
 
     def sequentialSearch(String itemTitle, String categ,int radio, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
-		int pos = mgr.categs.search(new CategDto(categName:categ,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
-		log.info "Tiempo busqueda secuencial: ${System.currentTimeMillis()-startTime} ms"
+		log1.info "secuential|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
     }
 	
@@ -29,7 +33,7 @@ class SearchService {
 		long startTime = System.currentTimeMillis()
 		def signatures = getCandidates(itemTitle,categ,radio,mgr)
 		def items = getItemsFromFile(signatures, itemTitle, radio)
-		log.info "Tiempo busqueda usando el indice: ${System.currentTimeMillis()-startTime} ms"
+		log1.info "using_index|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
 	}
 
@@ -56,7 +60,7 @@ class SearchService {
 	
 	def getAllItemsByCateg(IndexManager mgr, String categ)
 	{
-		int pos = mgr.categs.search(new CategDto(categName:categ,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		
 		def signatures = mgr.categs.get(pos).signatures
 		
@@ -72,7 +76,7 @@ class SearchService {
 			}
 			rfm.closeFile()
 		}
-		log.info "Total de items en la categ ${categ} : ${itemsFound.size()}"
+		log1.info "all_in_categ|${categ}|${itemsFound.size()}"
 		return itemsFound
 	}
 	
@@ -84,7 +88,7 @@ class SearchService {
 		ArrayList<ItemSignature> candidatos = new ArrayList<ItemSignature>()
 
 		//Obtengo todas las firmas para la categoria
-		int pos = mgr.categs.search(new CategDto(categName:categ,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		
 		def signatures = mgr.categs.get(pos).signatures
 

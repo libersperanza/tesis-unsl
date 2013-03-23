@@ -87,19 +87,4 @@ class RandomAccessFileManager
 	def resetFile(){
 		objFile.setLength(0)
 	}
-	public long insertCategs(CategDto dto)
-	{
-		long pos=-1;
-		try
-		{
-			pos = objFile.length()
-			objFile.seek (pos)
-			objFile.writeBytes(dto.toString()+"\n")
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return pos;
-	}
 }

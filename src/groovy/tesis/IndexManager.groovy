@@ -66,16 +66,15 @@ class IndexManager
     			categsList.add((CategDto)ois.readObject())
     		}
 		}
-		log.info("Archivo de categs leido con exito")
+		
 		createCategsHash(categsList)
 
 		File file2 = new File(ConfigurationHolder.config.pivotsFileName)
 		file2.withObjectInputStream(getClass().classLoader){ ois ->
     		pivots = (HashMap<String,PivotDto>)ois.readObject()
 		}
-		log.info("Archivo de pivots leido con exito")
 		
-		log.info "Creacion de indice desde archivo: ${System.currentTimeMillis()-startTime} ms"
+		log.info "index_creation_from_file|${System.currentTimeMillis()-startTime}"
 	}
 	
 	private createCategListFromFile()
@@ -97,7 +96,7 @@ class IndexManager
 		{
 			throw new Exception("Error al abrir el archivo")
 		}
-		log.info "Lectura de categorias desde archivo: ${System.currentTimeMillis()-startTime} ms"
+		log.info "reading_categs_from_file|${System.currentTimeMillis()-startTime}"
 		return list
 	}
 	
@@ -107,12 +106,13 @@ class IndexManager
 		categs = new CategsHash(list.size(), 0.4)
 		for(CategDto c:list)
 		{
-			if(categs.add(c)==-1)
+			categs.add(c)
+			/*if(categs.add(c)==-1)
 			{
 				log.info "No se pudo agregar la categoria: ${c.categName}"
-			}
+			}*/
 		}
-		log.info "Cargado de categorias en el hash: ${System.currentTimeMillis()-startTime} ms"
+		//log.info "Cargado de categorias en el hash: ${System.currentTimeMillis()-startTime} ms"
 	}
 	private void createPivots(int cant)
 	{
@@ -136,7 +136,7 @@ class IndexManager
 				}
 				fm.closeFile()
 				pivots.put("ALL",pivs)
-				log.info "${cant} pivotes cargados con exito"
+				//log.info "${cant} pivotes cargados con exito"
 			}
 			else
 			{
@@ -147,7 +147,7 @@ class IndexManager
 		{
 			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
 		}
-		log.info "Creacion de pivotes: ${System.currentTimeMillis()-startTime} ms"
+		log.info "pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
 	private void createPivotsIncr(pivotsQty,aQty,nQty){
 		pivots = [:]
@@ -186,7 +186,7 @@ class IndexManager
 				}				
 				fm.closeFile()
 				pivots.put("ALL",pivs)
-				log.info "${pivotsQty} pivotes cargados con exito"
+				//log.info "${pivotsQty} pivotes cargados con exito"
 			}
 			else
 			{
@@ -197,7 +197,7 @@ class IndexManager
 		{
 			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
 		}
-		log.info "Creacion de pivotes: ${System.currentTimeMillis()-startTime} ms"
+		log.info "pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
 	private void createSignatures()
@@ -218,7 +218,7 @@ class IndexManager
 				while(curItem = fm.nextItem())
 				{
 					ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
-					CategDto catForSearch = new CategDto(categName:curItem.categ,signatures:null)
+					CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
 					int pos = categs.search(catForSearch)
 					if (categs.get(pos).equals(catForSearch)){
 						sig.itemPosition = rfm.insertItem(curItem)
@@ -230,7 +230,7 @@ class IndexManager
 					}
 				}
 				rfm.closeFile()
-				log.info "Items no almacenados por categoria invalida: " + noCateg
+				//log.info "Items no almacenados por categoria invalida: " + noCateg
 			}
 			else
 			{
@@ -243,7 +243,7 @@ class IndexManager
 			throw new Exception("Error al abrir el archivo ${ConfigurationHolder.config.itemsBaseFileName}")
 		}
 		
-		log.info "Creacion de firmas: ${System.currentTimeMillis()-startTime} ms"
+		log.info "signature_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
 	def getPivotsForCateg(String categName)
@@ -260,8 +260,8 @@ class IndexManager
 	{
 		long startTime = System.currentTimeMillis()
 
-		CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:null);
-		CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:null);
+		CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,itemQty:0,signatures:null);
+		CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,itemQty:0,signatures:null);
 		List<CategDto> listCategs = categs.getValues()
 
 		File file = new File(ConfigurationHolder.config.categsFileName)
@@ -280,7 +280,7 @@ class IndexManager
 			oos.writeObject(pivots)
 		}
 
-		log.info "Creacion de archivos de categs y pivots: ${System.currentTimeMillis()-startTime} ms"
+		log.info "index_file_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
 	def getRandomPivot(fm){

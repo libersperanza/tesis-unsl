@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -65,6 +66,10 @@ environments {
 
 }
 
+//Variable para nombrar archivos en cada corrida
+SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss")
+String runId = sdf.format(Calendar.getInstance().getTime())
+
 // log4j configuration
 log4j = {
   
@@ -74,7 +79,9 @@ log4j = {
 	
 	appenders {
 		console name: "stdout", layout:pattern(conversionPattern: "%d{dd MMM yyyy HH:mm:ss,SSS} %c{2} %m%n")
-	}
+	  rollingFile name:"indexCreation", maxFileSize:'100MB', file:"test_results/index_${runId}.log", layout:pattern(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss} %m%n')
+    rollingFile name:"searchResults", maxFileSize:'100MB', file:"test_results/results_${runId}.log", layout:pattern(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss} %m%n')
+  }
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -89,6 +96,8 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
+    info indexCreation:'tesis.IndexManager'
+    info searchResults:'tesis.SearchService' 
 	root {
 		info 'stdout'
 	  }

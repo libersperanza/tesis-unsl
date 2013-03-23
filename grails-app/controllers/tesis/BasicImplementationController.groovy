@@ -15,7 +15,7 @@ import tesis.utils.Utils;
 
 class BasicImplementationController
 {
-	SessionService sessionService
+	IndexManager mgr
 	SearchService searchService
 	
 	def index =	{
@@ -23,8 +23,7 @@ class BasicImplementationController
 	} 
 
 	def initIndex =
-	{
-		IndexManager mgr
+	{	
 		log.info("Creando indice con parametros: $params")
 		try
 		{
@@ -37,8 +36,6 @@ class BasicImplementationController
 				int cant = Integer.valueOf(params.cant?:"5")
 				mgr = new IndexManager(params.pivotStrategy, cant);
 			}
-			sessionService.init()
-			sessionService.setIndex(mgr)
 			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA - MODO: $params.initMode"])
 		}
 		catch(Exception e)
@@ -49,13 +46,13 @@ class BasicImplementationController
 	}
 	def listCategs =
 	{
-		sessionService.getIndex().categs.printValues()
+		mgr.categs.printValues()
 		render(view:"list", model:[tit:"Categorias",lista:[]])
 	}
 
 	def listPivotes =
 	{
-		render(view:"list", model:[tit:"Pivotes", lista:sessionService.getIndex().pivots])
+		render(view:"list", model:[tit:"Pivotes", lista:mgr.pivots])
 	}
 	def searchItems =
 	{ render(view:"searchItems") }
@@ -63,7 +60,6 @@ class BasicImplementationController
 	{ render(view:"sequentialSearch") }
 	def searchItemsCateg =
 	{
-		IndexManager mgr = sessionService.getIndex()
 		int radio = Integer.valueOf(params.radio?:"5")
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,mgr)
@@ -73,7 +69,6 @@ class BasicImplementationController
 
 	def sequentialSearch=
 	{
-		IndexManager mgr = sessionService.getIndex()
 		int radio = Integer.valueOf(params.radio?:"5")
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 		def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,mgr)
@@ -86,13 +81,11 @@ class BasicImplementationController
 		}
 	def listItemCateg =
 	{
-		IndexManager mgr = sessionService.getIndex()
 		def itemsFound = searchService.getAllItemsByCateg(mgr, params.categ)
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
 	def saveData = {
-		IndexManager mgr = sessionService.getIndex()
 		mgr.createIndexFiles()
 	}
 	
