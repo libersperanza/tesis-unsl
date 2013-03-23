@@ -12,6 +12,8 @@ import tesis.data.ItemDto
 import tesis.data.ItemSignature;
 import tesis.file.manager.RandomAccessFileManager
 import tesis.utils.Utils;
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
+
 
 class BasicImplementationController
 {
@@ -27,6 +29,7 @@ class BasicImplementationController
 		log.info("Creando indice con parametros: $params")
 		try
 		{
+			ConfigurationHolder.config.strategy = "$params.pivotStrategy_$params.cant"
 			if("load".equals(params.initMode))
 			{
 				mgr = new IndexManager();
