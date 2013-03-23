@@ -24,15 +24,15 @@ import org.apache.commons.logging.LogFactory
  * @author lsperanza
  *
  */
-class SimpleFileManager {
+class TextFileManager {
 	File f;
 	String lineSeparator;
 	FileReader fr;
 	BufferedReader bf;
 	
-	Log log = LogFactory.getLog(SimpleFileManager.class.getName())
+	Log log = LogFactory.getLog(TextFileManager.class.getName())
 	
-	public SimpleFileManager(String filePath, String separator) {
+	public TextFileManager(String filePath, String separator) {
 		f = new File(filePath);
 		lineSeparator = separator;
 	}

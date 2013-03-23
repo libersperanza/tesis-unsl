@@ -4,37 +4,64 @@
 package tesis.data
 
 import com.sun.xml.internal.bind.v2.util.EditDistance
+import org.codehaus.groovy.grails.web.json.JSONObject
+import org.codehaus.groovy.grails.web.json.JSONArray
 
 /**
  * @author lsperanza
  *
  */
-class ItemSignature
+class ItemSignature implements Serializable
 {
-	def dists//Array de distancias
+	private static final long serialVersionUID = 7208542815446741112L
+	/**
+	 * @serial
+	 */
+	int[] dists//Array de distancias
+	/**
+	 * @serial
+	 */
 	long itemPosition
+	/**
+	 * @serial
+	 */
 	long itemSize
 	
 
+	public ItemSignature(List dists,long itemPosition, long itemSize){
+		this.dists = dists
+		this.itemPosition = itemPosition
+		if(itemSize){
+			this.itemSize = itemSize
+		}
+	}
 	public ItemSignature(String itemTitle, List pivotes)
 	{
 		dists = new int[pivotes.size()]
 		
 		for(int i=0; i< pivotes.size(); i++)
 		{
-			dists[i] = EditDistance.editDistance(itemTitle, pivotes[i].getItemTitle())
+			dists[i] = EditDistance.editDistance(itemTitle, pivotes[i].searchTitle)
 		}
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	@Override
+	public boolean equals(ItemSignature obj)
+	{
+		return (this.dists.equals(obj.dists) && this.itemPosition.equals(obj.itemPosition) && this.itemSize.equals(obj.itemSize))
+	}
+	
 	@Override
 	public String toString()
 	{
-		return "[dists=" + dists + ", itemPosition=" + itemPosition + ", size= ${itemSize}]";
+		return "ItemSignature [dists=" + dists + ", itemPosition=" + itemPosition + ", itemSize=" + itemSize + "]";
 	}
-	@Override
-	public boolean equals(ItemSignature obj){
-		return (this.dists.equals(obj.dists) && this.itemPosition.equals(obj.itemPosition) && this.itemSize.equals(obj.itemSize))
-	}
+	
+	public JSONObject toJSON()
+	{
+		JSONObject json = new JSONObject()
+		json.put("dists", new JSONArray(dists))
+		json.put("itemPosition",itemPosition)
+		json.put("itemSize",itemSize)
+		return json
+	}	
 }

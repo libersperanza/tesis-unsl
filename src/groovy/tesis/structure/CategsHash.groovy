@@ -11,6 +11,8 @@ import java.util.regex.Pattern
 import tesis.data.CategDto;
 import tesis.data.ItemSignature;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.codehaus.groovy.grails.commons.ConfigurationHolder;
 
 /**
@@ -20,11 +22,12 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder;
 class CategsHash
 {
 
+	Log log = LogFactory.getLog(CategsHash.class.getName())
 	private int size;
 	private int elemCount;
 	private ArrayList<CategDto> hash;
-	public final CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:new ArrayList<ItemSignature>());
-	public final CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:new ArrayList<ItemSignature>());
+	public final CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,signatures:null);
+	public final CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,signatures:null);
 	
 	public CategsHash(int n, double loadFactor)
 	{
@@ -138,15 +141,30 @@ class CategsHash
 	
 	public List<CategDto> getValues()
 	{
-		ArrayList<CategDto> list = new ArrayList<CategDto>();
+		/*ArrayList<CategDto> list = new ArrayList<CategDto>();
 		for(int i=0;i < size; i++)
 		{
-			if((!hash[i].equals(virgin))&&(!hash[i].equals(virgin)))
+			if((!hash[i].equals(virgin))&&(!hash[i].equals(used)))
 			{
 				list.add(hash[i]);
 			}
 		}
-		return list;
+		return list;*/
+		return hash;
+	}
+	
+	public void printValues()
+	{
+		//ArrayList<CategDto> list = new ArrayList<CategDto>();
+		for(int i=0;i < size; i++)
+		{
+			if((!hash[i].equals(virgin))&&(!hash[i].equals(used)))
+			{
+				log.info hash[i].toString()
+				//list.add(hash[i]);
+			}
+		}
+		//return list;
 	}
 	public int hashCode(String str) {
 		int b = 378551;

@@ -1,16 +1,22 @@
 package tesis
 
+import java.util.ArrayList;
+
+import tesis.file.manager.TextFileManager;
+
 import org.codehaus.groovy.grails.web.json.JSONObject
 
-import com.sun.xml.internal.bind.v2.util.EditDistance;
 
 import tesis.data.CategDto
+import tesis.data.ItemDto
+import tesis.data.ItemSignature;
 import tesis.file.manager.RandomAccessFileManager
 import tesis.utils.Utils;
 
 class BasicImplementationController
 {
 	SessionService sessionService
+	SearchService searchService
 	
 	def index =	{
 		render(view:"index") 
@@ -18,20 +24,22 @@ class BasicImplementationController
 
 	def initIndex =
 	{
-		IndexManager mgr = new IndexManager(params.file_name_cat, params.file_name_it,
-				"./test_data/Items.dat", params.file_name_piv, params.separator);
+		IndexManager mgr
+		log.info("Creando indice con parametros: $params")
 		try
 		{
-			String result = mgr.initIndex(Integer.parseInt(params.cant))
-			sessionService.init()
-			sessionService.setCategs(mgr.categs)
-			sessionService.setPivots(mgr.pivots)
-				
-			if(!result)
+			if("load".equals(params.initMode))
 			{
-				result = "INICIALIZACION CORRECTA"
+				mgr = new IndexManager();
 			}
-			render(view:"fillFile", model:[result:result])
+			else
+			{
+				int cant = Integer.valueOf(params.cant?:"5")
+				mgr = new IndexManager(params.pivotStrategy, cant);
+			}
+			sessionService.init()
+			sessionService.setIndex(mgr)
+			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA - MODO: $params.initMode"])
 		}
 		catch(Exception e)
 		{
@@ -41,12 +49,13 @@ class BasicImplementationController
 	}
 	def listCategs =
 	{
-		render(view:"list", model:[tit:"Categorias",lista:sessionService.getCategs().getValues()])
+		sessionService.getIndex().categs.printValues()
+		render(view:"list", model:[tit:"Categorias",lista:[]])
 	}
 
 	def listPivotes =
 	{
-		render(view:"list", model:[tit:"Pivotes", lista:sessionService.getPivots()])
+		render(view:"list", model:[tit:"Pivotes", lista:sessionService.getIndex().pivots])
 	}
 	def searchItems =
 	{ render(view:"searchItems") }
@@ -54,63 +63,21 @@ class BasicImplementationController
 	{ render(view:"sequentialSearch") }
 	def searchItemsCateg =
 	{
-		IndexManager mgr = new IndexManager(sessionService.getCategs(),sessionService.getPivots())
+		IndexManager mgr = sessionService.getIndex()
 		int radio = Integer.valueOf(params.radio?:"5")
-	
-		def signatures = mgr.searchItemsByCateg(Utils.removeSpecialCharacters(params.itemTitle)?.toUpperCase(), params.categ, radio)
-		def itemsFound = null
-		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
-	
-		if (signatures){
-			if (rfm.openFile("rw"))
-			{
-				itemsFound = new ArrayList()
-
-				signatures.each
-				{
-					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle)?.toUpperCase(), item.searchTitle)					
-					if(dist < radio)
-					{ 
-						itemsFound.add(item)
-					}					
-				}
-				rfm.closeFile()
-			}
-		}
-		println "Total de cadidatos: ${signatures?.size()}"
+		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
+		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,mgr)
+		
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
 	}
 
 	def sequentialSearch=
 	{
-		
-		IndexManager mgr = new IndexManager(sessionService.getCategs(),sessionService.getPivots())
+		IndexManager mgr = sessionService.getIndex()
 		int radio = Integer.valueOf(params.radio?:"5")
-		int pos = sessionService.getCategs().search(new CategDto(categName:params.categ,signatures:null))
-		def signatures = sessionService.getCategs().get(pos)?.signatures
-		def itemsFound = null
-		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
-		if (signatures){
-			if (rfm.openFile("rw"))
-			{
-				itemsFound = new ArrayList()
-			
-				signatures.each
-				{
-					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-				
-					def dist = EditDistance.editDistance(Utils.removeSpecialCharacters(params.itemTitle)?.toUpperCase(), item.searchTitle)
-					if(dist < radio)
-					{	
-						itemsFound.add(item)
-					}
-								
-				}
-			
-				rfm.closeFile()
-			}
-		}
+		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
+		def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,mgr)
+		
 		render(view:"sequentialSearch", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
@@ -119,28 +86,19 @@ class BasicImplementationController
 		}
 	def listItemCateg =
 	{
-		
-		IndexManager mgr = new IndexManager(sessionService.getCategs(),sessionService.getPivots())
-	
-		int pos = sessionService.getCategs().search(new CategDto(categName:params.categ,signatures:null))
-		def signatures = sessionService.getCategs().get(pos)?.signatures
-		def itemsFound = null
-		RandomAccessFileManager rfm = new RandomAccessFileManager("./test_data/Items.dat")
-		if (signatures){
-			if (rfm.openFile("rw"))
-			{
-				itemsFound = new ArrayList()
-				signatures.each
-				{
-					def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))							
-					itemsFound.add(item)					
-								
-				}
-				rfm.closeFile()
-			}
-		}
-		println "Total de items en la categ ${params.categ} : ${itemsFound?.size()}"
+		IndexManager mgr = sessionService.getIndex()
+		def itemsFound = searchService.getAllItemsByCateg(mgr, params.categ)
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
+	def saveData = {
+		IndexManager mgr = sessionService.getIndex()
+		mgr.createIndexFiles()
+	}
+	
+	def getData = {
+		
+	}
 }
+	
+
