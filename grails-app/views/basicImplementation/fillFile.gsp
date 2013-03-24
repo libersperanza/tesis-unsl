@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="layout" content="main"/>
-<title>Resultado de la Inicialización</title>
+<title>Resultado</title>
 </head>
 <body>
   <div class="body">

@@ -17,8 +17,9 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class BasicImplementationController
 {
-	IndexManager mgr
+	
 	SearchService searchService
+	SessionService sessionService
 	
 	def index =	{
 		render(view:"index") 
@@ -30,8 +31,10 @@ class BasicImplementationController
 		try
 		{
 			ConfigurationHolder.config.strategy = "${params.pivotStrategy}_${params.pivotsQty?:'5'}"
-		println ConfigurationHolder.config.strategy
-			mgr = new IndexManager(params.initMode);
+		
+			IndexManager mgr = new IndexManager(params.initMode);
+			sessionService.init()
+			sessionService.setIndex(mgr)
 		
 			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA - MODO: $params.initMode"])
 		}
@@ -43,13 +46,13 @@ class BasicImplementationController
 	}
 	def listCategs =
 	{
-		mgr.categs.printValues()
+		sessionService.getIndex().categs.printValues()
 		render(view:"list", model:[tit:"Categorias",lista:[]])
 	}
 
 	def listPivotes =
 	{
-		render(view:"list", model:[tit:"Pivotes", lista:mgr.pivots])
+		render(view:"list", model:[tit:"Pivotes", lista:sessionService.getIndex().pivots])
 	}
 	def searchItems =
 	{ render(view:"searchItems") }
@@ -59,7 +62,7 @@ class BasicImplementationController
 	{
 		int radio = Integer.valueOf(params.radio?:"5")
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,mgr)
+		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,sessionService.getIndex())
 		
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
 	}
@@ -68,7 +71,7 @@ class BasicImplementationController
 	{
 		int radio = Integer.valueOf(params.radio?:"5")
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,mgr)
+		def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,sessionService.getIndex())
 		
 		render(view:"sequentialSearch", model:[tit:"Items",itemsFound:itemsFound])
 
@@ -78,12 +81,13 @@ class BasicImplementationController
 		}
 	def listItemCateg =
 	{
-		def itemsFound = searchService.getAllItemsByCateg(mgr, params.categ)
+		def itemsFound = searchService.getAllItemsByCateg(sessionService.getIndex(), params.categ)
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
 	def saveData = {
-		mgr.createIndexFiles()
+		sessionService.getIndex().createIndexFiles()
+		render(view:"fillFile", model:[result:"Save: DONE!! - Mode: ${ConfigurationHolder.config.strategy}"])
 	}
 	
 	def getData = {

@@ -40,7 +40,7 @@ class SearchService {
 	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, int radio) {
 		ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
 
-		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName)
+		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 
 		if (rfm.openFile("rw"))
 		{
@@ -65,7 +65,7 @@ class SearchService {
 		def signatures = mgr.categs.get(pos).signatures
 		
 		ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
-		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName)
+		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 		if (rfm.openFile("rw"))
 		{
 			signatures.each

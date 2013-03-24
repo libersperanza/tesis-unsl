@@ -19,7 +19,7 @@
 
   </g:if>
   <g:else>
-  <h1>Listar items por categoría</h1>
+  <h1>Secuencial Search Items</h1>
 	  <g:form controller="basicImplementation" action="sequentialSearch">
 		<p class="ch-form-row ch-form-required"><label for="file_name_cat">Categoria:</label><input type="text" id="categ" name="categ" value=""/></p> 
 		<p class="ch-form-row ch-form-required"><label for="file_name_title">Title:</label><input type="text" id="itemTitle" name="itemTitle" value=""/></p>

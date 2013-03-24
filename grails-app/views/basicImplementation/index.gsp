@@ -14,7 +14,7 @@
 		<g:form controller="basicImplementation" action="initIndex">
 			<h1>Modo</h1>
 			<p class="ch-form-row ch-form-required">
-				<g:radio name="initMode" id="load" value="load" checked></g:radio><label for="load"> Usar datos precalculados</label>
+				<g:radio name="initMode" id="load" value="load" checked="checked"></g:radio><label for="load"> Usar datos precalculados</label>
 			</p>
 			<p class="ch-form-row ch-form-required">
 				<g:radio name="initMode" id="init" value="init"></g:radio><label for="init"> Inicializar datos</label>
@@ -22,8 +22,8 @@
 			<hr>
 			<h1>Estrategia</h1>
 			<p class="ch-form-row ch-form-required">
-				<g:radio name="pivotStrategy" id="random_samePivotes" value="random_samePivotes" checked/>
-				<label for="random_samePivotes">Random, mismos para todas las categorias</label>
+				<g:radio name="pivotStrategy" id="random_samePivotes" value="random_samePivotes" checked="checked"/>
+				<label for="random_samePivotes">Random, mismos pivots para todas las categorias</label>
 			</p>
 			<p class="ch-form-row ch-form-required">
 				<g:radio name="pivotStrategy" id="random_differentPivotes" value="random_differentPivotes" />
@@ -31,7 +31,7 @@
 			</p>
 			<p class="ch-form-row ch-form-required">
 				<g:radio name="pivotStrategy" id="incremental_samePivotes" value="incremental_samePivotes" />
-				<label for="incremental_samePivotes">Incremental, mismos para todas las categoras</label>
+				<label for="incremental_samePivotes">Incremental, mismos pivots para todas las categoras</label>
 			</p>
 			<p class="ch-form-row ch-form-required">
 				<g:radio name="pivotStrategy" id="incremental_differentPivotes" value="incremental_differentPivotes"/>
@@ -62,13 +62,13 @@
 	<script type="text/javascript">
 	var loading;
 	loading = 	$("<a>").transition({
-		content:loadingText,
+		content:"....",
 	    width:150,
 	    height:120
 	});
 	$(".ch-btn").bind("click",function(){
 		loading.show();
-		})
+		});
 	  
   </script>
 </body>

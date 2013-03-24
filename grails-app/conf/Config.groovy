@@ -104,11 +104,11 @@ log4j = {
 }
 VIRGIN_CELL = "*"
 USED_CELL = "-"
-categsFileName = "./test_data/categs.ser"
-pivotsFileName = "./test_data/pivotes.ser"
+categsFileName = "./test_data/categs-#strategy#.ser"
+pivotsFileName = "./test_data/pivotes-#strategy#.ser"
 categsBaseFileName = "./test_data/categs.csv"
 itemsBaseFileName = "./test_data/items.csv"
-itemsDataFileName = "./test_data/items.dat"
+itemsDataFileName = "./test_data/items-#strategy#.dat"
 textDataSeparator = ";"
 elementsPairs = 10
 sizeSample = 1000

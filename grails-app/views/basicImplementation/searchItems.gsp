@@ -7,16 +7,16 @@
 </head>
 <body>
   <div class="body">
-  <g:link controller="basicImplementation" action="index">Volver al Menu</g:link>
+  <g:link controller="basicImplementation" action="searchItems">Volver al Menu</g:link>
   <g:if test="${itemsFound}">
     <g:each var="elem" in="${itemsFound?}">
 	<div>${elem}</div>
   </g:each>
-  <g:link controller="basicImplementation" action="index">Volver al Menu</g:link>
+  <g:link controller="basicImplementation" action="searchItems">Volver al Menu</g:link>
   </g:if>
   
   <g:else>
-      <h1>Buscar Items</h1>
+      <h1>Search items - algorithm pivots</h1>
       <hr>
 	  <g:form controller="basicImplementation" action="searchItemsCateg">
 		<p class="ch-form-row ch-form-required"><label for="file_name_cat">Categoria:</label><input type="text" id="categ" name="categ" value=""/></p> 

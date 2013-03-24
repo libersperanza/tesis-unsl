@@ -47,20 +47,23 @@ class IndexManager
 		
 		if(initMode == "load"){
 			
-			File file = new File(ConfigurationHolder.config.categsFileName)
+			File file = new File(ConfigurationHolder.config.categsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 			//TODO: Leer la cantidad de categs del archivo
 			ArrayList<CategDto> categsList = new ArrayList<CategDto>(13071)
 			file.withObjectInputStream(getClass().classLoader){ ois ->
 				for(int i=0;i < 13071;i++)
-				{
-					categsList.add((CategDto)ois.readObject())
+				{	try{
+						categsList.add((CategDto)ois.readObject())
+					}catch(EOFException e){}
 				}
 			}			
 			createCategsHash(categsList)
 	
-			File file2 = new File(ConfigurationHolder.config.pivotsFileName)
+			File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 			file2.withObjectInputStream(getClass().classLoader){ ois ->
-				pivots = (HashMap<String,PivotDto>)ois.readObject()
+				try{
+					pivots = (HashMap<String,PivotDto>)ois.readObject()
+				}catch(EOFException e){}
 			}
 			
 			log.info "index_creation_from_file|${System.currentTimeMillis()-startTime}"
@@ -71,7 +74,7 @@ class IndexManager
 			{
 				createPivots()
 			}
-			else if ("BY_CATEG_RND".equals(pivotStrategy))
+			else if ("BY_CATEG_RND".equals(strategy))
 			{
 				//TODO: Implementar random por categoría, NO HACE FALTA
 			}else{
@@ -214,7 +217,7 @@ class IndexManager
 		
 		String res
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
-		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName)
+		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 
 		if(fm.openFile(0))
 		{
@@ -271,7 +274,7 @@ class IndexManager
 		CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,itemQty:0,signatures:null);
 		List<CategDto> listCategs = categs.getValues()
 
-		File file = new File(ConfigurationHolder.config.categsFileName)
+		File file = new File(ConfigurationHolder.config.categsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 		file.withObjectOutputStream { oos ->
 			for(int i=0;i < listCategs.size; i++)
 			{
@@ -281,8 +284,8 @@ class IndexManager
 				}
 			}
 		}
-
-		File file2 = new File(ConfigurationHolder.config.pivotsFileName)
+		
+		File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 		file2.withObjectOutputStream { oos ->
 			oos.writeObject(pivots)
 		}
