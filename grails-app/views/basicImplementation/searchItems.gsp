@@ -7,16 +7,19 @@
 </head>
 <body>
   <div class="body">
+  <h1>Search items - algorithm pivots</h1>  
   <g:link controller="basicImplementation" action="searchItems">Volver al Menu</g:link>
+  <hr>
   <g:if test="${itemsFound}">
+  <label>Results: ${itemsFound.size()}</label>
     <g:each var="elem" in="${itemsFound?}">
-	<div>${elem}</div>
+	<p><label><b>Id: </b></label>${elem?.itemId}; <label><b>Title: </b></label>${elem?.itemTitle}</p>
   </g:each>
   <g:link controller="basicImplementation" action="searchItems">Volver al Menu</g:link>
   </g:if>
   
   <g:else>
-      <h1>Search items - algorithm pivots</h1>
+      
       <hr>
 	  <g:form controller="basicImplementation" action="searchItemsCateg">
 		<p class="ch-form-row ch-form-required"><label for="file_name_cat">Categoria:</label><input type="text" id="categ" name="categ" value=""/></p> 
