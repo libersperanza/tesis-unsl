@@ -29,16 +29,10 @@ class BasicImplementationController
 		log.info("Creando indice con parametros: $params")
 		try
 		{
-			ConfigurationHolder.config.strategy = "$params.pivotStrategy_$params.cant"
-			if("load".equals(params.initMode))
-			{
-				mgr = new IndexManager();
-			}
-			else
-			{
-				int cant = Integer.valueOf(params.cant?:"5")
-				mgr = new IndexManager(params.pivotStrategy, cant);
-			}
+			ConfigurationHolder.config.strategy = "${params.pivotStrategy}_${params.pivotsQty?:'5'}"
+		println ConfigurationHolder.config.strategy
+			mgr = new IndexManager(params.initMode);
+		
 			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA - MODO: $params.initMode"])
 		}
 		catch(Exception e)
