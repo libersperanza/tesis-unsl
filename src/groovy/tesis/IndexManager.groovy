@@ -32,8 +32,6 @@ class IndexManager
 {
 	Log log = LogFactory.getLog(IndexManager.class.getName())
 	CategsHash categs = null;
-	String strategy
-	Integer pivotsQty
 	//Contiene la categoria y la lista de pivotes asociada.
 	//Si se utiliza el mismo conjunto de pivotes p/todas
 	//las categorias, se carga el par "ALL",[lista_pivotes]
@@ -42,47 +40,48 @@ class IndexManager
 	public IndexManager(String initMode)
 	{
 		long startTime = System.currentTimeMillis()
-		strategy = ConfigurationHolder.config.strategy.split("_")[0]
-		pivotsQty = Integer.valueOf(ConfigurationHolder.config.strategy.split("_")[2])
+		def strategyParams = ConfigurationHolder.config.strategy.split("_")
+		String strategy = strategyParams[0]
+		String pivotSelection = strategyParams[1]
+		int pivotsQty = Integer.valueOf(strategyParams[2])
+
 		
 		if(initMode == "load"){
 			
 			File file = new File(ConfigurationHolder.config.categsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
-			//TODO: Leer la cantidad de categs del archivo
-			ArrayList<CategDto> categsList = new ArrayList<CategDto>(13071)
+			ArrayList<CategDto> categsList
 			file.withObjectInputStream(getClass().classLoader){ ois ->
-				for(int i=0;i < 13071;i++)
-				{	try{
-						categsList.add((CategDto)ois.readObject())
-					}catch(EOFException e){}
+				int size = (Integer)ois.readObject()
+				categsList = new ArrayList<CategDto>(size)
+				for(int i=0;i < size ;i++)
+				{	
+					categsList.add((CategDto)ois.readObject())
 				}
 			}			
 			createCategsHash(categsList)
 	
 			File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 			file2.withObjectInputStream(getClass().classLoader){ ois ->
-				try{
-					pivots = (HashMap<String,PivotDto>)ois.readObject()
-				}catch(EOFException e){}
+				pivots = (HashMap<String,PivotDto>)ois.readObject()
 			}
 			
-			log.info "index_creation_from_file|${System.currentTimeMillis()-startTime}"
+			log.info "$ConfigurationHolder.config.strategy|index_creation_from_file|${System.currentTimeMillis()-startTime}"
 		}else{
 			createCategsHash(createCategListFromFile());
 			
 			if("random".equals(strategy))
 			{
-				createPivots()
+				createPivots(pivotSelection,pivotsQty)
 			}
 			else if ("BY_CATEG_RND".equals(strategy))
 			{
 				//TODO: Implementar random por categoría, NO HACE FALTA
 			}else{
-				createIncrementalPivots()
+				createIncrementalPivots(pivotSelection,pivotsQty)
 			}
 			
 			createSignatures()
-			log.info "index_creation|${System.currentTimeMillis()-startTime}"
+			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
 		}
 	}
 	
@@ -105,7 +104,7 @@ class IndexManager
 		{
 			throw new Exception("Error al abrir el archivo")
 		}
-		log.info "reading_categs_from_file|${System.currentTimeMillis()-startTime}"
+		log.info "$ConfigurationHolder.config.strategy|reading_categs_from_file|${System.currentTimeMillis()-startTime}"
 		return list
 	}
 	
@@ -116,14 +115,9 @@ class IndexManager
 		for(CategDto c:list)
 		{
 			categs.add(c)
-			/*if(categs.add(c)==-1)
-			{
-				log.info "No se pudo agregar la categoria: ${c.categName}"
-			}*/
 		}
-		//log.info "Cargado de categorias en el hash: ${System.currentTimeMillis()-startTime} ms"
 	}
-	private void createPivots()
+	private void createPivots(String pivotSelection, int pivotsQty)
 	{
 		pivots = [:]
 		long startTime = System.currentTimeMillis()
@@ -134,18 +128,41 @@ class IndexManager
 			if(fm.openFile(0))
 			{
 				def pivs = []
-				(1..pivotsQty).each
+				if("differentPivotes" == pivotSelection)
 				{
-					pivs.add(fm.nextPivot())
-					Random rand = new Random()
-					(1..rand.nextInt(5)).each
+					while(!pivots.every{it.value.size ==50} || pivots.isEmpty())
 					{
-						fm.nextPivot()
+						def piv = fm.nextPivot()
+						if(pivots.get(piv.categ))
+						{
+							pivots.get(piv.categ).add(piv)
+						}
+						else
+						{
+							pivots.put(piv.categ, [piv])
+						}
+					}
+					pivots.each{ k, v->
+						while(v.size > pivotsQty) {
+							Random rand = new Random()
+							v.remove(rand.nextInt(v.size))
+						}
 					}
 				}
+				else
+				{
+					(1..pivotsQty).each
+					{
+						pivs.add(fm.nextPivot())
+						Random rand = new Random()
+						(1..rand.nextInt(10)).each
+						{
+							fm.nextPivot()
+						}
+					}
+					pivots.put("ALL",pivs)
+				}
 				fm.closeFile()
-				pivots.put("ALL",pivs)
-				//log.info "${cant} pivotes cargados con exito"
 			}
 			else
 			{
@@ -156,9 +173,9 @@ class IndexManager
 		{
 			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
 		}
-		log.info "pivot_creation|${System.currentTimeMillis()-startTime}"
+		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
-	private void createIncrementalPivots(){
+	private void createIncrementalPivots(String pivotSelection, int pivotsQty){
 		def (aQty,nQty) = [ConfigurationHolder.config.elementsPairs,ConfigurationHolder.config.sizeSample]
 		pivots = [:]
 		ArrayList<ElementsPairs> elemPairs
@@ -196,7 +213,6 @@ class IndexManager
 				}				
 				fm.closeFile()
 				pivots.put("ALL",pivs)
-				//log.info "${pivotsQty} pivotes cargados con exito"
 			}
 			else
 			{
@@ -207,7 +223,7 @@ class IndexManager
 		{
 			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
 		}
-		log.info "pivot_creation|${System.currentTimeMillis()-startTime}"
+		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
 	private void createSignatures()
@@ -240,7 +256,6 @@ class IndexManager
 					}
 				}
 				rfm.closeFile()
-				//log.info "Items no almacenados por categoria invalida: " + noCateg
 			}
 			else
 			{
@@ -253,7 +268,7 @@ class IndexManager
 			throw new Exception("Error al abrir el archivo ${ConfigurationHolder.config.itemsBaseFileName}")
 		}
 		
-		log.info "signature_creation|${System.currentTimeMillis()-startTime}"
+		log.info "$ConfigurationHolder.config.strategy|signature_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
 	def getPivotsForCateg(String categName)
@@ -276,6 +291,7 @@ class IndexManager
 
 		File file = new File(ConfigurationHolder.config.categsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 		file.withObjectOutputStream { oos ->
+			oos.writeObject(categs.elemCount)
 			for(int i=0;i < listCategs.size; i++)
 			{
 				if((!listCategs[i].equals(virgin))&&(!listCategs[i].equals(used)))
@@ -290,7 +306,7 @@ class IndexManager
 			oos.writeObject(pivots)
 		}
 
-		log.info "index_file_creation|${System.currentTimeMillis()-startTime}"
+		log.info "$ConfigurationHolder.config.strategy|index_file_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
 	def getRandomPivot(fm){
@@ -311,7 +327,7 @@ class IndexManager
 			pair.b = getRandomPivot(file)
 			while (pair.a.itemId == pair.b.itemId){
 				pair.b = getRandomPivot(file)
-				log.info "mismo random en el par"
+				//log.info "mismo random en el par"
 			}
 			pair.initDist(pivotsQty,pivot)			
 			pairs.add(pair)
