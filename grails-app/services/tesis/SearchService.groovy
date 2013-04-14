@@ -24,7 +24,7 @@ class SearchService {
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
-		log1.info "secuential|${System.currentTimeMillis()-startTime}|$items.size"
+		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|${System.currentTimeMillis()-startTime}|$items.size|$signatures.size"
 		return items
     }
 	
@@ -33,7 +33,7 @@ class SearchService {
 		long startTime = System.currentTimeMillis()
 		def signatures = getCandidates(itemTitle,categ,radio,mgr)
 		def items = getItemsFromFile(signatures, itemTitle, radio)
-		log1.info "using_index|${System.currentTimeMillis()-startTime}|$items.size"
+		log1.info "$ConfigurationHolder.config.strategy|using_index|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
 	}
 
@@ -76,7 +76,7 @@ class SearchService {
 			}
 			rfm.closeFile()
 		}
-		log1.info "all_in_categ|${categ}|${itemsFound.size()}"
+		log1.info "$ConfigurationHolder.config.strategy|all_in_categ|${categ}|${itemsFound.size()}"
 		return itemsFound
 	}
 	
