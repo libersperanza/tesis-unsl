@@ -8,9 +8,10 @@
 <body>
   <div class="body">
   <h1>Search items - algorithm pivots</h1>  
+  
+  <g:if test="${itemsFound}">
   <g:link controller="basicImplementation" action="searchItems">Volver al Menu</g:link>
   <hr>
-  <g:if test="${itemsFound}">
   <label>Results: ${itemsFound.size()}</label>
     <g:each var="elem" in="${itemsFound?}">
 	<p><label><b>Id: </b></label>${elem?.itemId}; <label><b>Title: </b></label>${elem?.itemTitle}</p>
