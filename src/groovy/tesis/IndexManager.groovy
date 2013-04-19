@@ -182,8 +182,9 @@ class IndexManager
 		long startTime = System.currentTimeMillis()
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		String res;
-		def pCandidate
-		def max, min	
+		def pivote
+		def max	
+		println "pivote size" + pivots.size() + "categ size" +  categs.size
 		
 		if(pivotsQty <= 50)
 		{
@@ -191,28 +192,65 @@ class IndexManager
 			{
 				def pivs = []
 				/** el primer pivot es elegido al azar*/
-				pCandidate = getRandomPivot(fm)
-				pivs.add(pCandidate)
-				elemPairs = getElementsPairs(aQty,pivotsQty,pCandidate,fm)
+				pivote = getRandomPivot(fm)
+				pivs.add(pivote)
+				elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm)
 				
 				max = getMediaD(elemPairs,pivs, null)
-				
-				while(pivs.size() < pivotsQty){
-					pCandidate = getRandomPivot(fm)
-					while(pivs?.find{it.itemId == pCandidate.itemId}){						
-						pCandidate = getRandomPivot(fm)
-					}
-					min = getMediaD(elemPairs,pivs,pCandidate)
-					if(min>max){
-						max=min
-						for (e in elemPairs){
-							e.addDistance(pCandidate)
+				println "count: " + categs.elemCount
+				if("differentPivotes" == pivotSelection){
+					while(!pivots.every{it.value.size ==pivotsQty} 
+					|| pivots.isEmpty() || categs.elemCount >= pivots.size())
+					{
+						def piv = getIncrementalPivot(pivs,max,elemPairs,fm)
+						if(pivots.get(piv.categ) && pivots.get(piv.categ).size < pivotsQty)
+						{
+							pivots.get(piv.categ).add(piv)
 						}
-						pivs.add(pCandidate)
+						else if(!pivots.get(pivote.categ)) 
+						{
+							pivots.put(piv.categ, [piv])
+						}
+						
 					}
-				}				
-				fm.closeFile()
-				pivots.put("ALL",pivs)
+//					while(!pivots?.every{ it?.value?.size() == pivotsQty } || pivots.isEmpty() ) // ||  pivots?.size() < categs.size , pueden haber categ sin items
+//					{
+//						pivote = getIncrementalPivot(pivs,max,elemPairs,fm)
+//						if(pivote){
+//							if(pivots.get(pivote.categ) && pivots.get(pivote.categ).size < pivotsQty)
+//							{
+//								pivots.get(pivote.categ).add(pivote)
+//							}
+//							else if(!pivots.get(pivote.categ))
+//							{
+//								pivots.put(pivote.categ, [pivote])
+//							}
+//						}
+//					}
+					
+				}else{
+					while(pivs.size() < pivotsQty){
+						pivote = getIncrementalPivot(pivs,max,elemPairs,fm)
+						if(pivote){
+							pivs.add(pivote)
+						}
+//						pCandidate = getRandomPivot(fm)
+//						while(pivs?.find{it.itemId == pCandidate.itemId}){						
+//							pCandidate = getRandomPivot(fm)
+//						}
+//						min = getMediaD(elemPairs,pivs,pCandidate)
+//						if(min>max){
+//							max=min
+//							for (e in elemPairs){
+//								e.addDistance(pCandidate)
+//							}
+//							pivs.add(pCandidate)
+//						}
+					}				
+					fm.closeFile()
+					pivots.put("ALL",pivs)
+				}
+				
 			}
 			else
 			{
@@ -224,6 +262,21 @@ class IndexManager
 			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
 		}
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
+	}
+	private def getIncrementalPivot(pivs,max,elemPairs,fm){
+		def pCandidate = getRandomPivot(fm)
+		while(pivs?.find{it.itemId == pCandidate.itemId}){
+			pCandidate = getRandomPivot(fm)
+		}
+		def min = getMediaD(elemPairs,pivs,pCandidate)
+		if(min>max){
+			max=min
+			for (e in elemPairs){
+				e.addDistance(pCandidate)
+			}
+			return pCandidate
+		}
+		return null
 	}
 	
 	private void createSignatures()
