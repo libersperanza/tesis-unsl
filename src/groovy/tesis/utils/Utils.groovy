@@ -24,6 +24,11 @@ class Utils {
 		}
 		return ret.toString().trim()
 	}
+	/**
+	 * retorna el primer elemento libre
+	 * @param listD
+	 * @return
+	 */
 	public static def firtsFree(listD){
 		int i = 0
 		for(i=0;i<listD?.size();i++){

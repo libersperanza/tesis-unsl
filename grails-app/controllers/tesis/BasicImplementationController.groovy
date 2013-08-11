@@ -10,6 +10,7 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 import tesis.data.CategDto
 import tesis.data.ItemDto
 import tesis.data.ItemSignature;
+import tesis.data.PivotDto
 import tesis.file.manager.RandomAccessFileManager
 import tesis.utils.Utils;
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
@@ -91,6 +92,83 @@ class BasicImplementationController
 	}
 	
 	def getData = {
+		
+	}
+	def createFilePivotes = {
+		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
+		TextFileManager fmCateg = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);
+		ArrayList<CategDto> listC = new ArrayList<CategDto>()
+		
+		if(fmCateg.openFile(0))
+		{
+			CategDto dto;
+			while((dto = fmCateg.nextCateg()))
+			{
+				if(dto){listC.add(dto)}
+			}
+			fmCateg.closeFile();
+		}
+		else
+		{
+			throw new Exception("Error al abrir el archivo")
+		}
+		Map pv = [:]
+		PivotDto pivote 
+		Random rand
+		if(fm.openFile(0))
+		{
+				
+				while(pivote = fm.nextPivot()){
+					
+						
+						if(!pv?."${pivote.categ}"){
+							pv?."${pivote.categ}" = new ArrayList<PivotDto>()
+						}
+						pv?."${pivote.categ}".add(pivote)
+						
+						rand = new Random()
+						(1..rand.nextInt(2)).each
+						{
+							fm.nextPivot()
+						}
+				
+				}
+			
+		}
+		
+		def  pList = pv.findAll{ it.value?.size() > 50}
+		
+		println "categ con mas de 50 pivots: " + pList.size
+		
+		File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
+		file2.withObjectOutputStream { oos ->
+			oos.writeObject(pList)
+		}
+	/*	
+		def pivots
+		
+		File file3 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
+		file3.withObjectInputStream(getClass().classLoader){ ois ->
+			pivots = ois.readObject()
+		}
+		pivots.each{
+			println "key: " + it.key
+			println "size value: " + it.value?.size()
+		}
+		*/
+		println "ok"
+	}
+	def readPivotes = {
+		
+		def pivots
+		
+		File file3 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
+		file3.withObjectInputStream(getClass().classLoader){ ois ->
+			pivots = ois.readObject()
+		}
+println pivots.findAll{it.value.size()>500}.size()
+
+	
 		
 	}
 }
