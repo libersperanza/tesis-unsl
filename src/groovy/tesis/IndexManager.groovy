@@ -35,7 +35,7 @@ class IndexManager
 	//Contiene la categoria y la lista de pivotes asociada.
 	//Si se utiliza el mismo conjunto de pivotes p/todas
 	//las categorias, se carga el par "ALL",[lista_pivotes]
-	HashMap<String,PivotDto> pivots = null;
+	HashMap<String, ArrayList<PivotDto>> pivots = null;
 	def pivotsByCateg = null;
 
 	public IndexManager(String initMode)
@@ -63,7 +63,7 @@ class IndexManager
 	
 			File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 			file2.withObjectInputStream(getClass().classLoader){ ois ->
-				pivots = (HashMap<String,PivotDto>)ois.readObject()
+				pivots = (HashMap<String,ArrayList<PivotDto>>)ois.readObject()
 			}
 			
 			log.info "$ConfigurationHolder.config.strategy|index_creation_from_file|${System.currentTimeMillis()-startTime}"
@@ -130,7 +130,7 @@ class IndexManager
 			{
 				if("differentPivotes" == pivotSelection)
 				{
-					TextFileManager fm2 = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);					
+					/*TextFileManager fm2 = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);					
 					if(fm2.openFile(0))
 					{
 						CategDto dto;
@@ -145,18 +145,18 @@ class IndexManager
 					{
 						throw new Exception("Error al abrir el archivo")
 					}
-					while(!pivots.every{it.value.size == 30} || pivots.isEmpty())
+					while(!pivots.every{it.value.size() == 30} || pivots.isEmpty())
 					{
 						def piv = fm.nextPivot()
 						if(pivots.get(piv.categ))
 						{
-							if(pivots.get(piv.categ).size < 30)
+							if(pivots.get(piv.categ).size() < 30)
 							{
 								pivots.get(piv.categ).add(piv)
 							}
 							else
 							{								
-								println  pivots.findAll{it.value.size ==30}.keySet().size()
+								println  pivots.findAll{it.value.size() ==30}.keySet().size()
 							}
 						}
 						else
@@ -165,12 +165,17 @@ class IndexManager
 							p.add(piv)
 							pivots.put(piv.categ, p)
 						}
-					}
-					pivots.each{ k, v->
-						while(v.size > pivotsQty) {
+					}*/
+
+					initPivotsByCateg()
+					/*pivots.each{ k, v->*/
+					pivotsByCateg.each{ k, v->
+						while(v.size() > pivotsQty) {
 							Random rand = new Random()
-							v.remove(rand.nextInt(v.size))
+							v.remove(rand.nextInt(v.size()))
+							println "Removiendo elemento"
 						}
+						println "Categ $k completa"
 					}
 				}
 				else
@@ -221,9 +226,9 @@ class IndexManager
 					
 				if("differentPivotes" == pivotSelection){
 					initPivotsByCateg()
-					int i = 1
-					int j = 1
+					
 					println  "categorias: " + pivotsByCateg.size()
+					int j = 1
 					pivotsByCateg?.each{ obj ->
 						pivote = getRandomElement(obj.value)
 						pivs.add(pivote)
@@ -238,6 +243,7 @@ class IndexManager
 
 						PivotDto piv
 
+						int i = 1
 						while(pivots.get(obj.key)?.size() < pivotsQty)
 							{
 								if (j == 4311){
@@ -257,10 +263,10 @@ class IndexManager
 									pivots.get(piv.categ).add(piv)
 									
 								}
-								
+								println i
 							}
-						
-						println "categ completas : " + j++
+						j++
+						println "categ completas : $j"
 							
 					}
 				println "end categorias"
@@ -494,6 +500,7 @@ class IndexManager
 		List a
 		List b
 		for (pair in pairs){
+			
 			a = pair.aDists.clone()
 			b = pair.bDists.clone()
 			if(pivotCandidate){
@@ -502,6 +509,7 @@ class IndexManager
 			}
 			max = (a[0]-b[0]).abs()
 			for(int i=1; i< a.size() && a[i]!=-1; i++){
+				
 				value = (a[i]-b[i]).abs()
 				if(value>max){
 					max=value
