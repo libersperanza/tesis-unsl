@@ -16,33 +16,32 @@ class ItemsCounter
 		//Voy leyendo el archivo y actualizando el contador
 		String res
 		TextFileManager fm = new TextFileManager("./test_data/items.csv", ";");
-
+		
 		if(fm.openFile(0))
 		{
-
-			/*while(fm.nextItem())
-			{
-			}
-			print "*"*/
 			def curItem
-			/*while(curItem = fm.nextItem())
+			while(curItem = fm.nextItem())
 			{
-				if(categs.get(curItem.categ))
+				def categData = categs.get(curItem.categ)
+				if(categData)
 				{
-					categs.put(curItem.categ,categs.get(curItem.categ)+1)
+					/*if(curItem.itemTitle.length() < categData.min)
+					{
+						categData.min = curItem.itemTitle.length()
+					}
+					if(curItem.itemTitle.length() > categData.max)
+					{
+						categData.max = curItem.itemTitle.length()
+					}
+					categData.total_size = categData.total_size + curItem.itemTitle.length()*/
+					categData.total_elems = categData.total_elems + 1
+					categs.put(curItem.categ,categData)
 				}
 				else
 				{
-					//println "NO ESTA EN EL ARCHIVO: $curItem.categ"
-					categs.put(curItem.categ,1)
+					//categs.put(curItem.categ,["min":curItem.itemTitle.length(),"max":curItem.itemTitle.length(), "total_size":curItem.itemTitle.length(), "total_elems":1])
+					categs.put(curItem.categ,["total_elems":1])
 				}
-			}*/
-			
-			for(int i=0;i < 100; i++)
-			{
-				curItem = fm.nextItem()
-				println "ORIGINAL: $curItem.itemTitle"
-				println "REEMPLAZO: $curItem.searchTitle"
 			}
 		}
 		else
@@ -50,7 +49,17 @@ class ItemsCounter
 			throw new Exception("Error al abrir el archivo para lectura/escritura")
 		}
 		//Imprimo el map
-		categs.sort{it.value}.each { key, value -> println "$key;$value" }
+		categs.each { key, value -> 
+			try
+			{
+				//println "$key;$value.min;$value.max;${value.total_size/value.total_elems}" 
+				println "$key;$value.total_elems" 
+			}
+			catch(Exception e)
+			{
+				println "CATEG: $key;$value - EXCEPTION: $e"
+			}
+		}
 
 	}
 

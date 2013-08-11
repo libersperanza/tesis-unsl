@@ -123,23 +123,46 @@ class IndexManager
 		long startTime = System.currentTimeMillis()
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		String res;
-		if(pivotsQty <= 50)
+		if(pivotsQty <= 30)
 		{
 			if(fm.openFile(0))
 			{
-				def pivs = []
 				if("differentPivotes" == pivotSelection)
 				{
-					while(!pivots.every{it.value.size ==50} || pivots.isEmpty())
+					TextFileManager fm2 = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);					
+					if(fm2.openFile(0))
+					{
+						CategDto dto;
+						while((dto = fm2.nextCateg()))
+						{
+							ArrayList<PivotDto> p = new ArrayList<PivotDto>(30)
+							pivots.put(dto.categName, p)
+						}
+						fm2.closeFile();
+					}
+					else
+					{
+						throw new Exception("Error al abrir el archivo")
+					}
+					while(!pivots.every{it.value.size == 30} || pivots.isEmpty())
 					{
 						def piv = fm.nextPivot()
 						if(pivots.get(piv.categ))
 						{
-							pivots.get(piv.categ).add(piv)
+							if(pivots.get(piv.categ).size < 30)
+							{
+								pivots.get(piv.categ).add(piv)
+							}
+							else
+							{								
+								println  pivots.findAll{it.value.size ==30}.keySet().size()
+							}
 						}
 						else
 						{
-							pivots.put(piv.categ, [piv])
+							ArrayList<PivotDto> p = new ArrayList<PivotDto>(30)
+							p.add(piv)
+							pivots.put(piv.categ, p)
 						}
 					}
 					pivots.each{ k, v->
@@ -151,6 +174,7 @@ class IndexManager
 				}
 				else
 				{
+					def pivs = []
 					(1..pivotsQty).each
 					{
 						pivs.add(fm.nextPivot())
@@ -171,7 +195,7 @@ class IndexManager
 		}
 		else
 		{
-			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
+			throw new Exception("Cantidad de pivotes mayor a la permitida (30)")
 		}
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
