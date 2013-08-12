@@ -214,132 +214,89 @@ class IndexManager
 		String res;
 		def pivote
 		def max	
-		println "pivote size" + pivots.size() + "categ size" +  categs.size
 		
 		if(pivotsQty <= 50)
 		{
 			if(fm.openFile(0))
 			{
 				def pivs = []
-				
 	
-					
 				if("differentPivotes" == pivotSelection){
 					initPivotsByCateg()
 					
-					println  "categorias: " + pivotsByCateg.size()
-					int j = 1
 					pivotsByCateg?.each{ obj ->
+						
 						pivote = getRandomElement(obj.value)
 						pivs.add(pivote)
 						elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm,obj.value)
 						max = getMediaD(elemPairs,pivs, null)
 
-						println "count categ elements: " + obj.value?.size()
-						
 						if(!pivots.get(obj.key)){
 							pivots.put(obj.key, [])
 						}
 
 						PivotDto piv
+						int indexByCateg = 1
 
-						int i = 1
 						while(pivots.get(obj.key)?.size() < pivotsQty)
-							{
-								if (j == 4311){
-									println "name categ: " + obj.key
-									println "size: ${pivots?.get(obj.key).size()}"
-									println "categ : " + i
-
-								}
-								if(i==obj.value.size()){
-									println "MAX: 0"
-									max = 0
-									i = 1
-								}
-								i++
-								if ((piv = getIncrementalPivot(pivs,max,elemPairs,fm,obj.value))){						
-									
-									pivots.get(piv.categ).add(piv)
-									
-								}
-								println i
+						{	
+							if(indexByCateg==obj.value.size()){
+								max = 0
+								indexByCateg = 1
 							}
-						j++
-						println "categ completas : $j"
 							
-					}
-				println "end categorias"
-				
-				
-				/*
-				// el primer pivot es elegido al azar
-				pivote = getRandomPivot(fm)
-				pivs.add(pivote)
-				elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm)
-				
-				PivotDto piv 
-				max = getMediaD(elemPairs,pivs, null)
-				println "count: " + categs.elemCount
-				if("differentPivotes" == pivotSelection){
-					while(!pivots.every{it.value.size() ==pivotsQty} 
-					|| pivots.isEmpty() || categs.elemCount >= pivots.size())
-					{
-						if ((piv = getIncrementalPivot(pivs,max,elemPairs,fm))){
-							if(pivots.get(piv.categ) && pivots.get(piv.categ).size() < pivotsQty)
-							{
+							if ((piv = getIncrementalPivot(pivs,max,elemPairs,fm,obj.value))){						
+								
 								pivots.get(piv.categ).add(piv)
+								
 							}
-							else if(!pivots.get(pivote.categ)) 
-							{
-								pivots.put(piv.categ, [piv])
-							}
+							indexByCateg++
 						}
-					
 					}
-				*/
-				
-//					while(!pivots?.every{ it?.value?.size() == pivotsQty } || pivots.isEmpty() ) // ||  pivots?.size() < categs.size , pueden haber categ sin items
-//					{
-//						pivote = getIncrementalPivot(pivs,max,elemPairs,fm)
-//						if(pivote){
-//							if(pivots.get(pivote.categ) && pivots.get(pivote.categ).size < pivotsQty)
-//							{
-//								pivots.get(pivote.categ).add(pivote)
-//							}
-//							else if(!pivots.get(pivote.categ))
-//							{
-//								pivots.put(pivote.categ, [pivote])
-//							}
-//						}
-//					}
+					/*
+					// el primer pivot es elegido al azar
+					pivote = getRandomPivot(fm)
+					pivs.add(pivote)
+					elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm)
+					
+					PivotDto piv 
+					max = getMediaD(elemPairs,pivs, null)
+					println "count: " + categs.elemCount
+					if("differentPivotes" == pivotSelection){
+						while(!pivots.every{it.value.size() ==pivotsQty} 
+						|| pivots.isEmpty() || categs.elemCount >= pivots.size())
+						{
+							if ((piv = getIncrementalPivot(pivs,max,elemPairs,fm))){
+								if(pivots.get(piv.categ) && pivots.get(piv.categ).size() < pivotsQty)
+								{
+									pivots.get(piv.categ).add(piv)
+								}
+								else if(!pivots.get(pivote.categ)) 
+								{
+									pivots.put(piv.categ, [piv])
+								}
+							}
+						
+						}
+					*/
 					
 				}else{
+					pivote = getRandomPivot(fm)
+					pivs.add(pivote)
+					elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm)
+					max = getMediaD(elemPairs,pivs, null)
+
 					while(pivs.size() < pivotsQty){
 						pivote = getIncrementalPivot(pivs,max,elemPairs,fm)
 						if(pivote){
 							pivs.add(pivote)
 						}
-//						pCandidate = getRandomPivot(fm)
-//						while(pivs?.find{it.itemId == pCandidate.itemId}){						
-//							pCandidate = getRandomPivot(fm)
-//						}
-//						min = getMediaD(elemPairs,pivs,pCandidate)
-//						if(min>max){
-//							max=min
-//							for (e in elemPairs){
-//								e.addDistance(pCandidate)
-//							}
-//							pivs.add(pCandidate)
-//						}
 					}				
-					fm.closeFile()
 					pivots.put("ALL",pivs)
 				}
 				
-			}
-			else
-			{
+				fm.closeFile()
+			}else{
 				throw new Exception("Error al abrir el archivo")
 			}
 		}
@@ -348,7 +305,6 @@ class IndexManager
 			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
 		}
 
-		println "END createIncrementalPivots"
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
 	// TODO ver
@@ -358,7 +314,7 @@ class IndexManager
 			pCandidate = pivots? getRandomElement(pivots) : getRandomPivot(fm) 
 		}
 		def min = getMediaD(elemPairs,pivs,pCandidate)
-		if(min>max){
+		if(min>=max){
 			max=min
 			for (e in elemPairs){
 				e.addDistance(pCandidate)
@@ -390,16 +346,18 @@ class IndexManager
 				ItemDto curItem
 				while(curItem = fm.nextItem())
 				{
-					ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
-					CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
-					int pos = categs.search(catForSearch)
-					if (categs.get(pos).equals(catForSearch)){
-						sig.itemPosition = rfm.insertItem(curItem)
-						sig.itemSize = curItem.toJSON().toString().length()
-						categs.get(pos).signatures.add(sig)
-					}else{
-						
-						noCateg++
+					if(pivots.get(curItem.getCateg())){
+						ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
+						CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
+						int pos = categs.search(catForSearch)
+						if (categs.get(pos).equals(catForSearch)){
+							sig.itemPosition = rfm.insertItem(curItem)
+							sig.itemSize = curItem.toJSON().toString().length()
+							categs.get(pos).signatures.add(sig)
+						}else{
+							
+							noCateg++
+						}
 					}
 				}
 				rfm.closeFile()

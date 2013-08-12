@@ -124,13 +124,15 @@ class BasicImplementationController
 						if(!pv?."${pivote.categ}"){
 							pv?."${pivote.categ}" = new ArrayList<PivotDto>()
 						}
-						pv?."${pivote.categ}".add(pivote)
-						
-						rand = new Random()
+						//if(pv?."${pivote.categ}".size()<50){
+							pv?."${pivote.categ}".add(pivote)
+						//}
+						/*rand = new Random()
 						(1..rand.nextInt(2)).each
 						{
 							fm.nextPivot()
 						}
+						*/
 				
 				}
 			
@@ -138,7 +140,7 @@ class BasicImplementationController
 		
 		def  pList = pv.findAll{ it.value?.size() > 50}
 		
-		println "categ con mas de 50 pivots: " + pList.size
+		println "categ con mas de 50 pivots: " + pList.size()
 		
 		File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
 		file2.withObjectOutputStream { oos ->
@@ -166,8 +168,11 @@ class BasicImplementationController
 		file3.withObjectInputStream(getClass().classLoader){ ois ->
 			pivots = ois.readObject()
 		}
-println pivots.findAll{it.value.size()>500}.size()
+		def p =  pivots.findAll{it.value.size()< 50}
 
+		p.each{
+			println it.key
+		}
 	
 		
 	}
