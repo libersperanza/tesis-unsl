@@ -108,8 +108,37 @@ class SearchService {
 			if(candidato){
 				candidatos.add(candidato)
 			}
+		} 
+println signatures.size()
+	/*	List candidatosMap = []
+		signatures.each 
+		{
+			Map obj = [candidato:it]
+
+			value = (sig.dists[0] - it.dists[0]).abs()
+			def distance = 0
+			for (int i = 0;i<it.dists.size();i++)
+			{
+				distance = (sig.dists[i] - it.dists[i]).abs()
+				
+				value = distance < value? distance : value
+			}
+			
+			obj.distance = value
+			candidatosMap.add(obj)
 		}
-		
+		candidatosMap.sort { it.distance }
+
+
+		(1..ConfigurationHolder.config.kNN).each{
+			if(candidatosMap.isEmpty()){
+				return
+			}
+			candidatos.add(candidatosMap.head().candidato)
+			candidatosMap.remove(candidatosMap.head())
+		}
+println candidatos.size()
+*/
 		return candidatos
 	}
 }

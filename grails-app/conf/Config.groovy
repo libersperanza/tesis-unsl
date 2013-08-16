@@ -110,3 +110,4 @@ itemsDataFileName = "./test_data/items-#strategy#.dat"
 textDataSeparator = ";"
 elementsPairs = 10
 sizeSample = 1000
+kNN = 100
