@@ -138,7 +138,7 @@ class BasicImplementationController
 			
 		}
 		
-		def  pList = pv.findAll{ it.value?.size() > 50}
+		def  pList = pv.findAll{ it.value?.size() >= 50}
 		
 		println "categ con mas de 50 pivots: " + pList.size()
 		
@@ -146,18 +146,6 @@ class BasicImplementationController
 		file2.withObjectOutputStream { oos ->
 			oos.writeObject(pList)
 		}
-	/*	
-		def pivots
-		
-		File file3 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
-		file3.withObjectInputStream(getClass().classLoader){ ois ->
-			pivots = ois.readObject()
-		}
-		pivots.each{
-			println "key: " + it.key
-			println "size value: " + it.value?.size()
-		}
-		*/
 		println "ok"
 	}
 	def readPivotes = {

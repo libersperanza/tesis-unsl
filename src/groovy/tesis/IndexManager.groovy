@@ -130,52 +130,15 @@ class IndexManager
 			{
 				if("differentPivotes" == pivotSelection)
 				{
-					/*TextFileManager fm2 = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);					
-					if(fm2.openFile(0))
-					{
-						CategDto dto;
-						while((dto = fm2.nextCateg()))
-						{
-							ArrayList<PivotDto> p = new ArrayList<PivotDto>(30)
-							pivots.put(dto.categName, p)
-						}
-						fm2.closeFile();
-					}
-					else
-					{
-						throw new Exception("Error al abrir el archivo")
-					}
-					while(!pivots.every{it.value.size() == 30} || pivots.isEmpty())
-					{
-						def piv = fm.nextPivot()
-						if(pivots.get(piv.categ))
-						{
-							if(pivots.get(piv.categ).size() < 30)
-							{
-								pivots.get(piv.categ).add(piv)
-							}
-							else
-							{								
-								println  pivots.findAll{it.value.size() ==30}.keySet().size()
-							}
-						}
-						else
-						{
-							ArrayList<PivotDto> p = new ArrayList<PivotDto>(30)
-							p.add(piv)
-							pivots.put(piv.categ, p)
-						}
-					}*/
-
 					initPivotsByCateg()
-					/*pivots.each{ k, v->*/
+					println "Cant Categs in file ${pivotsByCateg.size()}"
 					pivotsByCateg.each{ k, v->
+						println k
 						while(v.size() > pivotsQty) {
 							Random rand = new Random()
 							v.remove(rand.nextInt(v.size()))
-							println "Removiendo elemento"
 						}
-						println "Categ $k completa"
+						pivots.put(k,v)
 					}
 				}
 				else
@@ -379,7 +342,6 @@ class IndexManager
 	def getPivotsForCateg(String categName)
 	{
 		def ret = pivots.get(categName)
-		println "pivotes por categs: " + ret?.size()
 		if(!ret)
 		{
 			ret = pivots.get("ALL")
