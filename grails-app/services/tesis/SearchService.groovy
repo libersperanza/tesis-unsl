@@ -28,16 +28,16 @@ class SearchService {
 		return items
     }
 	
-	def simpleSearch(String itemTitle, String categ,int radio, IndexManager mgr)
+	def simpleSearch(String itemTitle, String categ,int radio, IndexManager mgr, String method)
 	{
 		long startTime = System.currentTimeMillis()
-		def signatures = getCandidates(itemTitle,categ,radio,mgr)
-		def items = getItemsFromFile(signatures, itemTitle, radio)
-		log1.info "$ConfigurationHolder.config.strategy|using_index|${System.currentTimeMillis()-startTime}|$items.size"
+		def signatures = method == "byRank" ? getCandidatesByRank(itemTitle,categ,radio,mgr): getCandidatesByKNN(itemTitle,categ,radio,mgr)
+		def items = getItemsFromFile(signatures, itemTitle, radio, method)
+		log1.info "$ConfigurationHolder.config.strategy|using_index_${method?:'knn'}|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
 	}
 
-	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, int radio) {
+	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, int radio, String method) {
 		ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
 
 		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
@@ -48,7 +48,7 @@ class SearchService {
 			{
 				def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
 				def dist = EditDistance.editDistance(itemTitle, item.searchTitle)
-				if(dist < radio)
+				if(!method || dist < radio)
 				{
 					itemsFound.add(item)
 				}
@@ -79,13 +79,12 @@ class SearchService {
 		log1.info "$ConfigurationHolder.config.strategy|all_in_categ|${categ}|${itemsFound.size()}"
 		return itemsFound
 	}
-	
-	def getCandidates(String itemTitle, String categ,int radio, IndexManager mgr){
+	def getCandidatesByRank(String itemTitle, String categ,int radio, IndexManager mgr){
 		//Calculo la firma para la query
 		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
 		int value
-		ItemSignature candidato
-		ArrayList<ItemSignature> candidatos = new ArrayList<ItemSignature>()
+		ItemSignature candidate
+		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
 
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
@@ -95,50 +94,59 @@ class SearchService {
 		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
 		signatures.each 
 		{
-			candidato = it
+			candidate = it
 			for (int i = 0;i<it.dists.size();i++)
 			{
-				value = (sig.dists[i] - candidato.dists[i]).abs()
+				value = (sig.dists[i] - candidate.dists[i]).abs()
 				if (value > radio)
 				{
-					i = candidato.dists.size()
-					candidato=null
+					i = candidate.dists.size()
+					candidate=null
 				}
 			}
-			if(candidato){
-				candidatos.add(candidato)
+			if(candidate){
+				candidates.add(candidate)
 			}
-		} 
-println signatures.size()
-	/*	List candidatosMap = []
+		}
+		return candidates 
+	}
+	def getCandidatesByKNN(String itemTitle, String categ,int knn, IndexManager mgr){
+		
+		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
+		int value
+		ItemSignature candidate
+		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
+
+		//Obtengo todas las firmas para la categoria
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
+		
+		def signatures = mgr.categs.get(pos).signatures
+
+		List candidatesList = []
+		
 		signatures.each 
 		{
-			Map obj = [candidato:it]
-
-			value = (sig.dists[0] - it.dists[0]).abs()
+			Map obj = [candidate:it]
 			def distance = 0
 			for (int i = 0;i<it.dists.size();i++)
 			{
-				distance = (sig.dists[i] - it.dists[i]).abs()
+				distance += (sig.dists[i] - it.dists[i]).abs()
 				
-				value = distance < value? distance : value
 			}
 			
-			obj.distance = value
-			candidatosMap.add(obj)
+			obj.distance = distance
+			candidatesList.add(obj)
 		}
-		candidatosMap.sort { it.distance }
-
-
-		(1..ConfigurationHolder.config.kNN).each{
-			if(candidatosMap.isEmpty()){
+		candidatesList = candidatesList.sort { it.distance }
+		
+		(1..knn).each{
+			if(candidatesList.isEmpty()){
 				return
 			}
-			candidatos.add(candidatosMap.head().candidato)
-			candidatosMap.remove(candidatosMap.head())
+			candidates.add(candidatesList.head().candidate)
+			candidatesList.remove(candidatesList.head())
 		}
-println candidatos.size()
-*/
-		return candidatos
+		
+		return candidates
 	}
 }

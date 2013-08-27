@@ -63,7 +63,7 @@ class BasicImplementationController
 	{
 		int radio = Integer.valueOf(params.radio?:"5")
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,sessionService.getIndex())
+		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,sessionService.getIndex(), params.method)
 		
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
 	}
