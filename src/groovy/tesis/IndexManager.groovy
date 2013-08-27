@@ -216,32 +216,6 @@ class IndexManager
 							indexByCateg++
 						}
 					}
-					/*
-					// el primer pivot es elegido al azar
-					pivote = getRandomPivot(fm)
-					pivs.add(pivote)
-					elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm)
-					
-					PivotDto piv 
-					max = getMediaD(elemPairs,pivs, null)
-					println "count: " + categs.elemCount
-					if("differentPivotes" == pivotSelection){
-						while(!pivots.every{it.value.size() ==pivotsQty} 
-						|| pivots.isEmpty() || categs.elemCount >= pivots.size())
-						{
-							if ((piv = getIncrementalPivot(pivs,max,elemPairs,fm))){
-								if(pivots.get(piv.categ) && pivots.get(piv.categ).size() < pivotsQty)
-								{
-									pivots.get(piv.categ).add(piv)
-								}
-								else if(!pivots.get(pivote.categ)) 
-								{
-									pivots.put(piv.categ, [piv])
-								}
-							}
-						
-						}
-					*/
 					
 				}else{
 					pivote = getRandomPivot(fm)
