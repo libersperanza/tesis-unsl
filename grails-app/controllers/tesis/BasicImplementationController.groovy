@@ -20,7 +20,6 @@ class BasicImplementationController
 {
 	
 	SearchService searchService
-	SessionService sessionService
 	
 	def index =	{
 		render(view:"index") 
@@ -34,9 +33,9 @@ class BasicImplementationController
 			ConfigurationHolder.config.strategy = "${params.pivotStrategy}_${params.pivotsQty?:'5'}"
 		
 			IndexManager mgr = new IndexManager(params.initMode);
-			sessionService.init()
-			sessionService.setIndex(mgr)
-		
+			mgr.createIndexFiles()
+			
+			servletContext["index"] = mgr
 			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA - MODO: $params.initMode"])
 		}
 		catch(Exception e)
@@ -47,13 +46,13 @@ class BasicImplementationController
 	}
 	def listCategs =
 	{
-		sessionService.getIndex().categs.printValues()
+		servletContext["index"].categs.printValues()
 		render(view:"list", model:[tit:"Categorias",lista:[]])
 	}
 
 	def listPivotes =
 	{
-		render(view:"list", model:[tit:"Pivotes", lista:sessionService.getIndex().pivots])
+		render(view:"list", model:[tit:"Pivotes", lista:servletContext["index"].pivots])
 	}
 	def searchItems =
 	{ render(view:"searchItems") }
@@ -63,7 +62,7 @@ class BasicImplementationController
 	{
 		int radio = Integer.valueOf(params.radio?:"5")
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,sessionService.getIndex(), params.method)
+		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,servletContext["index"], params.method)
 		
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
 	}
@@ -72,7 +71,7 @@ class BasicImplementationController
 	{
 		int radio = Integer.valueOf(params.radio?:"5")
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,sessionService.getIndex())
+		def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,servletContext["index"])
 		
 		render(view:"sequentialSearch", model:[tit:"Items",itemsFound:itemsFound])
 
@@ -82,18 +81,11 @@ class BasicImplementationController
 		}
 	def listItemCateg =
 	{
-		def itemsFound = searchService.getAllItemsByCateg(sessionService.getIndex(), params.categ)
+		def itemsFound = searchService.getAllItemsByCateg(servletContext["index"], params.categ)
 		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
 
 	}
-	def saveData = {
-		sessionService.getIndex().createIndexFiles()
-		render(view:"fillFile", model:[result:"Save: DONE!! - Mode: ${ConfigurationHolder.config.strategy}"])
-	}
 	
-	def getData = {
-		
-	}
 	def createFilePivotes = {
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		TextFileManager fmCateg = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);
@@ -118,23 +110,12 @@ class BasicImplementationController
 		if(fm.openFile(0))
 		{
 				
-				while(pivote = fm.nextPivot()){
-					
-						
-						if(!pv?."${pivote.categ}"){
-							pv?."${pivote.categ}" = new ArrayList<PivotDto>()
-						}
-						//if(pv?."${pivote.categ}".size()<50){
-							pv?."${pivote.categ}".add(pivote)
-						//}
-						/*rand = new Random()
-						(1..rand.nextInt(2)).each
-						{
-							fm.nextPivot()
-						}
-						*/
-				
+			while(pivote = fm.nextPivot()){
+				if(!pv?."${pivote.categ}"){
+					pv?."${pivote.categ}" = new ArrayList<PivotDto>()
 				}
+				pv?."${pivote.categ}".add(pivote)
+			}
 			
 		}
 		
@@ -161,9 +142,5 @@ class BasicImplementationController
 		p.each{
 			println it.key
 		}
-	
-		
 	}
 }
-	
-

@@ -74,10 +74,8 @@ class IndexManager
 			{
 				createPivots(pivotSelection,pivotsQty)
 			}
-			else if ("BY_CATEG_RND".equals(strategy))
+			else
 			{
-				//TODO: Implementar random por categoría, NO HACE FALTA
-			}else{
 				createIncrementalPivots(pivotSelection,pivotsQty)
 			}
 			
