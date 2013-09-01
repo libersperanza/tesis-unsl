@@ -43,7 +43,7 @@
 					type="text" name="pivotsQty" value="10" />
 			</p>
 			
-			<g:submitButton class="ch-btn" name="calcular" value="Inicializar"></g:submitButton><g:link controller="basicImplementation" action="saveData"> Save</g:link>
+			<g:submitButton class="ch-btn" name="calcular" value="Inicializar"></g:submitButton>
 		</g:form>
 		<hr>
 		<g:link controller="basicImplementation" action="listCategs">Listar Categorías </g:link>

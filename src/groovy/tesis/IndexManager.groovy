@@ -74,7 +74,8 @@ class IndexManager
 			{
 				createPivots(pivotSelection,pivotsQty)
 			}
-			else {
+			else
+			{
 				createIncrementalPivots(pivotSelection,pivotsQty)
 			}
 			
