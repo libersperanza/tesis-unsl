@@ -23,7 +23,7 @@ class SearchService {
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
-		def items =  getItemsFromFile(signatures, itemTitle, radio)
+		def items =  getItemsFromFile(signatures, itemTitle, radio,null)
 		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|${System.currentTimeMillis()-startTime}|$items.size|$signatures.size"
 		return items
     }
@@ -146,7 +146,7 @@ class SearchService {
 			candidates.add(candidatesList.head().candidate)
 			candidatesList.remove(candidatesList.head())
 		}
-		
+
 		return candidates
 	}
 }
