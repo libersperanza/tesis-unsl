@@ -281,19 +281,18 @@ class IndexManager
 				ItemDto curItem
 				while(curItem = fm.nextItem())
 				{
-					if(pivots.get(curItem.getCateg())){
-						ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
-						CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
-						int pos = categs.search(catForSearch)
-						if (categs.get(pos).equals(catForSearch)){
-							sig.itemPosition = rfm.insertItem(curItem)
-							sig.itemSize = curItem.toJSON().toString().length()
-							categs.get(pos).signatures.add(sig)
-						}else{
-							
-							noCateg++
+					ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
+						if(sig){
+							CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
+							int pos = categs.search(catForSearch)
+							if (categs.get(pos).equals(catForSearch)){
+								sig.itemPosition = rfm.insertItem(curItem)
+								sig.itemSize = curItem.toJSON().toString().length()
+								categs.get(pos).signatures.add(sig)
+							}else{
+								noCateg++
+							}
 						}
-					}
 				}
 				rfm.closeFile()
 			}

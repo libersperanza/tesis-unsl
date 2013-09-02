@@ -1,18 +1,10 @@
 package tesis
 
-import java.util.ArrayList;
-
-import tesis.file.manager.TextFileManager;
-
-import org.codehaus.groovy.grails.web.json.JSONObject
-
-
+import java.util.ArrayList
+import tesis.file.manager.TextFileManager
 import tesis.data.CategDto
-import tesis.data.ItemDto
-import tesis.data.ItemSignature;
 import tesis.data.PivotDto
-import tesis.file.manager.RandomAccessFileManager
-import tesis.utils.Utils;
+import tesis.utils.Utils
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 
@@ -54,15 +46,28 @@ class BasicImplementationController
 	{
 		render(view:"list", model:[tit:"Pivotes", lista:servletContext["index"].pivots])
 	}
-	def searchItems =
-	{ render(view:"searchItems") }
-	def listItems =
-	{ render(view:"sequentialSearch") }
-	def searchItemsCateg =
+	def searchItems = { 
+		
+		render(view:"searchItems") }
+
+	def listItems = { render(view:"sequentialSearch") }
+	
+	def rankSearch =
 	{
-		int radio = Integer.valueOf(params.radio?:"5")
+		int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.simpleSearch(itemTitle,params.categ,radio,servletContext["index"], params.method)
+		def itemsFound = searchService.rankSearch(itemTitle,params.categ,radio,servletContext["index"])
+		
+		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
+	}
+
+	def knnSearch =
+	{
+		int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
+		println "kNeighbors - ${kNeighbors}"
+		println params
+		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
+		def itemsFound = searchService.knnSearch(itemTitle,params.categ,kNeighbors,servletContext["index"])
 		
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
 	}

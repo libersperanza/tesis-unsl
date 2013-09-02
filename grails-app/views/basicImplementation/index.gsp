@@ -54,7 +54,9 @@
 		|
 		<g:link controller="basicImplementation" action="listItems">Busqueda secuencial </g:link>
 		|
-		<g:link controller="basicImplementation" action="searchItems">Buscar items de una categoria </g:link>
+		<g:link controller="basicImplementation" action="searchItems" params="['method':'rank']">Busqueda por rango </g:link>
+		|
+		<g:link controller="basicImplementation" action="searchItems" params="['method':'knn']">Busqueda por knn </g:link>
 
 	</div>
 	<script type="text/javascript"

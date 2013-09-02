@@ -1,14 +1,14 @@
 package tesis
 
 import tesis.data.CategDto
-import tesis.data.ItemSignature;
+import tesis.data.ItemSignature
 import tesis.file.manager.RandomAccessFileManager
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.codehaus.groovy.grails.web.json.JSONObject
 import tesis.utils.Utils
-import com.sun.xml.internal.bind.v2.util.EditDistance;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.sun.xml.internal.bind.v2.util.EditDistance
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 
 
 class SearchService {
@@ -23,21 +23,29 @@ class SearchService {
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
-		def items =  getItemsFromFile(signatures, itemTitle, radio,null)
+		def items =  getItemsFromFile(signatures, itemTitle, null)
 		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|${System.currentTimeMillis()-startTime}|$items.size|$signatures.size"
 		return items
     }
 	
-	def simpleSearch(String itemTitle, String categ,int radio, IndexManager mgr, String method)
+	def knnSearch(String itemTitle, String categ,int kNeighbors, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
-		def signatures = method == "byRank" ? getCandidatesByRank(itemTitle,categ,radio,mgr): getCandidatesByKNN(itemTitle,categ,radio,mgr)
-		def items = getItemsFromFile(signatures, itemTitle, radio, method)
-		log1.info "$ConfigurationHolder.config.strategy|using_index_${method?:'knn'}|${System.currentTimeMillis()-startTime}|$items.size"
+		def signatures = getCandidatesByKNN(itemTitle,categ,kNeighbors,mgr)
+		def items = getItemsFromFile(signatures, itemTitle, null)
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
 	}
 
-	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, int radio, String method) {
+	def rankSearch(String itemTitle, String categ,int radio, IndexManager mgr)
+	{
+		long startTime = System.currentTimeMillis()
+		def signatures = getCandidatesByRank(itemTitle,categ,radio,mgr)
+		def items = getItemsFromFile(signatures, itemTitle, radio)
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|${System.currentTimeMillis()-startTime}|$items.size"
+		return items
+	}
+	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio) {
 		ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
 
 		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
@@ -48,7 +56,7 @@ class SearchService {
 			{
 				def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
 				def dist = EditDistance.editDistance(itemTitle, item.searchTitle)
-				if(!method || dist < radio)
+				if(!radio || dist < radio)
 				{
 					itemsFound.add(item)
 				}
@@ -86,6 +94,8 @@ class SearchService {
 		ItemSignature candidate
 		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
 
+		if(!sig) return candidates
+
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		
@@ -116,10 +126,12 @@ class SearchService {
 		int value
 		ItemSignature candidate
 		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
-
+		
+		if(!sig) return candidates
+		
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
-		
+		println  mgr.categs.get(pos)
 		def signatures = mgr.categs.get(pos).signatures
 
 		List candidatesList = []
