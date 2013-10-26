@@ -47,18 +47,28 @@ class BasicImplementationController
 		render(view:"list", model:[tit:"Pivotes", lista:servletContext["index"].pivots])
 	}
 	def searchItems = { 
-		
-		render(view:"searchItems") }
+		render(view:"searchItems") 
+	}
 
 	def listItems = { render(view:"sequentialSearch") }
 	
+	def knnRankSearch =
+	{
+		int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
+		int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
+		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
+		def itemsFound = searchService.knnByRankSearch(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
+		
+		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+	}
+
 	def rankSearch =
 	{
 		int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 		def itemsFound = searchService.rankSearch(itemTitle,params.categ,radio,servletContext["index"])
 		
-		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
+		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
 	}
 
 	def knnSearch =
@@ -69,7 +79,7 @@ class BasicImplementationController
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 		def itemsFound = searchService.knnSearch(itemTitle,params.categ,kNeighbors,servletContext["index"])
 		
-		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound])
+		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
 	}
 
 	def sequentialSearch=
