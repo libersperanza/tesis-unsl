@@ -74,8 +74,6 @@ class BasicImplementationController
 	def knnSearch =
 	{
 		int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
-		println "kNeighbors - ${kNeighbors}"
-		println params
 		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 		def itemsFound = searchService.knnSearch(itemTitle,params.categ,kNeighbors,servletContext["index"])
 		

@@ -55,10 +55,17 @@ class SearchService {
 			signatures.each
 			{
 				def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
-				def dist = EditDistance.editDistance(itemTitle, item.searchTitle)
-				if(!radio || dist < radio)
+				if(!radio)
 				{
 					itemsFound.add(item)
+				}
+				else
+				{
+					def dist = EditDistance.editDistance(itemTitle, item.searchTitle)
+					if(dist < radio)
+					{
+						itemsFound.add(item)
+					}
 				}
 			}
 			rfm.closeFile()
@@ -108,9 +115,9 @@ class SearchService {
 		
 		def signatures = mgr.categs.get(pos).signatures
 		
-		while(items?.size() != kNeighbors &&  rank <= limit) {
+		while(items.size() != kNeighbors &&  rank <= limit) {
 			
-			if(items?.size() > kNeighbors){
+			if(items.size() > kNeighbors){
 				if(!isRefined){
 					limit = rank
 					rank = Math.pow(radio, (i - 2))
@@ -133,8 +140,6 @@ class SearchService {
 
 			candidates = getCandidates(signatures,candidates,sig,rank)
 			items = getItemsFromFile(candidates, itemTitle, rank)
-			
-			
 		}
 		
 		if(items.size() != kNeighbors){
@@ -188,8 +193,6 @@ class SearchService {
 		ItemSignature candidate
 		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
 
-		if(!sig) return candidates
-
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		
@@ -220,9 +223,7 @@ class SearchService {
 		int value
 		ItemSignature candidate
 		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
-		
-		if(!sig) return candidates
-		
+				
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		println  mgr.categs.get(pos)

@@ -36,7 +36,7 @@ class IndexManager
 	//Si se utiliza el mismo conjunto de pivotes p/todas
 	//las categorias, se carga el par "ALL",[lista_pivotes]
 	HashMap<String, ArrayList<PivotDto>> pivots = null;
-	def pivotsByCateg = null;
+	def pivotsByCateg
 
 	public IndexManager(String initMode)
 	{
@@ -47,7 +47,7 @@ class IndexManager
 		int pivotsQty = Integer.valueOf(strategyParams[2])
 
 		
-		if(initMode == "load"){
+		if(initMode == "load"){	
 			
 			File file = new File(ConfigurationHolder.config.categsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 			ArrayList<CategDto> categsList
@@ -128,10 +128,8 @@ class IndexManager
 			{
 				if("differentPivotes" == pivotSelection)
 				{
-					initPivotsByCateg()
-					println "Cant Categs in file ${pivotsByCateg.size()}"
+					fillPivotsByCategFromFile()
 					pivotsByCateg.each{ k, v->
-						println k
 						while(v.size() > pivotsQty) {
 							Random rand = new Random()
 							v.remove(rand.nextInt(v.size()))
@@ -183,10 +181,9 @@ class IndexManager
 				def pivs = []
 	
 				if("differentPivotes" == pivotSelection){
-					initPivotsByCateg()
 					
-					pivotsByCateg?.each{ obj ->
-						
+					fillPivotsByCategFromFile()
+					pivotsByCateg.each{ obj ->
 						pivote = getRandomElement(obj.value)
 						pivs.add(pivote)
 						elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm,obj.value)
@@ -258,7 +255,8 @@ class IndexManager
 		}
 		return null
 	}
-	private void initPivotsByCateg(){
+	private void fillPivotsByCategFromFile(){
+		
 		File filePv = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
 		filePv.withObjectInputStream(getClass().classLoader){ ois ->
 			pivotsByCateg = ois.readObject()
@@ -267,9 +265,7 @@ class IndexManager
 	private void createSignatures()
 	{
 		long startTime = System.currentTimeMillis()
-		def noCateg=0
 		
-		String res
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 
@@ -279,22 +275,31 @@ class IndexManager
 			{
 				rfm.resetFile();
 				ItemDto curItem
+				def categDescartadas = []
 				while(curItem = fm.nextItem())
 				{
-					ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
-						if(sig){
-							CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
-							int pos = categs.search(catForSearch)
-							if (categs.get(pos).equals(catForSearch)){
-								sig.itemPosition = rfm.insertItem(curItem)
-								sig.itemSize = curItem.toJSON().toString().length()
-								categs.get(pos).signatures.add(sig)
-							}else{
-								noCateg++
-							}
+					if(getPivotsForCateg(curItem.getCateg())) //Para las categs con menos de 50 items
+					{
+						ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
+						CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
+						int pos = categs.search(catForSearch)
+						if (categs.get(pos).equals(catForSearch)){
+							sig.itemPosition = rfm.insertItem(curItem)
+							sig.itemSize = curItem.toJSON().toString().length()
+							categs.get(pos).signatures.add(sig)
 						}
+					}
+					else
+					{
+						if(!categDescartadas.contains(curItem.getCateg()))
+						{
+							categDescartadas.add(curItem.getCateg())
+						}
+						
+					}
 				}
 				rfm.closeFile()
+				println "Categ descartadas: $categDescartadas"
 			}
 			else
 			{
@@ -391,16 +396,14 @@ class IndexManager
 		List a
 		List b
 		for (pair in pairs){
-			
 			a = pair.aDists.clone()
 			b = pair.bDists.clone()
 			if(pivotCandidate){
 				a[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.a.searchTitle, pivotCandidate.searchTitle)
-				b[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.b.searchTitle, pivotCandidate.searchTitle)
+				b[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.b.searchTitle,pivotCandidate.searchTitle)
 			}
 			max = (a[0]-b[0]).abs()
 			for(int i=1; i< a.size() && a[i]!=-1; i++){
-				
 				value = (a[i]-b[i]).abs()
 				if(value>max){
 					max=value

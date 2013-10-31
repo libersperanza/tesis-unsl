@@ -37,8 +37,6 @@ class ItemSignature implements Serializable
 	}
 	public ItemSignature(String itemTitle, List pivotes)
 	{	
-		if(!pivotes) return null
-		
 		dists = new int[pivotes.size()]
 		
 		for(int i=0; i< pivotes.size(); i++)

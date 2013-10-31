@@ -75,7 +75,7 @@ class TextFileManager {
 			String linea;
 			if((linea =  bf.readLine()) != null) {
 				String[] arLinea = linea.split(lineSeparator);
-				dto = new CategDto(categName:arLinea[0],itemQty:Integer.parseInt(arLinea[1]),signatures:new ArrayList<ItemSignature>());
+				dto = new CategDto(categName:arLinea[0].replaceAll("\\s+", " ").replaceAll("\"","'"),itemQty:Integer.parseInt(arLinea[1]),signatures:new ArrayList<ItemSignature>());
 			}
 			else {
 				return null;
@@ -96,9 +96,8 @@ class TextFileManager {
 		try {
 
 			if((linea = bf.readLine()) != null) {
-				linea = linea?.replaceAll("\\s+", " ")?.replaceAll("\"","'")
+				linea = linea.replaceAll("\\s+", " ").replaceAll("\"","'")
 				arLinea = linea.split(lineSeparator);
-				
 				dto = new ItemDto()
 				def map = getCommonData(arLinea)
 				dto.categ = map.categ
