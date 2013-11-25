@@ -45,7 +45,7 @@ class SearchService {
 		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
 	}
-	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, def radio) {
+	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio) {
 		ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
 
 		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
