@@ -107,7 +107,7 @@ class SearchService {
 	
 		def i = 0
 		
-		def rank = Math.pow(radio,i)
+		Double rank = Math.pow(radio,i)
 		boolean isRefined = false
 		def limit = rank
 		//Obtengo todas las firmas para la categoria
@@ -139,7 +139,7 @@ class SearchService {
 			itemsPrev = items
 
 			candidates = getCandidates(signatures,candidates,sig,rank)
-			items = getItemsFromFile(candidates, itemTitle, rank)
+			items = getItemsFromFile(candidates, itemTitle, (rank).intValue())
 		}
 		
 		if(items.size() != kNeighbors){
