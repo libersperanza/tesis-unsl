@@ -109,7 +109,6 @@ class IndexManager
 	
 	private void createCategsHash(ArrayList<CategDto> list)
 	{
-		long startTime = System.currentTimeMillis()
 		categs = new CategsHash(list.size(), 0.4)
 		for(CategDto c:list)
 		{
@@ -299,7 +298,7 @@ class IndexManager
 					}
 				}
 				rfm.closeFile()
-				println "Categ descartadas: $categDescartadas"
+				//println "Categ descartadas: $categDescartadas"
 			}
 			else
 			{

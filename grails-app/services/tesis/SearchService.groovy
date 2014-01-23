@@ -23,26 +23,101 @@ class SearchService {
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
+		log1.info "$ConfigurationHolder.config.strategy|secuential_search|$radio|${System.currentTimeMillis()-startTime}|$signatures.size"
+		startTime = System.currentTimeMillis()
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
-		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|${System.currentTimeMillis()-startTime}|$items.size|$signatures.size"
+		log1.info "$ConfigurationHolder.config.strategy|secuential_file_access|$radio|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
     }
 	
 	def knnSearch(String itemTitle, String categ,int kNeighbors, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
-		def candidates = getCandidatesByKNN(itemTitle,categ,kNeighbors,mgr)
-		def items = getItemsFromFile(candidates, itemTitle, null)
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn|${System.currentTimeMillis()-startTime}|$items.size"
+		def results = getCandidatesByKNN(itemTitle,categ,kNeighbors,mgr)
+		startTime = System.currentTimeMillis()
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_search|${System.currentTimeMillis()-startTime}|$results.candidates.size|$results.total"
+		def items = getItemsFromFile(results.candidates, itemTitle, null)
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_file_access|${System.currentTimeMillis()-startTime}|$items.size"
 		return items
 	}
 
 	def rankSearch(String itemTitle, String categ,int radio, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
-		def candidates = getCandidatesByRank(itemTitle,categ,radio,mgr)
-		def items = getItemsFromFile(candidates, itemTitle, radio)
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|${System.currentTimeMillis()-startTime}|$items.size"
+		def results = getCandidatesByRank(itemTitle,categ,radio,mgr)
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank_search|${System.currentTimeMillis()-startTime}|$results.candidates.size|$results.total"
+		startTime = System.currentTimeMillis()
+		def items = getItemsFromFile(results.candidates, itemTitle, radio)
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank_file_access|${System.currentTimeMillis()-startTime}|$items.size"
+		return items
+	}
+
+	def knnByRankSearch(String itemTitle, String categ,int radio, int kNeighbors , IndexManager mgr)
+	{
+		long startTime = System.currentTimeMillis()
+
+		long millisSearch = 0L
+		long millisFile = 0L
+		int candidatesSize = 0
+		//Calculo la firma para la query
+		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
+
+		def (candidates, items, itemsPrev, itemsRandom) = [[],[],[],[]]
+	
+		def i = 0
+		
+		Double rank = Math.pow(radio,i)
+		boolean isRefined = false
+		def limit = rank
+		//Obtengo todas las firmas para la categoria
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
+		
+		def signatures = mgr.categs.get(pos).signatures
+		
+		while(items.size() != kNeighbors &&  rank <= limit) {
+			
+			if(items.size() > kNeighbors){
+				if(!isRefined){
+					limit = rank
+					rank = Math.pow(radio, (i - 2))
+					itemsRandom = itemsPrev
+				}else{
+					itemsPrev = itemsRandom
+					itemsRandom = items - itemsRandom
+					break
+				}
+				isRefined = true				
+				rank++
+			}else if(!isRefined){
+				rank = Math.pow(radio,i++)
+				limit = rank
+			}else{
+				rank++
+			}
+			
+			itemsPrev = items
+
+			candidates = getCandidates(signatures,candidates,sig,rank)
+			millisSearch += System.currentTimeMillis()-startTime
+			startTime = System.currentTimeMillis()
+			items = getItemsFromFile(candidates, itemTitle, (rank).intValue())
+			millisFile += System.currentTimeMillis()-startTime
+			startTime = System.currentTimeMillis()
+		}
+		
+		if(items.size() != kNeighbors){
+			def item 
+			while(itemsPrev?.size() < kNeighbors) {
+				Random rand = new Random()
+				item = itemsRandom[Math.abs(rand.nextInt()) % itemsRandom?.size()]
+				itemsRandom.remove(item)
+				itemsPrev.add(item)
+			}
+			items = itemsPrev
+		}
+		millisSearch += System.currentTimeMillis()-startTime
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank_search|$millisSearch|$candidates.size"
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank_file_access|$millisFile|$items.size"
 		return items
 	}
 	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio) {
@@ -95,66 +170,7 @@ class SearchService {
 		return itemsFound
 	}
 
-// new 
-
-	def knnByRankSearch(String itemTitle, String categ,int radio, int kNeighbors , IndexManager mgr)
-	{
-		long startTime = System.currentTimeMillis()
-		//Calculo la firma para la query
-		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
-
-		def (candidates, items, itemsPrev, itemsRandom) = [[],[],[],[]]
 	
-		def i = 0
-		
-		Double rank = Math.pow(radio,i)
-		boolean isRefined = false
-		def limit = rank
-		//Obtengo todas las firmas para la categoria
-		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
-		
-		def signatures = mgr.categs.get(pos).signatures
-		
-		while(items.size() != kNeighbors &&  rank <= limit) {
-			
-			if(items.size() > kNeighbors){
-				if(!isRefined){
-					limit = rank
-					rank = Math.pow(radio, (i - 2))
-					itemsRandom = itemsPrev
-				}else{
-					itemsPrev = itemsRandom
-					itemsRandom = items - itemsRandom
-					break
-				}
-				isRefined = true				
-				rank++
-			}else if(!isRefined){
-				rank = Math.pow(radio,i++)
-				limit = rank
-			}else{
-				rank++
-			}
-			
-			itemsPrev = items
-
-			candidates = getCandidates(signatures,candidates,sig,rank)
-			items = getItemsFromFile(candidates, itemTitle, (rank).intValue())
-		}
-		
-		if(items.size() != kNeighbors){
-			def item 
-			while(itemsPrev?.size() < kNeighbors) {
-				Random rand = new Random()
-				item = itemsRandom[Math.abs(rand.nextInt()) % itemsRandom?.size()]
-				itemsRandom.remove(item)
-				itemsPrev.add(item)
-			}
-			items = itemsPrev
-		}
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|${System.currentTimeMillis()-startTime}|$items.size"
-		return items
-	}
 
 	def getCandidates(def signatures, def candidatesSelected ,def sig, def radio){
 		int value
@@ -183,8 +199,6 @@ class SearchService {
 		}
 		return candidates 
 	}
-
-// end new
 
 	def getCandidatesByRank(String itemTitle, String categ,int radio, IndexManager mgr){
 		//Calculo la firma para la query
@@ -215,7 +229,7 @@ class SearchService {
 				candidates.add(candidate)
 			}
 		}
-		return candidates 
+		return ["candidates":candidates,"total":signatures.size]
 	}
 	def getCandidatesByKNN(String itemTitle, String categ,int knn, IndexManager mgr){
 		
@@ -226,7 +240,7 @@ class SearchService {
 				
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
-		println  mgr.categs.get(pos)
+
 		def signatures = mgr.categs.get(pos).signatures
 
 		List candidatesList = []
@@ -254,6 +268,6 @@ class SearchService {
 			candidatesList.remove(candidatesList.head())
 		}
 
-		return candidates
+		return ["candidates":candidates,"total":signatures.size]
 	}
 }
