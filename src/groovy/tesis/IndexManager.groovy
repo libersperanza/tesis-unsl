@@ -121,45 +121,38 @@ class IndexManager
 		long startTime = System.currentTimeMillis()
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		String res;
-		if(pivotsQty <= 30)
+		if(fm.openFile(0))
 		{
-			if(fm.openFile(0))
+			if("differentPivotes" == pivotSelection)
 			{
-				if("differentPivotes" == pivotSelection)
-				{
-					fillPivotsByCategFromFile()
-					pivotsByCateg.each{ k, v->
-						while(v.size() > pivotsQty) {
-							Random rand = new Random()
-							v.remove(rand.nextInt(v.size()))
-						}
-						pivots.put(k,v)
-					}
-				}
-				else
-				{
-					def pivs = []
-					(1..pivotsQty).each
-					{
-						pivs.add(fm.nextPivot())
+				fillPivotsByCategFromFile()
+				pivotsByCateg.each{ k, v->
+					while(v.size() > pivotsQty) {
 						Random rand = new Random()
-						(1..rand.nextInt(10)).each
-						{
-							fm.nextPivot()
-						}
+						v.remove(rand.nextInt(v.size()))
 					}
-					pivots.put("ALL",pivs)
+					pivots.put(k,v)
 				}
-				fm.closeFile()
 			}
 			else
 			{
-				throw new Exception("Error al abrir el archivo")
+				def pivs = []
+				(1..pivotsQty).each
+				{
+					pivs.add(fm.nextPivot())
+					Random rand = new Random()
+					(1..rand.nextInt(10)).each
+					{
+						fm.nextPivot()
+					}
+				}
+				pivots.put("ALL",pivs)
 			}
+			fm.closeFile()
 		}
 		else
 		{
-			throw new Exception("Cantidad de pivotes mayor a la permitida (30)")
+			throw new Exception("Error al abrir el archivo")
 		}
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}

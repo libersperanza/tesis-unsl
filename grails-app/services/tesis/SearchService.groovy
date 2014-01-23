@@ -23,32 +23,23 @@ class SearchService {
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
-		log1.info "$ConfigurationHolder.config.strategy|secuential_search|$radio|${System.currentTimeMillis()-startTime}|$signatures.size"
+		long timeSearch = System.currentTimeMillis()-startTime
 		startTime = System.currentTimeMillis()
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
-		log1.info "$ConfigurationHolder.config.strategy|secuential_file_access|$radio|${System.currentTimeMillis()-startTime}|$items.size"
+		long timeIO =  System.currentTimeMillis()-startTime
+		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|$timeSearch|$signatures.size|$timeIO|$items.size|$signatures.size"
 		return items
     }
-	
-	def knnSearch(String itemTitle, String categ,int kNeighbors, IndexManager mgr)
-	{
-		long startTime = System.currentTimeMillis()
-		def results = getCandidatesByKNN(itemTitle,categ,kNeighbors,mgr)
-		startTime = System.currentTimeMillis()
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_search|${System.currentTimeMillis()-startTime}|$results.candidates.size|$results.total"
-		def items = getItemsFromFile(results.candidates, itemTitle, null)
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_file_access|${System.currentTimeMillis()-startTime}|$items.size"
-		return items
-	}
 
 	def rankSearch(String itemTitle, String categ,int radio, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
 		def results = getCandidatesByRank(itemTitle,categ,radio,mgr)
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank_search|${System.currentTimeMillis()-startTime}|$results.candidates.size|$results.total"
+		long timeSearch = System.currentTimeMillis()-startTime
 		startTime = System.currentTimeMillis()
 		def items = getItemsFromFile(results.candidates, itemTitle, radio)
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank_file_access|${System.currentTimeMillis()-startTime}|$items.size"
+		long timeIO =  System.currentTimeMillis()-startTime
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$timeSearch|$results.candidates.size|$timeIO|$items.size|$results.total"
 		return items
 	}
 
@@ -116,8 +107,7 @@ class SearchService {
 			items = itemsPrev
 		}
 		millisSearch += System.currentTimeMillis()-startTime
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank_search|$millisSearch|$candidates.size"
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank_file_access|$millisFile|$items.size"
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$millisSearch|$candidates.size|$millisFile|$items.size|$signatures.size"
 		return items
 	}
 	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio) {
