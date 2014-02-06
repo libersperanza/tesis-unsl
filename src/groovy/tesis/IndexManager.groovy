@@ -166,7 +166,7 @@ class IndexManager
 		def pivote
 		def max	
 		
-		if(pivotsQty <= 50)
+		if(pivotsQty <= 128)
 		{
 			if(fm.openFile(0))
 			{
@@ -226,7 +226,7 @@ class IndexManager
 		}
 		else
 		{
-			throw new Exception("Cantidad de pivotes mayor a la permitida (50)")
+			throw new Exception("Cantidad de pivotes mayor a la permitida (128)")
 		}
 
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
