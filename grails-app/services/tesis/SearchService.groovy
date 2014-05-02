@@ -27,7 +27,7 @@ class SearchService {
 		startTime = System.currentTimeMillis()
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
 		long timeIO =  System.currentTimeMillis()-startTime
-		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|$timeSearch|$signatures.size|$timeIO|$items.size|$signatures.size"
+		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|$timeSearch|$signatures.size|$timeIO|$items.size|$signatures.size|$categ|$itemTitle"
 		return items
     }
 
@@ -39,7 +39,7 @@ class SearchService {
 		startTime = System.currentTimeMillis()
 		def items = getItemsFromFile(results.candidates, itemTitle, radio)
 		long timeIO =  System.currentTimeMillis()-startTime
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$timeSearch|$results.candidates.size|$timeIO|$items.size|$results.total"
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$timeSearch|$results.candidates.size|$timeIO|$items.size|$results.total|$categ|$itemTitle"
 		return items
 	}
 
@@ -107,7 +107,7 @@ class SearchService {
 			items = itemsPrev
 		}
 		millisSearch += System.currentTimeMillis()-startTime
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$millisSearch|$candidates.size|$millisFile|$items.size|$signatures.size"
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$millisSearch|$candidates.size|$millisFile|$items.size|$signatures.size|$categ|$itemTitle"
 		return items
 	}
 	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio) {
@@ -156,7 +156,7 @@ class SearchService {
 			}
 			rfm.closeFile()
 		}
-		log1.info "$ConfigurationHolder.config.strategy|all_in_categ|${categ}|${itemsFound.size()}"
+		log1.info "$ConfigurationHolder.config.strategy|all_in_categ|${categ}|${itemsFound.size()}|$categ| "
 		return itemsFound
 	}
 
