@@ -17,7 +17,7 @@ class SearchService {
 
     static transactional = false
 
-    def sequentialSearch(String itemTitle, String categ,int radio, IndexManager mgr)
+    def sequentialSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
@@ -31,7 +31,7 @@ class SearchService {
 		return items
     }
 
-	def rankSearch(String itemTitle, String categ,int radio, IndexManager mgr)
+	def rankSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
 		def results = getCandidatesByRank(itemTitle,categ,radio,mgr)
@@ -43,7 +43,7 @@ class SearchService {
 		return items
 	}
 
-	def knnByRankSearch(String itemTitle, String categ,int radio, int kNeighbors , IndexManager mgr)
+	def knnByRankSearch(String itemTitle, String categ,Integer radio, int kNeighbors , IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
 
@@ -190,7 +190,7 @@ class SearchService {
 		return candidates 
 	}
 
-	def getCandidatesByRank(String itemTitle, String categ,int radio, IndexManager mgr){
+	def getCandidatesByRank(String itemTitle, String categ,Integer radio, IndexManager mgr){
 		//Calculo la firma para la query
 		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
 		int value
