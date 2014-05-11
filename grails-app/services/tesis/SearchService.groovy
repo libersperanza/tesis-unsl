@@ -31,6 +31,19 @@ class SearchService {
 		return items
     }
 
+    def knnSearch(String itemTitle, String categ,int kNeighbors, IndexManager mgr)
+	{
+		long startTime = System.currentTimeMillis()
+		def results = getCandidatesByKNN(itemTitle,categ,kNeighbors,mgr)
+		long timeSearch = System.currentTimeMillis()-startTime
+		startTime = System.currentTimeMillis()
+		def items = getItemsFromFile(results.candidates, itemTitle, null)
+		long timeIO =  System.currentTimeMillis()-startTime
+		int radio = results.radio
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn|$radio|$timeSearch|$results.candidates.size|$timeIO|$items.size|$results.total|$categ|$itemTitle"
+		return items
+	}
+
 	def rankSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
@@ -249,15 +262,18 @@ class SearchService {
 			candidatesList.add(obj)
 		}
 		candidatesList = candidatesList.sort { it.distance }
-		
+		def radio=0
+		def cte
 		(1..knn).each{
 			if(candidatesList.isEmpty()){
 				return
 			}
-			candidates.add(candidatesList.head().candidate)
+			cte = candidatesList.head()
+			candidates.add(cte.candidate)
 			candidatesList.remove(candidatesList.head())
+			radio = (cte.distance > radio)? cte.distance : radio
 		}
 
-		return ["candidates":candidates,"total":signatures.size]
+		return ["candidates":candidates,"total":signatures.size,radio:radio]
 	}
 }
