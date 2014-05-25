@@ -1,7 +1,7 @@
 package tesis.utils
 
 class Utils {
-	public static def removeSpecialCharacters(str){
+	public static String removeSpecialCharacters(str){
 		if(str == null){
 			return null;
 		}
