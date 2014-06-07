@@ -31,19 +31,6 @@ class SearchService {
 		return items
     }
 
-    def knnSearch(String itemTitle, String categ,int kNeighbors, IndexManager mgr)
-	{
-		long startTime = System.currentTimeMillis()
-		def results = getCandidatesByKNN(itemTitle,categ,kNeighbors,mgr)
-		long timeSearch = System.currentTimeMillis()-startTime
-		startTime = System.currentTimeMillis()
-		def items = getItemsFromFile(results.candidates, itemTitle, null)
-		long timeIO =  System.currentTimeMillis()-startTime
-		int radio = results.radio
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn|$radio|$timeSearch|$results.candidates.size|$timeIO|$items.size|$results.total|$categ|$itemTitle"
-		return items
-	}
-
 	def rankSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
 		long startTime = System.currentTimeMillis()
@@ -54,6 +41,38 @@ class SearchService {
 		long timeIO =  System.currentTimeMillis()-startTime
 		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$timeSearch|$results.candidates.size|$timeIO|$items.size|$results.total|$categ|$itemTitle"
 		return items
+	}
+
+	def getCandidatesByRank(String itemTitle, String categ,Integer radio, IndexManager mgr){
+		//Calculo la firma para la query
+		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
+		int value
+		ItemSignature candidate
+		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
+
+		//Obtengo todas las firmas para la categoria
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
+		
+		def signatures = mgr.categs.get(pos).signatures
+
+		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
+		signatures.each 
+		{
+			candidate = it
+			for (int i = 0;i<it.dists.size();i++)
+			{
+				value = (sig.dists[i] - candidate.dists[i]).abs()
+				if (value > radio)
+				{
+					i = candidate.dists.size()
+					candidate=null
+				}
+			}
+			if(candidate){
+				candidates.add(candidate)
+			}
+		}
+		return ["candidates":candidates,"total":signatures.size]
 	}
 
 	def knnByRankSearch(String itemTitle, String categ,Integer radio, int kNeighbors , IndexManager mgr)
@@ -76,7 +95,7 @@ class SearchService {
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		
-		def signatures = mgr.categs.get(pos).signatures
+		def signatures = mgr.categs.get(pos).signatures.clone()
 		
 		while(items.size() != kNeighbors &&  rank <= limit) {
 			
@@ -122,6 +141,34 @@ class SearchService {
 		millisSearch += System.currentTimeMillis()-startTime
 		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$millisSearch|$candidates.size|$millisFile|$items.size|$signatures.size|$categ|$itemTitle"
 		return items
+	}
+
+	def getCandidates(def signatures, def candidatesSelected ,def sig, def radio){
+		int value
+		ItemSignature candidate
+		def candidates = candidatesSelected
+		
+		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
+		signatures.each 
+		{	
+			candidate = it
+			
+			if(!candidatesSelected?.find{it == candidate}){
+				for (int i = 0;i<it.dists.size();i++)
+				{
+					value = (sig.dists[i] - candidate.dists[i]).abs()
+					if (value > radio)
+					{
+						i = candidate.dists.size()
+						candidate=null
+					}
+				}
+				if(candidate){
+					candidates.add(candidate)
+				}
+			}
+		}
+		return candidates 
 	}
 	private getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio) {
 		ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
@@ -171,109 +218,5 @@ class SearchService {
 		}
 		log1.info "$ConfigurationHolder.config.strategy|all_in_categ|${categ}|${itemsFound.size()}|$categ| "
 		return itemsFound
-	}
-
-	
-
-	def getCandidates(def signatures, def candidatesSelected ,def sig, def radio){
-		int value
-		ItemSignature candidate
-		def candidates = candidatesSelected
-		
-		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
-		signatures?.each 
-		{	
-			candidate = it
-			
-			if(!candidatesSelected?.find{it == candidate}){
-				for (int i = 0;i<it.dists.size();i++)
-				{
-					value = (sig.dists[i] - candidate.dists[i]).abs()
-					if (value > radio)
-					{
-						i = candidate.dists.size()
-						candidate=null
-					}
-				}
-				if(candidate){
-					candidates.add(candidate)
-				}
-			}
-		}
-		return candidates 
-	}
-
-	def getCandidatesByRank(String itemTitle, String categ,Integer radio, IndexManager mgr){
-		//Calculo la firma para la query
-		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
-		int value
-		ItemSignature candidate
-		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
-
-		//Obtengo todas las firmas para la categoria
-		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
-		
-		def signatures = mgr.categs.get(pos).signatures
-
-		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
-		signatures.each 
-		{
-			candidate = it
-			for (int i = 0;i<it.dists.size();i++)
-			{
-				value = (sig.dists[i] - candidate.dists[i]).abs()
-				if (value > radio)
-				{
-					i = candidate.dists.size()
-					candidate=null
-				}
-			}
-			if(candidate){
-				candidates.add(candidate)
-			}
-		}
-		return ["candidates":candidates,"total":signatures.size]
-	}
-	def getCandidatesByKNN(String itemTitle, String categ,int knn, IndexManager mgr){
-		
-		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
-		int value
-		ItemSignature candidate
-		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
-				
-		//Obtengo todas las firmas para la categoria
-		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
-
-		def signatures = mgr.categs.get(pos).signatures
-
-		List candidatesList = []
-		
-		signatures.each 
-		{
-			Map obj = [candidate:it]
-			def distance = 0
-			for (int i = 0;i<it.dists.size();i++)
-			{
-				distance += (sig.dists[i] - it.dists[i]).abs()
-				
-			}
-			
-			obj.distance = distance
-			candidatesList.add(obj)
-		}
-		candidatesList = candidatesList.sort { it.distance }
-		def radio=0
-		def cte
-		(1..knn).each{
-			if(candidatesList.isEmpty()){
-				return
-			}
-			cte = candidatesList.head()
-			candidates.add(cte.candidate)
-			candidatesList.remove(candidatesList.head())
-			radio = (cte.distance > radio)? cte.distance : radio
-		}
-
-		return ["candidates":candidates,"total":signatures.size,radio:radio]
 	}
 }

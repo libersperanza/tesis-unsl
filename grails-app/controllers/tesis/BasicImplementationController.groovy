@@ -71,15 +71,6 @@ class BasicImplementationController
 		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
 	}
 
-	def knnSearch =
-	{
-		int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
-		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.knnSearch(itemTitle,params.categ,kNeighbors,servletContext["index"])
-		
-		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
-	}
-
 	def sequentialSearch=
 	{
 		int radio = Integer.valueOf(params.radio?:"5")

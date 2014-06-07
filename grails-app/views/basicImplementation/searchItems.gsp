@@ -29,9 +29,6 @@
 		<g:if test="${params.method == 'rankSearch'}">
 			<p class="ch-form-row ch-form-required"><label>Radio:</label><input type="text" name="radio" value="2"/></p>
 		</g:if>
-		<g:if test="${params.method == 'knnSearch'}">
-			<p class="ch-form-row ch-form-required"><label>kNeighbors</label><input type="text" name="neighbors" value=""/></p>
-		</g:if>
 		<g:if test="${params.method == 'knnRankSearch'}">
 			<p class="ch-form-row ch-form-required"><label>Radio:</label><input type="text" name="radio" value="2"/></p>
 			<p class="ch-form-row ch-form-required"><label>kNeighbors</label><input type="text" name="neighbors" value=""/></p>
