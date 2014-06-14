@@ -43,7 +43,8 @@ class SearchService {
 		return items
 	}
 
-	def getCandidatesByRank(String itemTitle, String categ,Integer radio, IndexManager mgr){
+	def getCandidatesByRank(String itemTitle, String categ,Integer radio, IndexManager mgr)
+	{
 		//Calculo la firma para la query
 		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
 		int value
@@ -195,6 +196,130 @@ class SearchService {
 			}
 			rfm.closeFile()
 		}
+		return itemsFound
+	}
+
+	def knnByRankSearchV2(String itemTitle, String categ,Integer a, int kNeighbors , IndexManager mgr)
+	{
+		Map timeCalc = [startTime : System.currentTimeMillis(), millisSearch : 0L, millisFile : 0L]
+		int radio = 0
+		int i = 0
+		def items = []
+		def indexData = mgr.categs.get(mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))).signatures.collect{["signature":it]}
+		//Calculo la firma para la query
+		ItemSignature q = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
+
+		while(items.size < kNeighbors) {
+			radio = Math.pow(a,i).intValue()
+			def results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
+			log.info "PROBANDO RADIO $radio RESULTS $results.size"
+			if(items.size + results.size > kNeighbors)
+			{
+				int li = Math.pow(a,i - 1).intValue()
+				int ls = radio
+				boolean done = false
+				while(li <= ls)
+				{
+					radio = ((ls + li)/2).intValue()
+					log.info "BISECCION RADIO $radio"
+					results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
+					if(items.size() + results.size == kNeighbors)
+					{
+						log.info "RESULTS $results.size - ITEMS $items.size"
+						li = ls + 1
+						items.addAll(results.collect{it.item})
+						indexData.removeAll(results.collect{it.signature})
+					}
+					else
+					{
+						log.info "RESULTS $results.size - ITEMS $items.size"
+						if(items.size + results.size < kNeighbors)
+						{
+							li = radio + 1
+							items.addAll(results.collect{it.item})
+							indexData.removeAll(results.collect{it.signature})
+						}
+						else
+						{
+							ls = radio - 1
+						}
+						radio = radio + 1 //PARA DESPUES
+					}
+				}
+				if(items.size != kNeighbors)
+				{
+					results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
+					log.info("ELIMINANDO ITEMS SOBRANTES DE $results.size")
+					int j = 0;
+					while(items.size < kNeighbors)
+					{
+						items.add(results[j].item)
+						indexData.remove(results[j].signature)
+						j++
+					}
+				}
+			}
+			else
+			{
+				log.info("AGREGANDO $results.size ITEMS AL RESULTADO FINAL")
+				items.addAll(results.collect{it.item})
+				indexData.removeAll(results.collect{it.signature})
+				i++
+			}
+		}
+		log.info("TERMINO")
+		int evalDistQty = indexData.findAll{it.dist!=null}.size + items.size
+		timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
+
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$timeCalc.millisSearch|$evalDistQty|$timeCalc.millisFile|$items.size|$indexData.size|$categ|$itemTitle"
+		return items
+	}
+
+	def getItemsForRadio(String itemTitle, ItemSignature q, Integer radio, List indexData, Map timeCalc){
+		
+		//ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
+		List itemsFound = []
+		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
+		timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
+		timeCalc.startTime = System.currentTimeMillis()
+		
+		rfm.openFile("rw")
+		timeCalc.millisFile += System.currentTimeMillis()-timeCalc.startTime
+		timeCalc.startTime = System.currentTimeMillis()
+		int dyc = 0
+		int dc = 0
+		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
+		indexData.each 
+		{ candidate -> 
+			boolean add = true
+			for (int i = 0;i<candidate.signature.dists.size();i++)
+			{
+				if ((q.dists[i] - candidate.signature.dists[i]).abs() > radio)
+				{
+					i = candidate.signature.dists.size()
+					add = false
+				}
+			}
+			timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
+			timeCalc.startTime = System.currentTimeMillis()
+			if(add)
+			{
+				def item =  new JSONObject(rfm.getItem(candidate.signature.itemPosition,candidate.signature.itemSize))
+				if(!candidate.dist)
+				{
+					candidate.dist = EditDistance.editDistance(itemTitle, item.searchTitle)
+				}
+				if(candidate.dist < radio)
+				{
+					itemsFound.add([item:item, signature: candidate])
+				}
+				timeCalc.millisFile += System.currentTimeMillis()-timeCalc.startTime
+				timeCalc.startTime = System.currentTimeMillis()
+			}
+		}
+		rfm.closeFile()
+		timeCalc.millisFile += System.currentTimeMillis()-timeCalc.startTime
+		timeCalc.startTime = System.currentTimeMillis()
 		return itemsFound
 	}
 	
