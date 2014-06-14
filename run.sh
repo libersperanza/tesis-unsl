@@ -21,8 +21,8 @@ LISTA="$title1 $title2 $title3 $title4"
 
 for var in $LISTA 
 do 
-    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?method=knnRankSearch&categ=1227Libros_Otros&neighbors=32&radio=5&itemTitle=$var"
-	curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?method=knnRankSearch&categ=1227Libros_Otros&neighbors=316&radio=5&itemTitle=$var"
-	curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?method=knnRankSearch&categ=1227Libros_Otros&neighbors=3163&radio=5&itemTitle=$var"
+    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?method=knnRankSearch&categ=1227Libros_Otros&neighbors=32&radio=2&itemTitle=$var"
+	curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?method=knnRankSearch&categ=1227Libros_Otros&neighbors=316&radio=2&itemTitle=$var"
+	curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?method=knnRankSearch&categ=1227Libros_Otros&neighbors=3163&radio=2&itemTitle=$var"
 done
 
