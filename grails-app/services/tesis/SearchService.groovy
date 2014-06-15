@@ -271,7 +271,7 @@ class SearchService {
 		int evalDistQty = indexData.findAll{it.dist!=null}.size + items.size
 		timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
 
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$timeCalc.millisSearch|$evalDistQty|$timeCalc.millisFile|$items.size|$indexData.size|$categ|$itemTitle"
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$timeCalc.millisSearch|$evalDistQty|$timeCalc.millisFile|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
 		return items
 	}
 
