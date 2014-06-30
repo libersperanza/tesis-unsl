@@ -54,39 +54,96 @@ class BasicImplementationController
 	
 	def knnRankSearch =
 	{
-		int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
-		int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
-		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.knnByRankSearchV2(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
-		
-		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+		try
+		{
+			int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
+			int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
+			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
+			def itemsFound = searchService.knnByRankSearchV2(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
+			if(params.flat=="Y")
+			{
+				render itemsFound
+			}
+			else
+			{
+				render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+			}
+		}
+		catch(Exception e)
+		{
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+		}
 	}
 
 	def rankSearch =
 	{
-		int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
-		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.rankSearch(itemTitle,params.categ,radio,servletContext["index"])
+		try 
+		{
+			int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
+			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
+			def itemsFound = searchService.rankSearch(itemTitle,params.categ,radio,servletContext["index"])
+			
+			if(params.flat=="Y")
+			{
+				render itemsFound
+			}
+			else
+			{
+				render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+			}
+		}
+		catch(Exception e)
+		{
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+		}
 		
-		render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+		
 	}
 
 	def sequentialSearch=
 	{
-		int radio = Integer.valueOf(params.radio?:"5")
-		String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-		def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,servletContext["index"])
-		
-		render(view:"sequentialSearch", model:[tit:"Items",itemsFound:itemsFound])
-
+		try 
+		{
+			int radio = Integer.valueOf(params.radio?:"5")
+			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
+			def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,servletContext["index"])
+			
+			if(params.flat=="Y")
+			{
+				render itemsFound
+			}
+			else
+			{
+				render(view:"sequentialSearch", model:[tit:"Items",itemsFound:itemsFound])
+			}
+		}
+		catch(Exception e) 
+		{
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+		}
 	}
 	def listItemCategForm = {
 		render (view:"listItemsCateg")
 		}
 	def listItemCateg =
 	{
-		def itemsFound = searchService.getAllItemsByCateg(servletContext["index"], params.categ)
-		render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
+		try 
+		{
+			def itemsFound = searchService.getAllItemsByCateg(servletContext["index"], params.categ)
+			if(params.flat=="Y")
+			{
+				render itemsFound
+			}
+			else
+			{
+				
+				render(view:"listItemsCateg", model:[tit:"Items",itemsFound:itemsFound])
+			}
+		}
+		catch(Exception e) 
+		{
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+		}
 
 	}
 	

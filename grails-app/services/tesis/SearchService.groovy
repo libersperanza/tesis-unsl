@@ -209,10 +209,10 @@ class SearchService {
 		//Calculo la firma para la query
 		ItemSignature q = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
 
-		while(items.size < kNeighbors) {
+		while(items.size < kNeighbors && indexData.size > 0) {
 			radio = Math.pow(a,i).intValue()
 			def results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
-			log.info "PROBANDO RADIO $radio RESULTS $results.size"
+			//log.info "PROBANDO RADIO $radio RESULTS $results.size"
 			if(items.size + results.size > kNeighbors)
 			{
 				int li = Math.pow(a,i - 1).intValue()
@@ -221,18 +221,18 @@ class SearchService {
 				while(li <= ls)
 				{
 					radio = ((ls + li)/2).intValue()
-					log.info "BISECCION RADIO $radio"
+					//log.info "BISECCION RADIO $radio"
 					results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
 					if(items.size() + results.size == kNeighbors)
 					{
-						log.info "RESULTS $results.size - ITEMS $items.size"
+						//log.info "RESULTS $results.size - ITEMS $items.size"
 						li = ls + 1
 						items.addAll(results.collect{it.item})
 						indexData.removeAll(results.collect{it.signature})
 					}
 					else
 					{
-						log.info "RESULTS $results.size - ITEMS $items.size"
+						//log.info "RESULTS $results.size - ITEMS $items.size"
 						if(items.size + results.size < kNeighbors)
 						{
 							li = radio + 1
@@ -249,7 +249,7 @@ class SearchService {
 				if(items.size != kNeighbors)
 				{
 					results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
-					log.info("ELIMINANDO ITEMS SOBRANTES DE $results.size")
+					//log.info("ELIMINANDO ITEMS SOBRANTES DE $results.size")
 					int j = 0;
 					while(items.size < kNeighbors)
 					{
@@ -261,13 +261,13 @@ class SearchService {
 			}
 			else
 			{
-				log.info("AGREGANDO $results.size ITEMS AL RESULTADO FINAL")
+				//log.info("AGREGANDO $results.size ITEMS AL RESULTADO FINAL")
 				items.addAll(results.collect{it.item})
 				indexData.removeAll(results.collect{it.signature})
 				i++
 			}
 		}
-		log.info("TERMINO")
+		//log.info("TERMINO")
 		int evalDistQty = indexData.findAll{it.dist!=null}.size + items.size
 		timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
 
