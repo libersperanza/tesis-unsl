@@ -62,7 +62,7 @@ class BasicImplementationController
 			def itemsFound = searchService.knnByRankSearchV2(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
 			if(params.flat=="Y")
 			{
-				render itemsFound
+				render ""//render itemsFound+ "\n"
 			}
 			else
 			{
@@ -71,7 +71,7 @@ class BasicImplementationController
 		}
 		catch(Exception e)
 		{
-			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 	}
 
@@ -85,7 +85,7 @@ class BasicImplementationController
 			
 			if(params.flat=="Y")
 			{
-				render itemsFound
+				render ""//render itemsFound+ "\n"
 			}
 			else
 			{
@@ -94,7 +94,7 @@ class BasicImplementationController
 		}
 		catch(Exception e)
 		{
-			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 		
 		
@@ -110,7 +110,7 @@ class BasicImplementationController
 			
 			if(params.flat=="Y")
 			{
-				render itemsFound
+				render ""//render itemsFound+ "\n"
 			}
 			else
 			{
@@ -119,7 +119,7 @@ class BasicImplementationController
 		}
 		catch(Exception e) 
 		{
-			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 	}
 	def listItemCategForm = {
@@ -132,7 +132,7 @@ class BasicImplementationController
 			def itemsFound = searchService.getAllItemsByCateg(servletContext["index"], params.categ)
 			if(params.flat=="Y")
 			{
-				render itemsFound
+				render ""//render itemsFound+ "\n"
 			}
 			else
 			{
@@ -142,7 +142,7 @@ class BasicImplementationController
 		}
 		catch(Exception e) 
 		{
-			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e"
+			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 
 	}
