@@ -44,7 +44,9 @@ class BasicImplementationController
 
 	def listPivotes =
 	{
-		render(view:"list", model:[tit:"Pivotes", lista:servletContext["index"].pivots])
+		log.info servletContext["index"].pivots
+		//render(view:"list", model:[tit:"Pivotes", lista:servletContext["index"].pivots])
+		render(view:"list", model:[tit:"Pivotes", lista:[]])
 	}
 	def searchItems = { 
 		render(view:"searchItems") 
@@ -71,6 +73,7 @@ class BasicImplementationController
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace()
 			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 	}
@@ -94,6 +97,7 @@ class BasicImplementationController
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace()
 			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 		
@@ -119,6 +123,7 @@ class BasicImplementationController
 		}
 		catch(Exception e) 
 		{
+			e.printStackTrace()
 			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 	}
@@ -142,6 +147,7 @@ class BasicImplementationController
 		}
 		catch(Exception e) 
 		{
+			e.printStackTrace()
 			render "PARAMS: [title=${params.itemTitle}, categ=${params.categ}] ERROR: $e\n"
 		}
 
