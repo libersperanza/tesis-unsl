@@ -19,27 +19,37 @@ class SearchService {
 
     def sequentialSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
-		long startTime = System.currentTimeMillis()
+		long id = java.lang.Thread.currentThread().getId();
+		long startTimeCPU = Utils.getCpuTime([id])
+		long startTimeUser = Utils.getUserTime([id])
+		
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
-		long timeSearch = System.currentTimeMillis()-startTime
-		startTime = System.currentTimeMillis()
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
-		long timeIO =  System.currentTimeMillis()-startTime
-		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|$timeSearch|$signatures.size|$timeIO|$items.size|$signatures.size|$categ|$itemTitle"
+		
+		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
+		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|$elapsedCPUTime|$elapsedUserTime|$signatures.size|$items.size|$signatures.size|$categ|$itemTitle"
 		return items
     }
 
 	def rankSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
-		long startTime = System.currentTimeMillis()
+		long id = java.lang.Thread.currentThread().getId();
+		long startTimeCPU = Utils.getCpuTime([id])
+		long startTimeUser = Utils.getUserTime([id])
+
+
 		def results = getCandidatesByRank(itemTitle,categ,radio,mgr)
-		long timeSearch = System.currentTimeMillis()-startTime
-		startTime = System.currentTimeMillis()
 		def items = getItemsFromFile(results.candidates, itemTitle, radio)
-		long timeIO =  System.currentTimeMillis()-startTime
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$timeSearch|$results.candidates.size|$timeIO|$items.size|$results.total|$categ|$itemTitle"
+		
+		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
+
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$elapsedCPUTime|$elapsedUserTime|$results.candidates.size|$items.size|$results.total|$categ|$itemTitle"
 		return items
 	}
 
@@ -78,11 +88,12 @@ class SearchService {
 
 	def knnByRankSearch(String itemTitle, String categ,Integer radio, int kNeighbors , IndexManager mgr)
 	{
-		long startTime = System.currentTimeMillis()
+		long id = java.lang.Thread.currentThread().getId();
+		long startTimeCPU = Utils.getCpuTime([id])
+		long startTimeUser = Utils.getUserTime([id])
 
-		long millisSearch = 0L
-		long millisFile = 0L
-		int candidatesSize = 0
+
+		int candidatesSize = 0 //ES LA CANTIDAD DE VECES QUE CALCULAMOS LA FUNCION DE DISTANCIA
 		//Calculo la firma para la query
 		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
 
@@ -122,11 +133,8 @@ class SearchService {
 			itemsPrev = items
 
 			candidates = getCandidates(signatures,candidates,sig,rank)
-			millisSearch += System.currentTimeMillis()-startTime
-			startTime = System.currentTimeMillis()
 			items = getItemsFromFile(candidates, itemTitle, (rank).intValue())
-			millisFile += System.currentTimeMillis()-startTime
-			startTime = System.currentTimeMillis()
+			candidatesSize +=candidates.size
 		}
 		
 		if(items.size() != kNeighbors){
@@ -139,8 +147,12 @@ class SearchService {
 			}
 			items = itemsPrev
 		}
-		millisSearch += System.currentTimeMillis()-startTime
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$millisSearch|$candidates.size|$millisFile|$items.size|$signatures.size|$categ|$itemTitle"
+
+		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
+
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$elapsedCPUTime|$elapsedUserTime|$candidatesSize|$items.size|$signatures.size|$categ|$itemTitle"
 		return items
 	}
 

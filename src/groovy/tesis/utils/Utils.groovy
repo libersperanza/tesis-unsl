@@ -1,5 +1,8 @@
 package tesis.utils
 
+import java.lang.management.*;
+
+
 class Utils {
 	public static String removeSpecialCharacters(str){
 		if(str == null){
@@ -37,5 +40,33 @@ class Utils {
 			}
 		}
 		return i
+	}
+
+	/** Get CPU time in nanoseconds. */
+	public long getCpuTime( long[] ids ) {
+	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
+	    if ( ! bean.isThreadCpuTimeSupported( ) )
+	        return 0L;
+	    long time = 0L;
+	    for ( int i : ids ) {
+	        long t = bean.getThreadCpuTime( ids[i] );
+	        if ( t != -1 )
+	            time += t;
+	    }
+	    return time;
+	}
+ 
+	/** Get user time in nanoseconds. */
+	public long getUserTime( long[] ids ) {
+	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
+	    if ( ! bean.isThreadCpuTimeSupported( ) )
+	        return 0L;
+	    long time = 0L;
+	    for ( int i : ids ) {
+	        long t = bean.getThreadUserTime( ids[i] );
+	        if ( t != -1 )
+	            time += t;
+	    }
+	    return time;
 	}
 }
