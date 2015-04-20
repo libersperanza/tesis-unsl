@@ -213,6 +213,12 @@ class SearchService {
 
 	def knnByRankSearchV2(String itemTitle, String categ,Integer a, int kNeighbors , IndexManager mgr)
 	{
+		long id = java.lang.Thread.currentThread().getId();
+
+		long startTimeCPU = Utils.getCpuTime([id])
+		long startTimeUser = Utils.getUserTime([id])
+
+		
 		Map timeCalc = [startTime : System.currentTimeMillis(), millisSearch : 0L, millisFile : 0L]
 		int radio = 0
 		int i = 0
@@ -283,7 +289,11 @@ class SearchService {
 		int evalDistQty = indexData.findAll{it.dist!=null}.size + items.size
 		timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
 
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$timeCalc.millisSearch|$evalDistQty|$timeCalc.millisFile|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
+		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
+
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$elapsedCPUTime|$elapsedUserTime|$evalDistQty|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
+//		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$timeCalc.millisSearch|$evalDistQty|$timeCalc.millisFile|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
 		return items
 	}
 
