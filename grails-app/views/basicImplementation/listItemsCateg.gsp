@@ -10,7 +10,8 @@
  
   <g:if test="${itemsFound}">
    <g:link controller="basicImplementation" action="listItemCategForm">Volver al Menu</g:link>
-    <g:each var="elem" in="${itemsFound}">
+   <label>Size category: ${itemsFound.size()}</label>    
+   <g:each var="elem" in="${itemsFound}">
 	<div>${elem}</div>
   </g:each>
     <g:link controller="basicImplementation" action="listItemCategForm">Volver al Menu</g:link>

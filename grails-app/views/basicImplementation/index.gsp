@@ -43,7 +43,7 @@
 					type="text" name="pivotsQty" value="10" />
 			</p>
 			
-			<g:submitButton class="ch-btn" name="calcular" value="Inicializar"></g:submitButton><g:link controller="basicImplementation" action="saveData"> Save</g:link>
+			<g:submitButton class="ch-btn" name="calcular" value="Inicializar"></g:submitButton>
 		</g:form>
 		<hr>
 		<g:link controller="basicImplementation" action="listCategs">Listar Categorías </g:link>
@@ -54,7 +54,9 @@
 		|
 		<g:link controller="basicImplementation" action="listItems">Busqueda secuencial </g:link>
 		|
-		<g:link controller="basicImplementation" action="searchItems">Buscar items de una categoria </g:link>
+		<g:link controller="basicImplementation" action="searchItems" params="['method':'rankSearch']">Busqueda por rango </g:link>
+		|
+		<g:link controller="basicImplementation" action="searchItems" params="['method':'knnRankSearch']">Busqueda por knn rank </g:link>
 
 	</div>
 	<script type="text/javascript"

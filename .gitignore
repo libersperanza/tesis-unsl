@@ -9,6 +9,8 @@
 *.xlsx
 *.xls
 *.log
+*.ods
+*.zip
 target
 target/
 items.csv
@@ -28,3 +30,5 @@ prodDb.properties
 prodDb.script
 newrelic.log
 target-eclipse/
+item_titles.csv
+test_data/items_for_search.txt

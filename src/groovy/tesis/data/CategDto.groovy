@@ -54,7 +54,7 @@ class CategDto implements Serializable
 	@Override
 	public String toString()
 	{
-		return "CategDto [categName=" + categName + ", itemQty=" + itemQty + ", signatures=" + signatures + "]";
+		return "CategDto [categName=" + categName + ", itemQty=" + itemQty + "]";//, signatures=" + signatures + "]";
 	}
 
 

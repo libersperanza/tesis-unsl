@@ -96,9 +96,8 @@ class TextFileManager {
 		try {
 
 			if((linea = bf.readLine()) != null) {
-				linea = linea?.replaceAll("\\s+", " ")?.replaceAll("\"","'")
+				linea = linea
 				arLinea = linea.split(lineSeparator);
-				
 				dto = new ItemDto()
 				def map = getCommonData(arLinea)
 				dto.categ = map.categ

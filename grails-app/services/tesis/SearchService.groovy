@@ -23,7 +23,7 @@ class SearchService {
 		long startTimeCPU = Utils.getCpuTime([id])
 		long startTimeUser = Utils.getUserTime([id])
 		
-		int pos = mgr.categs?.search(new CategDto(categName:categ,itemQty:0,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
@@ -38,7 +38,6 @@ class SearchService {
 	def rankSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
 		long id = java.lang.Thread.currentThread().getId();
-
 		long startTimeCPU = Utils.getCpuTime([id])
 		long startTimeUser = Utils.getUserTime([id])
 
