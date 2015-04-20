@@ -1,7 +1,10 @@
 package tesis.utils
 
+import java.lang.management.*;
+
+
 class Utils {
-	public static def removeSpecialCharacters(str){
+	public static String removeSpecialCharacters(str){
 		if(str == null){
 			return null;
 		}
@@ -24,6 +27,11 @@ class Utils {
 		}
 		return ret.toString().trim()
 	}
+	/**
+	 * retorna el primer elemento libre
+	 * @param listD
+	 * @return
+	 */
 	public static def firtsFree(listD){
 		int i = 0
 		for(i=0;i<listD?.size();i++){
@@ -32,5 +40,34 @@ class Utils {
 			}
 		}
 		return i
+	}
+
+	/** Get CPU time in nanoseconds. */
+	public static long getCpuTime(def ids ) {
+	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
+	    if ( ! bean.isThreadCpuTimeSupported( ) )
+	        return 0L;
+	    long time = 0L;
+	    for (def id : ids ) {
+	    	long t = bean.getThreadCpuTime(id);
+	        if ( t != -1 )
+	            time += t;
+	    }
+	    return time;
+	}
+ 
+	/** Get user time in nanoseconds. */
+	public static long getUserTime(def ids ) {
+	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
+	    if ( ! bean.isThreadCpuTimeSupported( ) )
+	        return 0L;
+	    long time = 0L;
+	    for (def id : ids ) {
+	        long t = bean.getThreadUserTime(id);
+	        if ( t != -1 )
+	            time += t;
+	    }
+
+	    return time;
 	}
 }
