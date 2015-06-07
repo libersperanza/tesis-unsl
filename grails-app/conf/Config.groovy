@@ -70,15 +70,11 @@ environments {
 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss")
 // log4j configuration
 log4j = {
-  
-	def mypattern = new org.apache.log4j.EnhancedPatternLayout(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss} %c{2} %m%n %throwable')
-		
-//	rollingFile name:'stdout', file:"/tmp/log/tesis/app-catalina.log", maxFileSize:'300MB', layout: mypattern
 	
 	appenders {
 		console name: "stdout", layout:pattern(conversionPattern: "%d{dd MMM yyyy HH:mm:ss,SSS} %c{2} %m%n")
-	  rollingFile name:"indexCreation", maxFileSize:'100MB', file:"test_results/index.log", layout:pattern(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss}|%m%n')
-    rollingFile name:"searchResults", maxFileSize:'100MB', file:"test_results/search.log", layout:pattern(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss}|%m%n')
+	  rollingFile name:"indexCreation", maxFileSize:'100GB', file:"test_results/index.log", layout:pattern(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss}|%m%n')
+    rollingFile name:"searchResults", maxFileSize:'100GB', file:"test_results/search.log", layout:pattern(conversionPattern: '%d{yyyy/MM/dd HH:mm:ss}|%m%n')
   }
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers

@@ -219,7 +219,6 @@ class SearchService {
 		long startTimeUser = Utils.getUserTime([id])
 
 		
-		Map timeCalc = [startTime : System.currentTimeMillis(), millisSearch : 0L, millisFile : 0L]
 		int radio = 0
 		int i = 0
 		def items = []
@@ -229,7 +228,7 @@ class SearchService {
 
 		while(items.size < kNeighbors && indexData.size > 0) {
 			radio = Math.pow(a,i).intValue()
-			def results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
+			def results = getItemsForRadio(itemTitle, q, radio, indexData)
 			//log.info "PROBANDO RADIO $radio RESULTS $results.size"
 			if(items.size + results.size > kNeighbors)
 			{
@@ -240,7 +239,7 @@ class SearchService {
 				{
 					radio = ((ls + li)/2).intValue()
 					//log.info "BISECCION RADIO $radio"
-					results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
+					results = getItemsForRadio(itemTitle, q, radio, indexData)
 					if(items.size() + results.size == kNeighbors)
 					{
 						//log.info "RESULTS $results.size - ITEMS $items.size"
@@ -266,7 +265,7 @@ class SearchService {
 				}
 				if(items.size != kNeighbors)
 				{
-					results = getItemsForRadio(itemTitle, q, radio, indexData, timeCalc)
+					results = getItemsForRadio(itemTitle, q, radio, indexData)
 					//log.info("ELIMINANDO ITEMS SOBRANTES DE $results.size")
 					int j = 0;
 					while(items.size < kNeighbors)
@@ -287,27 +286,23 @@ class SearchService {
 		}
 		//log.info("TERMINO")
 		int evalDistQty = indexData.findAll{it.dist!=null}.size + items.size
-		timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
 
 		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
 		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
 
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
 		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$elapsedCPUTime|$elapsedUserTime|$evalDistQty|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
-//		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$timeCalc.millisSearch|$evalDistQty|$timeCalc.millisFile|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
 		return items
 	}
 
-	def getItemsForRadio(String itemTitle, ItemSignature q, Integer radio, List indexData, Map timeCalc){
+	def getItemsForRadio(String itemTitle, ItemSignature q, Integer radio, List indexData){
 		
 		//ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
 		List itemsFound = []
 		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
-		timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
-		timeCalc.startTime = System.currentTimeMillis()
-		
+
 		rfm.openFile("rw")
-		timeCalc.millisFile += System.currentTimeMillis()-timeCalc.startTime
-		timeCalc.startTime = System.currentTimeMillis()
+		
 		int dyc = 0
 		int dc = 0
 		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
@@ -322,8 +317,6 @@ class SearchService {
 					add = false
 				}
 			}
-			timeCalc.millisSearch += System.currentTimeMillis()-timeCalc.startTime
-			timeCalc.startTime = System.currentTimeMillis()
 			if(add)
 			{
 				def item =  new JSONObject(rfm.getItem(candidate.signature.itemPosition,candidate.signature.itemSize))
@@ -335,13 +328,9 @@ class SearchService {
 				{
 					itemsFound.add([item:item, signature: candidate])
 				}
-				timeCalc.millisFile += System.currentTimeMillis()-timeCalc.startTime
-				timeCalc.startTime = System.currentTimeMillis()
 			}
 		}
 		rfm.closeFile()
-		timeCalc.millisFile += System.currentTimeMillis()-timeCalc.startTime
-		timeCalc.startTime = System.currentTimeMillis()
 		return itemsFound
 	}
 	

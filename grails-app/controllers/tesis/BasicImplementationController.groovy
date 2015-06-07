@@ -25,7 +25,6 @@ class BasicImplementationController
 			ConfigurationHolder.config.strategy = "${params.pivotStrategy}_${params.pivotsQty?:'5'}"
 		
 			IndexManager mgr = new IndexManager(params.initMode);
-			mgr.createIndexFiles()
 			
 			servletContext["index"] = mgr
 			render(view:"fillFile", model:[result:"INICIALIZACION CORRECTA - MODO: $params.initMode"])

@@ -42,7 +42,7 @@ class Utils {
 		return i
 	}
 
-	/** Get CPU time in nanoseconds. */
+	/** Get CPU time in milliseconds. */
 	public static long getCpuTime(def ids ) {
 	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
 	    if ( ! bean.isThreadCpuTimeSupported( ) )
@@ -53,10 +53,10 @@ class Utils {
 	        if ( t != -1 )
 	            time += t;
 	    }
-	    return time;
+	    return (time * 0.000001).longValue();
 	}
  
-	/** Get user time in nanoseconds. */
+	/** Get user time in milliseconds. */
 	public static long getUserTime(def ids ) {
 	    ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
 	    if ( ! bean.isThreadCpuTimeSupported( ) )
@@ -68,6 +68,6 @@ class Utils {
 	            time += t;
 	    }
 
-	    return time;
+	    return (time * 0.000001).longValue();
 	}
 }

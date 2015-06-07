@@ -81,6 +81,9 @@ class IndexManager
 			
 			createSignatures()
 			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
+			startTime = System.currentTimeMillis()
+			createIndexFiles()
+			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
 		}
 	}
 	
@@ -166,8 +169,8 @@ class IndexManager
 		def pivote
 		def max	
 		
-		if(pivotsQty <= 128)
-		{
+		/*if(pivotsQty <= 128)
+		{*/
 			if(fm.openFile(0))
 			{
 				def pivs = []
@@ -223,11 +226,11 @@ class IndexManager
 			}else{
 				throw new Exception("Error al abrir el archivo")
 			}
-		}
+		/*}
 		else
 		{
 			throw new Exception("Cantidad de pivotes mayor a la permitida (128)")
-		}
+		}*/
 
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
