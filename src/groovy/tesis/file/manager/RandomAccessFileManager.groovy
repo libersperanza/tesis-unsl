@@ -12,6 +12,7 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 import tesis.data.CategDto;
 import tesis.data.ItemDto;
 import tesis.data.ItemSignature;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author lsperanza
@@ -22,6 +23,9 @@ class RandomAccessFileManager
 
 	RandomAccessFile objFile;
 	File f;
+	Map pages;//Aca vamos acumulando las paginas que tenemos
+	int pageQty;//tam archivo/4096 (tam pag)
+	static long PAGE_SIZE = 4096
 	
 	public RandomAccessFileManager(String filePath)
 	{
@@ -33,6 +37,9 @@ class RandomAccessFileManager
 		try
 		{
 			objFile = new RandomAccessFile(f,mode);
+			pageQty = objFile.length()/PAGE_SIZE
+			println "CANT PAGINAS:$pageQty"
+			pages = [:]
 		}
 		catch (FileNotFoundException e)
 		{
@@ -48,8 +55,16 @@ class RandomAccessFileManager
 		try
 		{
 			pos = objFile.length()
+			int curPage = pos/PAGE_SIZE
+			int nextPage = (pos + 372)/PAGE_SIZE
+			if(nextPage>curPage)
+			{
+				//Escribo caracteres de relleno
+				objFile.writeBytes("    ")
+			}
+			pos = objFile.length()
 			objFile.seek(pos)
-			objFile.writeBytes(dto.toJSON().toString())
+			objFile.writeBytes(StringUtils.rightPad(dto.toJSON().toString(),372))
 		}
 		catch (IOException e)
 		{
@@ -58,13 +73,32 @@ class RandomAccessFileManager
 		return pos;
 	}
 	
-	public String getItem(long pos,itemSize) 
+	public String getItem(long pos,itemSize)
 	{
-		objFile.seek(pos)
-		byte[] data = new byte[itemSize]
-		objFile.read(data)
-		String json = new String(data)
-		return new JSONObject(json)
+		//Aca chequeo si tengo la pagina cargada o si la tengo que buscar
+		//Nro pag = pos modulo cant pag
+		int pagNbr = pos%pageQty
+		byte[] data
+
+		if(!pages.get(pagNbr))
+		{
+			//Seek hasta nro pag*tam pag
+			//Busco la pagina en el archivo y la cargo en mem
+			long pagePos = pagNbr * PAGE_SIZE
+			objFile.seek(pagePos)
+			data = new byte[PAGE_SIZE]
+			objFile.read(data)
+			pages.put(pagNbr,data)
+		}
+		else
+		{
+			data = pages.get(pagNbr)
+		}
+		//pos item = pos mod tam pag
+		int posItem = pos % PAGE_SIZE
+		String json = new String(Arrays.copyOfRange(data,posItem,posItem+372))
+		println json
+		return new JSONObject(json.trim())
 
 	}
 	
@@ -73,6 +107,7 @@ class RandomAccessFileManager
 		try
 		{
 			objFile.close();
+			pages = null;
 		}
 		catch (IOException e)
 		{

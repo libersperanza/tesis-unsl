@@ -80,10 +80,9 @@ class IndexManager
 			}
 			
 			createSignatures()
-			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
 			startTime = System.currentTimeMillis()
 			createIndexFiles()
-			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
+			log.info "$ConfigurationHolder.config.strategy|index_file_creation|${System.currentTimeMillis()-startTime}"
 		}
 	}
 	
@@ -270,7 +269,7 @@ class IndexManager
 			{
 				rfm.resetFile();
 				ItemDto curItem
-				def categDescartadas = []
+				//def categDescartadas = []
 				while(curItem = fm.nextItem())
 				{
 					if(getPivotsForCateg(curItem.getCateg())) //Para las categs con menos de 50 items
@@ -279,19 +278,21 @@ class IndexManager
 						CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
 						int pos = categs.search(catForSearch)
 						if (categs.get(pos).equals(catForSearch)){
+
 							sig.itemPosition = rfm.insertItem(curItem)
-							sig.itemSize = curItem.toJSON().toString().length()
+							//el tamaño es fijo, se completa array con blancos al escribir
+							//sig.itemSize = curItem.toJSON().toString().length()
 							categs.get(pos).signatures.add(sig)
 						}
 					}
-					else
+					/*else
 					{
 						if(!categDescartadas.contains(curItem.getCateg()))
 						{
 							categDescartadas.add(curItem.getCateg())
 						}
 						
-					}
+					}*/
 				}
 				rfm.closeFile()
 				//println "Categ descartadas: $categDescartadas"

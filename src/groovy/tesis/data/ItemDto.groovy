@@ -29,8 +29,15 @@ class ItemDto extends PivotDto implements Serializable
 		json.put("categ", categ)
 		json.put("itemTitle", itemTitle)
 		json.put("searchTitle", searchTitle)
-		json.put("mainDescription", mainDescription)
-		json.put("secDescription", secDescription)
+		if(mainDescription?.length()>100)
+		{
+			json.put("mainDescription", mainDescription?.substring(0,100))
+		}
+		else
+		{
+			json.put("mainDescription", mainDescription)
+		}
+		//json.put("secDescription", secDescription)
 		return json
 	}
 }

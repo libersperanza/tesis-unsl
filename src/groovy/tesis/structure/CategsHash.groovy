@@ -166,6 +166,23 @@ class CategsHash
 		}
 		//return list;
 	}
+
+	public void printSignaturesValues()
+	{
+		int max = 0
+		for(int i=0;i < size; i++)
+		{
+			if((!hash[i].equals(virgin))&&(!hash[i].equals(used)))
+			{
+				hash[i].signatures.each{
+					if(it.itemSize >= max) max = it.itemSize
+					//log.info it.itemSize
+				}
+			}
+		}
+		log.info "MAXIMA LONG: $max"
+		//return list;
+	}
 	public int hashCode(String str) {
 		int b = 378551;
 		int a = 63689;
