@@ -37,8 +37,7 @@ class BasicImplementationController
 	}
 	def listCategs =
 	{
-		//servletContext["index"].categs.printValues()
-		servletContext["index"].categs.printSignaturesValues()
+		servletContext["index"].categs.printValues()
 		render(view:"list", model:[tit:"Categorias",lista:[]])
 	}
 

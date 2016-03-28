@@ -24,7 +24,6 @@ class RandomAccessFileManager
 	RandomAccessFile objFile;
 	File f;
 	Map pages;//Aca vamos acumulando las paginas que tenemos
-	int pageQty;//tam archivo/4096 (tam pag)
 	static long PAGE_SIZE = 4096
 	
 	public RandomAccessFileManager(String filePath)
@@ -37,8 +36,6 @@ class RandomAccessFileManager
 		try
 		{
 			objFile = new RandomAccessFile(f,mode);
-			pageQty = objFile.length()/PAGE_SIZE
-			println "CANT PAGINAS:$pageQty"
 			pages = [:]
 		}
 		catch (FileNotFoundException e)
@@ -76,10 +73,9 @@ class RandomAccessFileManager
 	public String getItem(long pos,itemSize)
 	{
 		//Aca chequeo si tengo la pagina cargada o si la tengo que buscar
-		//Nro pag = pos modulo cant pag
-		int pagNbr = pos%pageQty
+		//Nro pag = pos / tam pagina
+		int pagNbr = pos/PAGE_SIZE
 		byte[] data
-
 		if(!pages.get(pagNbr))
 		{
 			//Seek hasta nro pag*tam pag
@@ -89,15 +85,17 @@ class RandomAccessFileManager
 			data = new byte[PAGE_SIZE]
 			objFile.read(data)
 			pages.put(pagNbr,data)
+			//println "FETCH $pagNbr - DATA: ${new String(data)}"
 		}
 		else
 		{
 			data = pages.get(pagNbr)
+			//println "HIT $pagNbr - DATA: ${new String(data)}"
 		}
 		//pos item = pos mod tam pag
 		int posItem = pos % PAGE_SIZE
+		//println "POS: $pos - POS_ITEM:$posItem - PAG:$pagNbr"
 		String json = new String(Arrays.copyOfRange(data,posItem,posItem+372))
-		println json
 		return new JSONObject(json.trim())
 
 	}

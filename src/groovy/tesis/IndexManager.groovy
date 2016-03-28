@@ -278,10 +278,11 @@ class IndexManager
 						CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
 						int pos = categs.search(catForSearch)
 						if (categs.get(pos).equals(catForSearch)){
-
 							sig.itemPosition = rfm.insertItem(curItem)
+							//log.info "[CATEG: $curItem.categ - ITEM: ${curItem.itemId}- POS: $sig.itemPosition]"
 							//el tamaño es fijo, se completa array con blancos al escribir
 							//sig.itemSize = curItem.toJSON().toString().length()
+							sig.itemSize = 372
 							categs.get(pos).signatures.add(sig)
 						}
 					}

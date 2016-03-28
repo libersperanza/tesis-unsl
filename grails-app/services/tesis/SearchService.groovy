@@ -347,8 +347,8 @@ class SearchService {
 			signatures.each
 			{
 				def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
+				itemsFound.add(item)
 				log.info item
-				//itemsFound.add(item)
 							
 			}
 			rfm.closeFile()
