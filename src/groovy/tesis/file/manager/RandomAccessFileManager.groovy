@@ -25,18 +25,30 @@ class RandomAccessFileManager
 	File f;
 	Map pages;//Aca vamos acumulando las paginas que tenemos
 	static long PAGE_SIZE = 4096
+	int hit;
+	int miss;
 	
 	public RandomAccessFileManager(String filePath)
 	{
 		f = new File(filePath);
 	}
 	
+	public int getHit()
+	{
+		return hit
+	}
+	public int getMiss()
+	{
+		return miss
+	}
 	public boolean openFile(String mode)
 	{
 		try
 		{
 			objFile = new RandomAccessFile(f,mode);
 			pages = [:]
+			hit = 0;
+			miss = 0;
 		}
 		catch (FileNotFoundException e)
 		{
@@ -85,11 +97,13 @@ class RandomAccessFileManager
 			data = new byte[PAGE_SIZE]
 			objFile.read(data)
 			pages.put(pagNbr,data)
+			miss++;
 			//println "FETCH $pagNbr - DATA: ${new String(data)}"
 		}
 		else
 		{
 			data = pages.get(pagNbr)
+			hit++;
 			//println "HIT $pagNbr - DATA: ${new String(data)}"
 		}
 		//pos item = pos mod tam pag

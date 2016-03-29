@@ -206,6 +206,7 @@ class SearchService {
 					}
 				}
 			}
+			log.info("HITS: ${rmf.getHit()} - MISS: ${rmf.getMiss()}")
 			rfm.closeFile()
 		}
 		return itemsFound
