@@ -63,7 +63,7 @@ class BasicImplementationController
 			def itemsFound = searchService.knnByRankSearchV2(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
 			if(params.flat=="Y")
 			{
-				render ""//render itemsFound+ "\n"
+				render itemsFound.size//render itemsFound+ "\n"
 			}
 			else
 			{
@@ -87,7 +87,7 @@ class BasicImplementationController
 			
 			if(params.flat=="Y")
 			{
-				render ""//render itemsFound+ "\n"
+				render itemsFound.size//render itemsFound+ "\n"
 			}
 			else
 			{
@@ -113,7 +113,7 @@ class BasicImplementationController
 			
 			if(params.flat=="Y")
 			{
-				render ""//render itemsFound+ "\n"
+				render itemsFound.size//render itemsFound+ "\n"
 			}
 			else
 			{

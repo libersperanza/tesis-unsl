@@ -348,7 +348,6 @@ class SearchService {
 			{
 				def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
 				itemsFound.add(item)
-				log.info item
 							
 			}
 			rfm.closeFile()

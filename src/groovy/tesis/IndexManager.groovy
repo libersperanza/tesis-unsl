@@ -70,7 +70,7 @@ class IndexManager
 		}else{
 			createCategsHash(createCategListFromFile());
 			
-			if("random".equals(strategy))
+			if("random".equals(strategy)) //La estrategia puede ser mismos pivotes para todas las categorías o distintos pivotes para cada categoría
 			{
 				createPivots(pivotSelection,pivotsQty)
 			}
@@ -251,7 +251,7 @@ class IndexManager
 		return null
 	}
 	private void fillPivotsByCategFromFile(){
-		
+		//El file contiene pivotes (items) para las categorías con más de 50 items
 		File filePv = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
 		filePv.withObjectInputStream(getClass().classLoader){ ois ->
 			pivotsByCateg = ois.readObject()
