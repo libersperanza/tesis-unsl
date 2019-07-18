@@ -18,16 +18,17 @@ curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?in
 
 echo "init index... done"
 
-#warmup
-#while read title
-#do
-#    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?flat=Y&radio=$radio&categ=$title"
-#    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?flat=Y&radio=$radio&categ=$title"
-#    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?flat=Y&radio=2&neighbors=10&categ=$title"
-#done < test_data/warmup_search.txt
+echo "begin warmup..."
+while read title
+do
+    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?flat=Y&radio=$radio&categ=$title"
+    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?flat=Y&radio=$radio&categ=$title"
+    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?flat=Y&radio=2&neighbors=10&categ=$title"
+done < test_data/warmup_search.txt
 
-#echo > test_results/search.log
+echo > test_results/search.log
 
+echo "warmup ended..."
 
 while read title
 do
@@ -35,7 +36,7 @@ do
     res_rank=$(curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?flat=Y&radio=$radio&categ=$title")
     res_knn=$(curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?flat=Y&radio=$radio&neighbors=$res_rank&categ=$title")
     echo "$res_seq - $res_rank - $res_knn"
-done < test_data/item_titles.small.txt
+done < test_data/item_titles.txt
 
 mv test_results/search.log test_results/search."${pivotStrategy}"_"$pivotsQty".log
 
