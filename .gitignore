@@ -31,4 +31,3 @@ prodDb.script
 newrelic.log
 target-eclipse/
 item_titles.csv
-test_data/items_for_search.txt

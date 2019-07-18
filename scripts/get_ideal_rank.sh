@@ -1,3 +1,4 @@
+#!/bin/bash
 title1="Libro%20Te%20Amo%20Pero%20Soy%20Feliz%20Sin%20Ti.%20Jaime%20Jaramillo"
 title2="El%20Secreto%20Rhonda%20Byrne%20Lvbp13"
 title3="Libro%20De%20Italiano%20Forza%202"
