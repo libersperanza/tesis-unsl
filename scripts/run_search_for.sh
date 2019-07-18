@@ -4,13 +4,13 @@ pivotStrategy=$1
 pivotsQty=$2
 radio=$3
 
-echo "Starting grails..."
+echo "starting grails..."
 
 . scripts/run_grails.sh
 
 sleep 15s
 
-echo "Grails started..."
+echo "grails started..."
 
 echo "init index... $pivotStrategy $pivotsQty"
 
@@ -35,10 +35,16 @@ do
     res_seq=$(curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?flat=Y&radio=$radio&categ=$title")
     res_rank=$(curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?flat=Y&radio=$radio&categ=$title")
     res_knn=$(curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?flat=Y&radio=$radio&neighbors=$res_rank&categ=$title")
-    echo "$res_seq - $res_rank - $res_knn"
+    if [ $res_seq -ne $res_rank ]
+     then
+     echo "[ERROR][search:$title][results_seq:$res_seq][results_rank:$res_rank]"
+	fi
 done < test_data/item_titles.txt
 
 mv test_results/search.log test_results/search."${pivotStrategy}"_"$pivotsQty".log
 
+echo "stopping grails..."
+
 . scripts/stop_grails.sh
 
+echo "grails stopped..."
