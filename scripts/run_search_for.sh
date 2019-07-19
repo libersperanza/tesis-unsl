@@ -8,7 +8,7 @@ echo "starting grails..."
 
 . scripts/run_grails.sh
 
-sleep 15s
+sleep 60s
 
 echo "grails started..."
 
@@ -21,9 +21,9 @@ echo "init index... done"
 echo "begin warmup..."
 while read title
 do
-    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?flat=Y&radio=$radio&categ=$title"
-    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?flat=Y&radio=$radio&categ=$title"
-    curl "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?flat=Y&radio=2&neighbors=10&categ=$title"
+    curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?flat=Y&radio=$radio&categ=$title"
+    curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?flat=Y&radio=$radio&categ=$title"
+    curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?flat=Y&radio=2&neighbors=10&categ=$title"
 done < test_data/warmup_search.txt
 
 echo > test_results/search.log
