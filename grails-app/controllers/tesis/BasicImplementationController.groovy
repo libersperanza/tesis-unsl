@@ -4,9 +4,10 @@ import java.util.ArrayList
 import tesis.file.manager.TextFileManager
 import tesis.data.CategDto
 import tesis.data.PivotDto
+import tesis.data.ItemDto
 import tesis.utils.Utils
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
-
+import java.net.URLEncoder
 
 class BasicImplementationController
 {
@@ -154,45 +155,59 @@ class BasicImplementationController
 	
 	def createFilePivotes = {
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
-		TextFileManager fmCateg = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);
-		ArrayList<CategDto> listC = new ArrayList<CategDto>()
-		
-		if(fmCateg.openFile(0))
-		{
-			CategDto dto;
-			while((dto = fmCateg.nextCateg()))
-			{
-				if(dto){listC.add(dto)}
-			}
-			fmCateg.closeFile();
-		}
-		else
-		{
-			throw new Exception("Error al abrir el archivo")
-		}
-		Map pv = [:]
+		Map pivotesByCateg = [:]
 		PivotDto pivote 
-		Random rand
 		if(fm.openFile(0))
 		{
 				
 			while(pivote = fm.nextPivot()){
-				if(!pv?."${pivote.categ}"){
-					pv?."${pivote.categ}" = new ArrayList<PivotDto>()
+				if(!pivotesByCateg.containsKey(pivote.categ)){
+					pivotesByCateg.put(pivote.categ, new ArrayList<PivotDto>())
 				}
-				pv?."${pivote.categ}".add(pivote)
+				pivotesByCateg.get(pivote.categ).add(pivote)
 			}
 			
 		}
-		
-		def  pList = pv.findAll{ it.value?.size() >= 50}
-		
-		println "categ con mas de 50 pivots: " + pList.size()
+		fm.closeFile()
 		
 		File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
 		file2.withObjectOutputStream { oos ->
-			oos.writeObject(pList)
+			oos.writeObject(pivotesByCateg)
 		}
+		println "ok"
+	}
+	def createFileSearchTitles = {
+		
+		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
+		Map itemsByCateg = [:]
+		if(fm.openFile(0))
+		{
+			ItemDto item 
+			while(item = fm.nextItem()){
+				if(!itemsByCateg.containsKey(item.categ)){
+					itemsByCateg.put(item.categ,new ArrayList<String>())
+				}
+				itemsByCateg.get(item.categ).add(item.itemTitle)
+			}	
+		}
+		fm.closeFile()
+
+		File resFileSearchTitles = new File("./test_data/search_titles.txt")
+		log.info "Writing results file ${resFileSearchTitles.name}"
+		resFileSearchTitles.withWriter{ out ->
+			itemsByCateg.each{ categ,items ->
+				//Obtengo el 10% de la BD
+				int sampleSize = items.size()/10 
+				Random rand = new Random();
+			    for (int i = 0; i < sampleSize; i++) {
+			        int randomIndex = rand.nextInt(items.size());
+			        String randomTitle =  items.get(randomIndex);
+			        items.remove(randomIndex);
+			        out.println "${categ}&itemTitle=${URLEncoder.encode(randomTitle, "UTF-8")}"
+			    }
+			}
+		}
+
 		println "ok"
 	}
 	def readPivotes = {

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.regex.Matcher
 import java.util.regex.Pattern;
@@ -16,7 +17,7 @@ import tesis.data.CategDto;
 import tesis.data.ItemDto;
 import tesis.data.ItemSignature;
 import tesis.data.PivotDto
-import tesis.utils.Utils;
+import tesis.utils.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory
 
@@ -29,7 +30,8 @@ class TextFileManager {
 	String lineSeparator;
 	FileReader fr;
 	BufferedReader bf;
-	
+	FileInputStream fis;
+
 	Log log = LogFactory.getLog(TextFileManager.class.getName())
 	
 	public TextFileManager(String filePath, String separator) {
@@ -39,13 +41,14 @@ class TextFileManager {
 
 	public boolean openFile(int skipLines) {
 		try {
-			fr = new FileReader(f);
+			//fr = new FileReader(f);
+			fis = new FileInputStream(f)
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}
-		bf = new BufferedReader(fr);
+		bf = new BufferedReader(new InputStreamReader(fis, "UTF8"));
 		for(int i=0; i< skipLines; i++) {
 			try {
 				bf.readLine();
@@ -59,7 +62,8 @@ class TextFileManager {
 	}
 	public boolean closeFile() {
 		try {
-			fr.close();
+			//fr.close();
+			fis.close();
 			bf.close();
 		}
 		catch (IOException e) {
@@ -154,6 +158,6 @@ class TextFileManager {
 	}
 
 	private getCommonData(String[] arLinea) {
-		return [itemId:arLinea[1],categ:arLinea[0],searchTitle:Utils.removeSpecialCharacters(arLinea[2].toUpperCase())]
+		return [itemId:arLinea[1],categ:arLinea[0],searchTitle:Utils.removeSpecialCharacters(arLinea[2])]
 	}
 }
