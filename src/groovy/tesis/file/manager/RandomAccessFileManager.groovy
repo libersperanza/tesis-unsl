@@ -58,7 +58,7 @@ class RandomAccessFileManager
 		return pos;
 	}
 	
-	public String getItem(long pos,itemSize) 
+	public JSONObject getItem(long pos,itemSize) 
 	{
 		objFile.seek(pos)
 		byte[] data = new byte[itemSize]

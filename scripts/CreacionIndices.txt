@@ -4,9 +4,7 @@ curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotS
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_samePivotes&pivotsQty=4";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=4";
 
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_samePivotes&pivotsQty=8";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=8";
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_samePivotes&pivotsQty=8";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=8";
 
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_samePivotes&pivotsQty=16";
@@ -14,9 +12,7 @@ curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotS
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_samePivotes&pivotsQty=16";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=16";
 
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_samePivotes&pivotsQty=32";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=32";
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_samePivotes&pivotsQty=32";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=32";
 
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_samePivotes&pivotsQty=64";
@@ -24,13 +20,9 @@ curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotS
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_samePivotes&pivotsQty=64";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=64";
 
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_samePivotes&pivotsQty=128";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=128";
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_samePivotes&pivotsQty=128";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=128";
 
 
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_samePivotes&pivotsQty=256";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=256";
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_samePivotes&pivotsQty=256";
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=256";

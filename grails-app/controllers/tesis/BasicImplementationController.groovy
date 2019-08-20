@@ -62,13 +62,19 @@ class BasicImplementationController
 			int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
 			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 			def itemsFound = searchService.knnByRankSearchV2(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
-			if(params.flat=="Y")
-			{
-				render itemsFound.size//render itemsFound+ "\n"
-			}
-			else
-			{
-				render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+			switch(params.response_format) {
+				case "empty":
+					render "\n"
+					break
+				case "size":
+					render itemsFound.size
+					break
+				case "ids":
+					render itemsFound.collect{it.itemId}.sort().join(",")
+					break
+				default:
+					render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+
 			}
 		}
 		catch(Exception e)
@@ -86,13 +92,19 @@ class BasicImplementationController
 			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 			def itemsFound = searchService.rankSearch(itemTitle,params.categ,radio,servletContext["index"])
 			
-			if(params.flat=="Y")
-			{
-				render itemsFound.size//render itemsFound+ "\n"
-			}
-			else
-			{
-				render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+			switch(params.response_format) {
+				case "empty":
+					render "\n"
+					break
+				case "size":
+					render itemsFound.size
+					break
+				case "ids":
+					render itemsFound.collect{it.itemId}.sort().join(",")
+					break
+				default:
+					render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+
 			}
 		}
 		catch(Exception e)
@@ -112,13 +124,19 @@ class BasicImplementationController
 			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
 			def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,servletContext["index"])
 			
-			if(params.flat=="Y")
-			{
-				render itemsFound.size//render itemsFound+ "\n"
-			}
-			else
-			{
-				render(view:"sequentialSearch", model:[tit:"Items",itemsFound:itemsFound])
+			switch(params.response_format) {
+				case "empty":
+					render "\n"
+					break
+				case "size":
+					render itemsFound.size
+					break
+				case "ids":
+					render itemsFound.collect{it.itemId}.sort().join(",")
+					break
+				default:
+					render(view:"searchItems", model:[tit:"Items",itemsFound:itemsFound, searchMethod : "${params.method}"])
+
 			}
 		}
 		catch(Exception e) 
@@ -218,10 +236,17 @@ class BasicImplementationController
 		file3.withObjectInputStream(getClass().classLoader){ ois ->
 			pivots = ois.readObject()
 		}
-		def p =  pivots.findAll{it.value.size()< 50}
+		/*def p =  pivots.findAll{it.value.size()< 50}
 
 		p.each{
 			println it.key
+		}*/
+		pivots.keySet().each{
+			categ ->
+			
+			List lengths = pivots.get(categ).collect{it.searchTitle}
+
+			println "[$categ][max:${lengths.max()}][min:${lengths.min()}][avg:${lengths.sum()/lengths.size()}]"
 		}
 	}
 }

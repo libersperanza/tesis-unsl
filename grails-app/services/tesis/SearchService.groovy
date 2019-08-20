@@ -19,37 +19,37 @@ class SearchService {
 
     def sequentialSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
-		long id = java.lang.Thread.currentThread().getId();
-		long startTimeCPU = Utils.getCpuTime([id])
-		long startTimeUser = Utils.getUserTime([id])
+		//long id = java.lang.Thread.currentThread().getId();
+		//long startTimeCPU = Utils.getCpuTime([id])
+		//long startTimeUser = Utils.getUserTime([id])
 		
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		def signatures = mgr.categs.get(pos).signatures
 		def items =  getItemsFromFile(signatures, itemTitle, radio)
 		
-		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
-		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
-		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
-		log1.info "$ConfigurationHolder.config.strategy|secuential|$radio|$elapsedCPUTime|$elapsedUserTime|$signatures.size|$items.size|$signatures.size|$categ|$itemTitle"
+		//long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		//long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG
+		log1.info "$ConfigurationHolder.config.strategy|sequential|$radio|$elapsedCPUTime|$elapsedUserTime|$signatures.size|$items.size|$signatures.size|$categ"
 		return items
     }
 
 	def rankSearch(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
-		long id = java.lang.Thread.currentThread().getId();
-		long startTimeCPU = Utils.getCpuTime([id])
-		long startTimeUser = Utils.getUserTime([id])
+		//long id = java.lang.Thread.currentThread().getId();
+		//long startTimeCPU = Utils.getCpuTime([id])
+		//long startTimeUser = Utils.getUserTime([id])
 
 
 		def results = getCandidatesByRank(itemTitle,categ,radio,mgr)
 		def items = getItemsFromFile(results.candidates, itemTitle, radio)
 		
-		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
-		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
+		//long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		//long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
 
-		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$elapsedCPUTime|$elapsedUserTime|$results.candidates.size|$items.size|$results.total|$categ|$itemTitle"
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$results.candidates.size|$items.size|$results.total|$categ"
 		return items
 	}
 
@@ -86,6 +86,7 @@ class SearchService {
 		return ["candidates":candidates,"total":signatures.size]
 	}
 
+	//ESTA NO SE USA!!!!!!!!
 	def knnByRankSearch(String itemTitle, String categ,Integer radio, int kNeighbors , IndexManager mgr)
 	{
 		long id = java.lang.Thread.currentThread().getId();
@@ -107,7 +108,7 @@ class SearchService {
 		//Obtengo todas las firmas para la categoria
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		
-		def signatures = mgr.categs.get(pos).signatures.clone()
+		def signatures = mgr.categs.get(pos).signatures
 		
 		while(items.size() != kNeighbors &&  rank <= limit) {
 			
@@ -141,7 +142,7 @@ class SearchService {
 			def item 
 			while(itemsPrev?.size() < kNeighbors) {
 				Random rand = new Random()
-				item = itemsRandom[Math.abs(rand.nextInt()) % itemsRandom?.size()]
+				item = itemsRandom[Math.abs(rand.nextInt()) % itemsRandom.size()]
 				itemsRandom.remove(item)
 				itemsPrev.add(item)
 			}
@@ -151,8 +152,8 @@ class SearchService {
 		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
 		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
 
-		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$elapsedCPUTime|$elapsedUserTime|$candidatesSize|$items.size|$signatures.size|$categ|$itemTitle"
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_rank|$rank|$candidatesSize|$items.size|$signatures.size|$categ"
 		return items
 	}
 
@@ -192,14 +193,14 @@ class SearchService {
 		{
 			signatures.each
 			{
-				def item =  new JSONObject(rfm.getItem(it.itemPosition,it.itemSize))
+				JSONObject item = rfm.getItem(it.itemPosition,it.itemSize)
 				if(!radio)
 				{
 					itemsFound.add(item)
 				}
 				else
 				{
-					def dist = EditDistance.editDistance(itemTitle, item.searchTitle)
+					int dist = EditDistance.editDistance(itemTitle, item.searchTitle)
 					if(dist < radio)
 					{
 						itemsFound.add(item)
@@ -211,126 +212,139 @@ class SearchService {
 		return itemsFound
 	}
 
-	def knnByRankSearchV2(String itemTitle, String categ,Integer a, int kNeighbors , IndexManager mgr)
+	def knnByRankSearchV2(String query, String categ,Integer a, int kNeighbors , IndexManager mgr)
 	{
-		long id = java.lang.Thread.currentThread().getId();
+		//long id = java.lang.Thread.currentThread().getId();
 
-		long startTimeCPU = Utils.getCpuTime([id])
-		long startTimeUser = Utils.getUserTime([id])
+		//long startTimeCPU = Utils.getCpuTime([id])
+		//long startTimeUser = Utils.getUserTime([id])
 
-		
 		int radio = 0
-		int i = 0
-		def items = []
-		def indexData = mgr.categs.get(mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))).signatures.collect{["signature":it]}
+		int i = 1
+		List finalResult
+		List indexData = mgr.categs.get(mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))).signatures.collect{["signature":it]}
 		//Calculo la firma para la query
-		ItemSignature q = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
-
-		while(items.size < kNeighbors && indexData.size > 0) {
+		ItemSignature querySignature = new ItemSignature(query, mgr.getPivotsForCateg(categ))
+		List items = []
+		while(items.size() < kNeighbors && indexData.size > 0) {
 			radio = Math.pow(a,i).intValue()
-			def results = getItemsForRadio(itemTitle, q, radio, indexData)
-			//log.info "PROBANDO RADIO $radio RESULTS $results.size"
-			if(items.size + results.size > kNeighbors)
+			//log.info "PROBANDO RADIO $radio"
+			items = getItemsForRadio(query, querySignature, radio, indexData)
+			//log.info "PROBANDO RADIO $radio RESULTS $items.size"
+			if(items.size() > kNeighbors)
 			{
 				int li = Math.pow(a,i - 1).intValue()
 				int ls = radio
-				boolean done = false
+
 				while(li <= ls)
 				{
 					radio = ((ls + li)/2).intValue()
 					//log.info "BISECCION RADIO $radio"
-					results = getItemsForRadio(itemTitle, q, radio, indexData)
-					if(items.size() + results.size == kNeighbors)
+					items = getItemsForRadio(query, querySignature, radio, indexData)
+					//log.info "BISECCION RADIO $radio RESULTS $items.size"
+					if(items.size() == kNeighbors)
 					{
-						//log.info "RESULTS $results.size - ITEMS $items.size"
+						//log.info "FIN BISECCION RADIO $radio"
 						li = ls + 1
-						items.addAll(results.collect{it.item})
-						indexData.removeAll(results.collect{it.signature})
+						finalResult = items
 					}
 					else
 					{
-						//log.info "RESULTS $results.size - ITEMS $items.size"
-						if(items.size + results.size < kNeighbors)
+						if(items.size < kNeighbors)
 						{
+							//log.info "K NO ALCANZADO CON RADIO $radio"
 							li = radio + 1
-							items.addAll(results.collect{it.item})
-							indexData.removeAll(results.collect{it.signature})
+							radio = radio + 1
 						}
 						else
 						{
 							ls = radio - 1
 						}
-						radio = radio + 1 //PARA DESPUES
 					}
 				}
 				if(items.size != kNeighbors)
 				{
-					results = getItemsForRadio(itemTitle, q, radio, indexData)
-					//log.info("ELIMINANDO ITEMS SOBRANTES DE $results.size")
-					int j = 0;
-					while(items.size < kNeighbors)
-					{
-						items.add(results[j].item)
-						indexData.remove(results[j].signature)
-						j++
+					//log.info "FIN BISECCION RADIO $radio $items.size"
+					if(items.size() < kNeighbors){
+						items = getItemsForRadio(query, querySignature, radio, indexData)
 					}
+					//log.info "ORDENANDO ITEMS EN BASE A LA DISTANCIA DE Q"
+					items.sort{it.dist}
+					finalResult = items.subList(0,kNeighbors)
 				}
 			}
-			else
-			{
-				//log.info("AGREGANDO $results.size ITEMS AL RESULTADO FINAL")
-				items.addAll(results.collect{it.item})
-				indexData.removeAll(results.collect{it.signature})
-				i++
+			else{
+				finalResult = items
 			}
+			i++
 		}
+
+		//long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		//long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
+		int evalDistQty = indexData.findAll{it.dist != null}.size()
 		//log.info("TERMINO")
-		int evalDistQty = indexData.findAll{it.dist!=null}.size + items.size
-
-		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
-		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
-
-		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$elapsedCPUTime|$elapsedUserTime|$evalDistQty|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
-		return items
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$evalDistQty|${finalResult.size()}|${indexData.size()}|$categ"
+		return finalResult.collect{it.item}
 	}
 
-	def getItemsForRadio(String itemTitle, ItemSignature q, Integer radio, List indexData){
+	def getItemsForRadio(String query, ItemSignature q, Integer radio, List indexData){
 		
-		//ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
 		List itemsFound = []
 		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 
-		rfm.openFile("rw")
+		rfm.openFile("r")
+
+		//long id = java.lang.Thread.currentThread().getId();
+		//long startTimeCPU = 0
+		//long timeCheckSignatures = 0
+		//long timeGetItemAndEditDist = 0
+		//int piv_comparisons = 0
+		//int piv_discarded = 0
+		//int ed_calc = 0
 		
-		int dyc = 0
-		int dc = 0
 		//Comparo la firma de la query con las firmas de la categoria, si el valor es mayor que el radio, descarto el item
-		indexData.each 
-		{ candidate -> 
-			boolean add = true
-			for (int i = 0;i<candidate.signature.dists.size();i++)
-			{
-				if ((q.dists[i] - candidate.signature.dists[i]).abs() > radio)
-				{
-					i = candidate.signature.dists.size()
-					add = false
+		for(int j = 0; j < indexData.size(); j++)
+		{ 
+			//Para no chequear los pivotes si ya se había calculado la distancia a la query
+			if(indexData[j].dist != null){
+				if(indexData[j].dist < radio){
+					itemsFound.add(indexData[j])
 				}
 			}
-			if(add)
-			{
-				def item =  new JSONObject(rfm.getItem(candidate.signature.itemPosition,candidate.signature.itemSize))
-				if(!candidate.dist)
+			else{
+				//startTimeCPU = Utils.getCpuTime([id])
+				boolean check = true
+				//piv_comparisons++
+				for (int i = 0; i < indexData[j].signature.dists.size(); i++)
 				{
-					candidate.dist = EditDistance.editDistance(itemTitle, item.searchTitle)
+					if ((q.dists[i] - indexData[j].signature.dists[i]).abs() > radio)
+					{
+						i = indexData[j].signature.dists.size()
+						check = false
+						//piv_discarded++
+					}
 				}
-				if(candidate.dist < radio)
+				//timeCheckSignatures += Utils.getCpuTime([id]) - startTimeCPU;
+				//startTimeCPU = Utils.getCpuTime([id])
+				if(check)
 				{
-					itemsFound.add([item:item, signature: candidate])
+					if(indexData[j].dist == null)
+					{
+						//ed_calc++
+						indexData[j].item = rfm.getItem(indexData[j].signature.itemPosition,indexData[j].signature.itemSize)
+						indexData[j].dist = EditDistance.editDistance(query, indexData[j].item.searchTitle)
+					}
+					if(indexData[j].dist < radio)
+					{
+						itemsFound.add(indexData[j])
+					}
 				}
+				//timeGetItemAndEditDist += Utils.getCpuTime([id]) - startTimeCPU;
 			}
 		}
 		rfm.closeFile()
+		//log.info "[TPO_PIV_COMP: $timeCheckSignatures][#PIV_COMP:$piv_comparisons][#PIV_DISC:$piv_discarded][TPO_ED_CALC: $timeGetItemAndEditDist][#ED_CALC:$ed_calc]"
 		return itemsFound
 	}
 	
