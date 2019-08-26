@@ -6,6 +6,7 @@
 ./scripts/run_search_for_all_categs.sh random_differentPivotes 64 rank
 ./scripts/run_search_for_all_categs.sh random_differentPivotes 128 rank
 ./scripts/run_search_for_all_categs.sh random_differentPivotes 256 rank
+
 ./scripts/run_search_for_all_categs.sh incremental_differentPivotes 4 rank
 ./scripts/run_search_for_all_categs.sh incremental_differentPivotes 8 rank
 ./scripts/run_search_for_all_categs.sh incremental_differentPivotes 16 rank

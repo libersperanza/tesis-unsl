@@ -9,7 +9,8 @@ search=$3 # knn|rank
 
 echo > test_results/search.log
 
-categs=$(awk -F\; '{print$1}' test_data/categs.csv)
+#categs=$(awk -F\; '{print$1}' test_data/categs.csv)
+categs="MLA1574 MLA1430 MLA1168 MLA1132 MLA1648 MLA407134 MLA1276 MLA1000 MLA1051 MLA1246 MLA1499 MLA3937 MLA1367 MLA1368 MLA5726 MLA1182 MLA1798 MLA1144 MLA1459 MLA1384 MLA1953 MLA1071 MLA1039 MLA1403 MLA409431 MLA1743 MLA1540 MLA2547"
 
 for categ in $categs
 do
@@ -19,6 +20,6 @@ done
 # Espero a que termine el proceso
 wait
 
-mv test_results/search.log test_results/search."$search"."$pivotStrategy"_"$pivotsQty".log
+mv test_results/search.log test_results/search.rank.random_differentPivotes_4.log
 
 . scripts/stop_grails.sh
