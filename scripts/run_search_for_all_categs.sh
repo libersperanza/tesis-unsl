@@ -20,6 +20,6 @@ done
 # Espero a que termine el proceso
 wait
 
-mv test_results/search.log test_results/search.rank.random_differentPivotes_4.log
+mv test_results/search.log test_results/search."$search"."$pivotStrategy"_"$pivotsQty".log
 
 . scripts/stop_grails.sh
