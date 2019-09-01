@@ -8,6 +8,7 @@ import tesis.data.ItemDto
 import tesis.utils.Utils
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import java.net.URLEncoder
+import com.sun.xml.internal.bind.v2.util.EditDistance
 
 class BasicImplementationController
 {
@@ -61,7 +62,7 @@ class BasicImplementationController
 			int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
 			int kNeighbors = Integer.valueOf(params.neighbors?:ConfigurationHolder.config.kNeighbors)
 			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-			def itemsFound = searchService.knnByRankSearchV2(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
+			List itemsFound = searchService.knnByRankSearchV2(itemTitle,params.categ,radio,kNeighbors,servletContext["index"])
 			switch(params.response_format) {
 				case "empty":
 					render "\n"
@@ -90,7 +91,7 @@ class BasicImplementationController
 		{
 			int radio = Integer.valueOf(params.radio?:ConfigurationHolder.config.radio)
 			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-			def itemsFound = searchService.rankSearch(itemTitle,params.categ,radio,servletContext["index"])
+			List itemsFound = searchService.rankSearch(itemTitle,params.categ,radio,servletContext["index"])
 			
 			switch(params.response_format) {
 				case "empty":
@@ -122,7 +123,7 @@ class BasicImplementationController
 		{
 			int radio = Integer.valueOf(params.radio?:"5")
 			String itemTitle = Utils.removeSpecialCharacters(params.itemTitle).toUpperCase()
-			def itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,servletContext["index"])
+			List itemsFound = searchService.sequentialSearch(itemTitle,params.categ,radio,servletContext["index"])
 			
 			switch(params.response_format) {
 				case "empty":
@@ -152,7 +153,7 @@ class BasicImplementationController
 	{
 		try 
 		{
-			def itemsFound = searchService.getAllItemsByCateg(servletContext["index"], params.categ)
+			List itemsFound = searchService.getAllItemsByCateg(servletContext["index"], params.categ)
 			if(params.flat=="Y")
 			{
 				render ""//render itemsFound+ "\n"
@@ -230,7 +231,7 @@ class BasicImplementationController
 	}
 	def readPivotes = {
 		
-		def pivots
+		Map pivots
 		
 		File file3 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
 		file3.withObjectInputStream(getClass().classLoader){ ois ->
@@ -248,5 +249,21 @@ class BasicImplementationController
 
 			println "[$categ][max:${lengths.max()}][min:${lengths.min()}][avg:${lengths.sum()/lengths.size()}]"
 		}
+	}
+
+	def editDistanceTime = {
+		long id = java.lang.Thread.currentThread().getId();
+		log.info("ANTES DE TOMAR TIEMPO CPU")
+		long startTimeCPU = tesis.utils.Utils.getCpuTime([id])
+		log.info("ANTES DE TOMAR TIEMPO USR")
+		long startTimeUser = tesis.utils.Utils.getUserTime([id])
+		log.info("ANTES DE CALCULAR DIST")
+		int dist = EditDistance.editDistance(params.title1, params.title2)
+		log.info("ANTES DE TOMAR TIEMPO CPU")
+		long elapsedCPUTime = tesis.utils.Utils.getCpuTime([id]) - startTimeCPU;
+		log.info("ANTES DE TOMAR TIEMPO USR")
+		long elapsedUserTime = tesis.utils.Utils.getUserTime([id]) - startTimeUser;
+		log.info("[DIST: $dist, TIME_CPU: $elapsedCPUTime, TIME_USR: $elapsedUserTime]")
+
 	}
 }

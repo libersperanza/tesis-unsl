@@ -1,5 +1,5 @@
 ##### Búsquedas por rango
-./scripts/run_search_for_all_categs.sh random_differentPivotes 4 rank
+
 ./scripts/run_search_for_all_categs.sh random_differentPivotes 8 rank
 ./scripts/run_search_for_all_categs.sh random_differentPivotes 16 rank
 ./scripts/run_search_for_all_categs.sh random_differentPivotes 32 rank

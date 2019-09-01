@@ -7,10 +7,10 @@ echo "starting grails..."
 sdk use grails 1.3.7
 sdk use java 6u65
 
-export GRAILS_OPTS="-Xdebug -Xmx8G -Xmx8G -XX:MaxPermSize=8G"
+export GRAILS_OPTS="-Xdebug -Xmx12G -Xmx12G -XX:MaxPermSize=12G"
 
 nohup grails run-app >/dev/null 2>&1 &
 
-sleep 60s
+sleep 30s
 
 echo "grails started..."
