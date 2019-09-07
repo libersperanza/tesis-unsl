@@ -275,6 +275,12 @@ class IndexManager
 			pivotsByCateg = ois.readObject()
 		}
 	}
+	public def getAllpivotsByCateg(){
+		if(!pivotsByCateg){
+			fillPivotsByCategFromFile()
+		}
+		return pivotsByCateg
+	}
 	private void createSignatures()
 	{
 		long startTime = System.currentTimeMillis()
