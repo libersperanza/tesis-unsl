@@ -26,7 +26,7 @@ class SearchService {
 		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		ArrayList<ItemSignature> signatures = mgr.categs.get(pos).signatures
-		ArrayList<JSONObject> items =  getItemsFromFile(signatures, itemTitle, radio)
+		ArrayList<JSONObject> items =  getItemsFromFile(signatures, itemTitle, radio, mgr)
 		
 		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
 		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
@@ -49,14 +49,14 @@ class SearchService {
 
 		Map results = getCandidatesByRank(itemTitle,categ,radio,mgr)
 
-		log.info("TIEMPO DE FILTRO: ${Utils.getCpuTime([id]) - startTimeCPU} - ${Utils.getUserTime([id]) - startTimeUser}")
+		/*log.info("TIEMPO DE FILTRO: ${Utils.getCpuTime([id]) - startTimeCPU} - ${Utils.getUserTime([id]) - startTimeUser}")
 
 		long startTimeCPU2 = Utils.getCpuTime([id])
-		long startTimeUser2 = Utils.getUserTime([id])
+		long startTimeUser2 = Utils.getUserTime([id])*/
 		
-		ArrayList<JSONObject> items = getItemsFromFile(results.candidates, itemTitle, radio)
+		ArrayList<JSONObject> items = getItemsFromFile(results.candidates, itemTitle, radio, mgr)
 
-		log.info("TIEMPO DE COMPARACION CONTRA ARCHIVO: ${Utils.getCpuTime([id]) - startTimeCPU2} - ${Utils.getUserTime([id]) - startTimeUser2}")
+		//log.info("TIEMPO DE COMPARACION CONTRA ARCHIVO: ${Utils.getCpuTime([id]) - startTimeCPU2} - ${Utils.getUserTime([id]) - startTimeUser2}")
 		
 		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
 		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
@@ -64,21 +64,21 @@ class SearchService {
 		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG
 		//log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$results.candidates.size|$items.size|$results.total|$categ"
 		
-		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
-		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$elapsedCPUTime|$elapsedUserTime|$results.candidates.size|$items.size|$results.total|$categ|$itemTitle"
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG
+		log1.info "$ConfigurationHolder.config.strategy|using_index_rank|$radio|$elapsedCPUTime|$elapsedUserTime|$results.candidates.size|$items.size|$results.total|$categ"
 		return items
 	}
 
 	Map getCandidatesByRank(String itemTitle, String categ,Integer radio, IndexManager mgr)
 	{
-		long id = java.lang.Thread.currentThread().getId();
+		/*long id = java.lang.Thread.currentThread().getId();
 		long startTimeCPU = Utils.getCpuTime([id])
-		long startTimeUser = Utils.getUserTime([id])
+		long startTimeUser = Utils.getUserTime([id])*/
 		//Calculo la firma para la query
 		ItemSignature sig = new ItemSignature(itemTitle, mgr.getPivotsForCateg(categ))
-		long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
+		/*long elapsedCPUTime = Utils.getCpuTime([id]) - startTimeCPU;
 		long elapsedUserTime = Utils.getUserTime([id]) - startTimeUser;
-		log.info("TIEMPO CALCULO FIRMA Q: ${elapsedCPUTime + elapsedUserTime}")
+		log.info("TIEMPO CALCULO FIRMA Q: ${elapsedCPUTime + elapsedUserTime}")*/
 		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
 
 		//Obtengo todas las firmas para la categoria
@@ -117,49 +117,53 @@ class SearchService {
 		return ["candidates":candidates,"total":signatures.size]
 	}
 
-	private ArrayList<JSONObject> getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio) {
+	private ArrayList<JSONObject> getItemsFromFile(ArrayList<ItemSignature> signatures, String itemTitle, Integer radio, IndexManager mgr) {
 		
 		ArrayList<JSONObject> itemsFound = new ArrayList<JSONObject>()
-
-		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 		
-		long id = java.lang.Thread.currentThread().getId();
+		/*long id = java.lang.Thread.currentThread().getId();
 		long startTimeCPU = 0
 		long startTimeUser = 0
-		long timeReadFile = 0
-		long timeEvalDist = 0
+		long timeReadFileCPU = 0
+		long timeEvalDistCPU = 0
+		long timeCheckRadioCPU = 0
+		long timeReadFileUsr = 0
+		long timeEvalDistUsr = 0
+		long timeCheckRadioUsr = 0*/
 
-		if (rfm.openFile("r"))
+		for(int i = 0; i < signatures.size(); i++)
 		{
-			for(int i = 0; i < signatures.size(); i++)
+			/*startTimeCPU = Utils.getCpuTime([id])
+			startTimeUser = Utils.getUserTime([id])*/
+
+			JSONObject item = mgr.items.get(signatures[i].itemPosition)
+			/*timeReadFileCPU += Utils.getCpuTime([id]) - startTimeCPU;
+			timeReadFileUsr += Utils.getUserTime([id]) - startTimeUser;
+
+			startTimeCPU = Utils.getCpuTime([id])
+			startTimeUser = Utils.getUserTime([id])*/
+			
+			int dist = EditDistance.editDistance(itemTitle, item.searchTitle)
+			
+			/*timeEvalDistCPU += Utils.getCpuTime([id]) - startTimeCPU;
+			timeEvalDistUsr += Utils.getUserTime([id]) - startTimeUser;
+			
+			startTimeCPU = Utils.getCpuTime([id]) 
+			startTimeUser = Utils.getUserTime([id])*/
+			if((radio - dist) > 0)
 			{
-				startTimeCPU = Utils.getCpuTime([id])
-				startTimeUser = Utils.getUserTime([id])
-
-				JSONObject item = rfm.getItem(signatures[i].itemPosition,signatures[i].itemSize)
-				timeReadFile += Utils.getCpuTime([id]) - startTimeCPU;
-				timeReadFile += Utils.getUserTime([id]) - startTimeUser;
-
-				startTimeCPU = Utils.getCpuTime([id])
-				startTimeUser = Utils.getUserTime([id])
-				
-				int dist = EditDistance.editDistance(itemTitle, item.searchTitle)
-				
-				timeEvalDist += Utils.getCpuTime([id]) - startTimeCPU;
-				timeEvalDist += Utils.getUserTime([id]) - startTimeUser;
-				
-				if(dist < radio)
-				{
-					itemsFound.add(item)
-				}
+				itemsFound.add(item)
 			}
-			rfm.closeFile()
+			/*timeCheckRadioCPU += Utils.getCpuTime([id]) - startTimeCPU;
+			timeCheckRadioUsr += Utils.getUserTime([id]) - startTimeUser;*/
 		}
-		log.info("TPO LECTURA ARCHIVO: $timeReadFile - TPO EVAL DIST: $timeEvalDist")
+		/*log.info("TPO LECTURA ARCHIVO: $timeReadFileCPU - $timeReadFileUsr")
+		log.info("TPO EVAL DIST: $timeEvalDistCPU - $timeEvalDistUsr")
+		log.info("TPO CHECK RADIO: $timeCheckRadioCPU - $timeCheckRadioUsr")*/
 		return itemsFound
 	}
 
-	ArrayList<JSONObject> knnByRankSearchV2(String query, String categ,Integer a, int kNeighbors , IndexManager mgr)
+	List<JSONObject> knnByRankSearchV2(String query, String categ,Integer a, int kNeighbors , IndexManager mgr)
 	{
 		long id = java.lang.Thread.currentThread().getId();
 
@@ -168,15 +172,15 @@ class SearchService {
 
 		int radio = 0
 		int i = 1
-		ArrayList<JSONObject> finalResult
-		List indexData = mgr.categs.get(mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))).signatures.collect{["signature":it]}
+		List finalResult
+		ArrayList<HashMap<String,Object>> indexData = mgr.categs.get(mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))).signatures.collect{["signature":it]}
 		//Calculo la firma para la query
 		ItemSignature querySignature = new ItemSignature(query, mgr.getPivotsForCateg(categ))
-		List items = []
+		ArrayList<HashMap<String,Object>> items = new ArrayList<HashMap<String,Object>>()
 		while(items.size() < kNeighbors && indexData.size > 0) {
 			radio = Math.pow(a,i).intValue()
 			//log.info "PROBANDO RADIO $radio"
-			items = getItemsForRadio(query, querySignature, radio, indexData)
+			items = getItemsForRadio(query, querySignature, radio, indexData, mgr)
 			//log.info "PROBANDO RADIO $radio RESULTS $items.size"
 			if(items.size() > kNeighbors)
 			{
@@ -187,7 +191,7 @@ class SearchService {
 				{
 					radio = ((ls + li)/2).intValue()
 					//log.info "BISECCION RADIO $radio"
-					items = getItemsForRadio(query, querySignature, radio, indexData)
+					items = getItemsForRadio(query, querySignature, radio, indexData, mgr)
 					//log.info "BISECCION RADIO $radio RESULTS $items.size"
 					if(items.size() == kNeighbors)
 					{
@@ -213,11 +217,11 @@ class SearchService {
 				{
 					//log.info "FIN BISECCION RADIO $radio $items.size"
 					if(items.size() < kNeighbors){
-						items = getItemsForRadio(query, querySignature, radio, indexData)
+						items = getItemsForRadio(query, querySignature, radio, indexData, mgr)
 					}
 					//log.info "ORDENANDO ITEMS EN BASE A LA DISTANCIA DE Q"
 					items.sort{it.dist}
-					finalResult = items.subList(0,kNeighbors)
+					finalResult = new ArrayList<HashMap<String,Object>>(items.subList(0,kNeighbors))
 				}
 			}
 			else{
@@ -235,17 +239,14 @@ class SearchService {
 		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG
 		//log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$evalDistQty|${finalResult.size()}|${indexData.size()}|$categ"
 		
-		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG|TITULO_BUSQUEDA
-		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$elapsedCPUTime|$elapsedUserTime|$evalDistQty|$items.size|${indexData.size + items.size}|$categ|$itemTitle"
+		//ESTRATEGIA|TIPO_BUSQUEDA|RADIO|TIEMPO_CPU|TIEMPO_USUARIO|#EVAL_FUNCION_DISTANCIA==#CANDIDATOS|#RESULTADOS|#ITEMS_CATEG|CATEG
+		log1.info "$ConfigurationHolder.config.strategy|using_index_knn_radio|$radio|$elapsedCPUTime|$elapsedUserTime|$evalDistQty|$finalResult.size|$indexData.size|$categ"
 		return finalResult.collect{it.item}
 	}
 
-	List getItemsForRadio(String query, ItemSignature q, Integer radio, List indexData){
+	ArrayList<HashMap<String,Object>> getItemsForRadio(String query, ItemSignature q, Integer radio, List indexData, IndexManager mgr){
 		
-		List itemsFound = []
-		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
-
-		rfm.openFile("r")
+		ArrayList<HashMap<String,Object>> itemsFound = new ArrayList<HashMap<String,Object>>()
 
 		//long id = java.lang.Thread.currentThread().getId();
 		//long startTimeCPU = 0
@@ -284,7 +285,7 @@ class SearchService {
 					if(indexData[j].dist == null)
 					{
 						//ed_calc++
-						indexData[j].item = rfm.getItem(indexData[j].signature.itemPosition,indexData[j].signature.itemSize)
+						indexData[j].item = mgr.items.get(indexData[j].signature.itemPosition)
 						indexData[j].dist = EditDistance.editDistance(query, indexData[j].item.searchTitle)
 					}
 					if(indexData[j].dist < radio)
@@ -295,7 +296,6 @@ class SearchService {
 				//timeGetItemAndEditDist += Utils.getCpuTime([id]) - startTimeCPU;
 			}
 		}
-		rfm.closeFile()
 		//log.info "[TPO_PIV_COMP: $timeCheckSignatures][#PIV_COMP:$piv_comparisons][#PIV_DISC:$piv_discarded][TPO_ED_CALC: $timeGetItemAndEditDist][#ED_CALC:$ed_calc]"
 		return itemsFound
 	}

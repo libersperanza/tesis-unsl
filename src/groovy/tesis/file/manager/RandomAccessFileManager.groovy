@@ -58,7 +58,7 @@ class RandomAccessFileManager
 		return pos;
 	}
 	
-	public JSONObject getItem(long pos,itemSize) 
+	public JSONObject getItem(long pos, long itemSize) 
 	{
 		objFile.seek(pos)
 		byte[] data = new byte[itemSize]
@@ -81,10 +81,8 @@ class RandomAccessFileManager
 		}
 		return true;
 	}
-	def seek(pos){
-		objFile.seek(pos)
-	}
-	def resetFile(){
+
+	public void resetFile(){
 		objFile.setLength(0)
 	}
 }

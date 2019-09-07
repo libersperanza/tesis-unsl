@@ -36,12 +36,14 @@ class IndexManager
 	//Si se utiliza el mismo conjunto de pivotes p/todas
 	//las categorias, se carga el par "ALL",[lista_pivotes]
 	HashMap<String, ArrayList<PivotDto>> pivots = null;
-	def pivotsByCateg
+	Map pivotsByCateg
+	HashMap<Integer,JSONObject> items;
+
 
 	public IndexManager(String initMode)
 	{
 		long startTime = System.currentTimeMillis()
-		def strategyParams = ConfigurationHolder.config.strategy.split("_")
+		List strategyParams = ConfigurationHolder.config.strategy.split("_")
 		String strategy = strategyParams[0]
 		String pivotSelection = strategyParams[1]
 		int pivotsQty = Integer.valueOf(strategyParams[2])
@@ -58,8 +60,14 @@ class IndexManager
 				{	
 					categsList.add((CategDto)ois.readObject())
 				}
-			}			
-			createCategsHash(categsList)
+			}
+			RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
+			
+			if (!rfm.openFile("r")) { throw new Exception("Error opening file")};
+
+			createCategsHash(categsList, rfm)
+
+			rfm.closeFile()
 	
 			File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 			file2.withObjectInputStream(getClass().classLoader){ ois ->
@@ -68,8 +76,9 @@ class IndexManager
 			
 			log.info "$ConfigurationHolder.config.strategy|index_creation_from_file|${System.currentTimeMillis()-startTime}"
 		}else{
-			createCategsHash(createCategListFromFile());
-			
+
+			createCategsHash(createCategListFromFile(), null);
+
 			if("random".equals(strategy)) //La estrategia puede ser mismos pivotes para todas las categorías o distintos pivotes para cada categoría
 			{
 				createPivots(pivotSelection,pivotsQty)
@@ -85,6 +94,7 @@ class IndexManager
 			createIndexFiles()
 			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
 		}
+
 	}
 	
 	private createCategListFromFile()
@@ -110,12 +120,20 @@ class IndexManager
 		return list
 	}
 	
-	private void createCategsHash(ArrayList<CategDto> list)
+	private void createCategsHash(ArrayList<CategDto> list, RandomAccessFileManager rfm)
 	{
+		items = new HashMap<JSONObject>()
 		categs = new CategsHash(list.size(), 0.4)
 		for(CategDto c:list)
 		{
 			categs.add(c)
+			if(rfm != null)
+			{
+				for(int i=0; i < c.signatures.size(); i++)
+				{
+					items.put(c.signatures[i].itemPosition, rfm.getItem(c.signatures[i].itemPosition,c.signatures[i].itemSize))
+				}
+			}
 		}
 	}
 	private void createPivots(String pivotSelection, int pivotsQty)
@@ -139,7 +157,7 @@ class IndexManager
 			}
 			else
 			{
-				def pivs = []
+				List pivs = []
 				(1..pivotsQty).each
 				{
 					pivs.add(fm.nextPivot())
@@ -279,9 +297,11 @@ class IndexManager
 						CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
 						int pos = categs.search(catForSearch)
 						if (categs.get(pos).equals(catForSearch)){
+							String json = curItem.toJSON().toString()
 							sig.itemPosition = rfm.insertItem(curItem)
-							sig.itemSize = curItem.toJSON().toString().length()
+							sig.itemSize = json.length()
 							categs.get(pos).signatures.add(sig)
+							items.put(sig.itemPosition, json)
 						}
 					}
 					else

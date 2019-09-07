@@ -212,11 +212,11 @@ class BasicImplementationController
 		fm.closeFile()
 
 		itemsByCateg.each{ categ,items ->
-			File resFileSearchTitles = new File("./test_data/search_titles/1pct/${categ}_search_titles.txt")
+			File resFileSearchTitles = new File("./test_data/search_titles/${categ}_search_titles_red.txt")
 			log.info "Writing results file ${resFileSearchTitles.name}"
 			resFileSearchTitles.withWriter{ out ->
-				//Obtengo el 1% de la BD
-				int sampleSize = items.size()/100 
+				//Obtengo el 10% de la BD
+				int sampleSize = items.size()/10 
 				Random rand = new Random();
 			    for (int i = 0; i < sampleSize; i++) {
 			        int randomIndex = rand.nextInt(items.size());
