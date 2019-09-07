@@ -266,4 +266,11 @@ class BasicImplementationController
 		log.info("[DIST: $dist, TIME_CPU: $elapsedCPUTime, TIME_USR: $elapsedUserTime]")
 
 	}
+	
+	def histogram = {
+		log.info params
+		log.info params.categ.getClass()
+		log.info servletContext["index"].getClass()
+		searchService.getHistogramByRadio(params.categ,servletContext["index"],params.percentage)
+	}
 }
