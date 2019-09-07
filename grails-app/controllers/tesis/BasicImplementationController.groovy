@@ -212,7 +212,7 @@ class BasicImplementationController
 		fm.closeFile()
 
 		itemsByCateg.each{ categ,items ->
-			File resFileSearchTitles = new File("./test_data/search_titles/${categ}_search_titles_red.txt")
+			File resFileSearchTitles = new File("./test_data/search_titles/${categ}_search_titles.txt")
 			log.info "Writing results file ${resFileSearchTitles.name}"
 			resFileSearchTitles.withWriter{ out ->
 				//Obtengo el 10% de la BD
