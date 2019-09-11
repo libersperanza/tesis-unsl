@@ -11,7 +11,6 @@ import tesis.data.ElementsPairs
 import tesis.data.ItemDto;
 import tesis.data.ItemSignature;
 import tesis.data.PivotDto
-import tesis.file.manager.RandomAccessFileManager;
 import tesis.file.manager.TextFileManager;
 import tesis.structure.CategsHash;
 import tesis.utils.Utils;
@@ -20,8 +19,6 @@ import java.io.File;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
-import org.codehaus.groovy.grails.web.json.JSONArray
-import org.codehaus.groovy.grails.web.json.JSONObject
 
 import com.sun.xml.internal.bind.v2.util.EditDistance;
 /**
@@ -36,8 +33,9 @@ class IndexManager
 	//Si se utiliza el mismo conjunto de pivotes p/todas
 	//las categorias, se carga el par "ALL",[lista_pivotes]
 	HashMap<String, ArrayList<PivotDto>> pivots = null;
-	Map pivotsByCateg
-	HashMap<Integer,JSONObject> items;
+	HashMap<String,ItemDto> items = null;
+
+	Map pivotsByCateg = null;
 
 
 	public IndexManager(String initMode)
@@ -48,6 +46,15 @@ class IndexManager
 		String pivotSelection = strategyParams[1]
 		int pivotsQty = Integer.valueOf(strategyParams[2])
 
+		//Si existe el file de items, lo cargo
+		File file3 = new File(ConfigurationHolder.config.itemsDataFileName)
+
+		if(file3.exists())
+		{	
+			file3.withObjectInputStream(getClass().classLoader){ ois ->
+				items = (HashMap<String,ItemDto>)ois.readObject()
+			}
+		}
 		
 		if(initMode == "load"){	
 			
@@ -61,13 +68,8 @@ class IndexManager
 					categsList.add((CategDto)ois.readObject())
 				}
 			}
-			RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
-			
-			if (!rfm.openFile("r")) { throw new Exception("Error opening file")};
 
-			createCategsHash(categsList, rfm)
-
-			rfm.closeFile()
+			createCategsHash(categsList)
 	
 			File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 			file2.withObjectInputStream(getClass().classLoader){ ois ->
@@ -77,7 +79,7 @@ class IndexManager
 			log.info "$ConfigurationHolder.config.strategy|index_creation_from_file|${System.currentTimeMillis()-startTime}"
 		}else{
 
-			createCategsHash(createCategListFromFile(), null);
+			createCategsHash(createCategListFromFile());
 
 			if("random".equals(strategy)) //La estrategia puede ser mismos pivotes para todas las categorías o distintos pivotes para cada categoría
 			{
@@ -87,8 +89,12 @@ class IndexManager
 			{
 				createIncrementalPivots(pivotSelection,pivotsQty)
 			}
-			
-			createSignatures()
+			boolean fillItemsData = (items == null)
+			if(fillItemsData)
+			{
+				items = new HashMap<String,ItemDto>()
+			}
+			createSignatures(fillItemsData)
 			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
 			startTime = System.currentTimeMillis()
 			createIndexFiles()
@@ -120,20 +126,12 @@ class IndexManager
 		return list
 	}
 	
-	private void createCategsHash(ArrayList<CategDto> list, RandomAccessFileManager rfm)
+	private void createCategsHash(ArrayList<CategDto> list)
 	{
-		items = new HashMap<JSONObject>()
 		categs = new CategsHash(list.size(), 0.4)
 		for(CategDto c:list)
 		{
 			categs.add(c)
-			if(rfm != null)
-			{
-				for(int i=0; i < c.signatures.size(); i++)
-				{
-					items.put(c.signatures[i].itemPosition, rfm.getItem(c.signatures[i].itemPosition,c.signatures[i].itemSize))
-				}
-			}
 		}
 	}
 	private void createPivots(String pivotSelection, int pivotsQty)
@@ -252,7 +250,7 @@ class IndexManager
 
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
-	// TODO ver
+	
 	private def getIncrementalPivot(pivs,max,elemPairs,fm,pivots=null){
 		def pCandidate = pivots? getRandomElement(pivots) : getRandomPivot(fm) 
 		while(pivs?.find{it.itemId == pCandidate.itemId}){
@@ -275,51 +273,40 @@ class IndexManager
 			pivotsByCateg = ois.readObject()
 		}
 	}
-	private void createSignatures()
+	private void createSignatures(boolean fillItemsData)
 	{
 		long startTime = System.currentTimeMillis()
 		
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
-		RandomAccessFileManager rfm = new RandomAccessFileManager(ConfigurationHolder.config.itemsDataFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
-
 		if(fm.openFile(0))
 		{
-			if(rfm.openFile("rw"))
+			ItemDto curItem
+			def categDescartadas = []
+			while(curItem = fm.nextItem())
 			{
-				rfm.resetFile();
-				ItemDto curItem
-				def categDescartadas = []
-				while(curItem = fm.nextItem())
+				if(getPivotsForCateg(curItem.getCateg())) //Para las categs con menos de 50 items
 				{
-					if(getPivotsForCateg(curItem.getCateg())) //Para las categs con menos de 50 items
-					{
-						ItemSignature sig = new ItemSignature(curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
-						CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
-						int pos = categs.search(catForSearch)
-						if (categs.get(pos).equals(catForSearch)){
-							String json = curItem.toJSON().toString()
-							sig.itemPosition = rfm.insertItem(curItem)
-							sig.itemSize = json.length()
-							categs.get(pos).signatures.add(sig)
-							items.put(sig.itemPosition, json)
-						}
-					}
-					else
-					{
-						if(!categDescartadas.contains(curItem.getCateg()))
+					ItemSignature sig = new ItemSignature(curItem.getItemId(), curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
+					CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
+					int pos = categs.search(catForSearch)
+					if (categs.get(pos).equals(catForSearch)){
+						categs.get(pos).signatures.add(sig)
+						if(fillItemsData)
 						{
-							categDescartadas.add(curItem.getCateg())
+							items.put(curItem.getItemId(), curItem)
 						}
-						
 					}
 				}
-				rfm.closeFile()
-				//println "Categ descartadas: $categDescartadas"
+				else
+				{
+					if(!categDescartadas.contains(curItem.getCateg()))
+					{
+						categDescartadas.add(curItem.getCateg())
+					}
+					
+				}
 			}
-			else
-			{
-				throw new Exception("Error al abrir el archivo para lectura/escritura")
-			}
+			//println "Categ descartadas: $categDescartadas"
 			fm.closeFile()
 		}
 		else
@@ -359,13 +346,26 @@ class IndexManager
 				}
 			}
 		}
+		log.info "$ConfigurationHolder.config.strategy|categs_file_creation|${System.currentTimeMillis()-startTime}"
 		
+		startTime = System.currentTimeMillis()
 		File file2 = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))
 		file2.withObjectOutputStream { oos ->
 			oos.writeObject(pivots)
 		}
+		log.info "$ConfigurationHolder.config.strategy|pivots_file_creation|${System.currentTimeMillis()-startTime}"
+		
+		startTime = System.currentTimeMillis()
+		File file3 = new File(ConfigurationHolder.config.itemsDataFileName)
+		
+		if(!file3.exists())
+		{
+			file3.withObjectOutputStream { oos ->
+				oos.writeObject(items)
+			}
+		}
 
-		log.info "$ConfigurationHolder.config.strategy|index_file_creation|${System.currentTimeMillis()-startTime}"
+		log.info "$ConfigurationHolder.config.strategy|items_file_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
 	def getRandomPivot(fm){

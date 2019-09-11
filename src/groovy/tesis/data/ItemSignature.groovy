@@ -21,23 +21,30 @@ class ItemSignature implements Serializable
 	/**
 	 * @serial
 	 */
-	long itemPosition
-	/**
-	 * @serial
-	 */
-	long itemSize
+	String itemId
 	
 
-	public ItemSignature(List dists,long itemPosition, long itemSize){
+	public ItemSignature(List dists, String itemId){
 		this.dists = dists
-		this.itemPosition = itemPosition
-		if(itemSize){
-			this.itemSize = itemSize
+		this.itemId = itemId
+	}
+
+	public ItemSignature(String itemId, String itemTitle, List pivotes)
+	{	
+		this.itemId = itemId
+		dists = new int[pivotes.size()]
+
+		
+		for(int i=0; i< pivotes.size(); i++)
+		{
+			dists[i] = EditDistance.editDistance(itemTitle, pivotes[i].searchTitle)
 		}
 	}
+
 	public ItemSignature(String itemTitle, List pivotes)
 	{	
 		dists = new int[pivotes.size()]
+
 		
 		for(int i=0; i< pivotes.size(); i++)
 		{
@@ -47,21 +54,20 @@ class ItemSignature implements Serializable
 	@Override
 	public boolean equals(ItemSignature obj)
 	{
-		return (this.dists.equals(obj.dists) && this.itemPosition.equals(obj.itemPosition) && this.itemSize.equals(obj.itemSize))
+		return (this.dists.equals(obj.dists) && this.itemId.equals(obj.itemId))
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "ItemSignature [dists=" + dists + ", itemPosition=" + itemPosition + ", itemSize=" + itemSize + "]";
+		return "ItemSignature [dists=" + dists + ", itemId=" + itemId + "]";
 	}
 	
 	public JSONObject toJSON()
 	{
 		JSONObject json = new JSONObject()
 		json.put("dists", new JSONArray(dists))
-		json.put("itemPosition",itemPosition)
-		json.put("itemSize",itemSize)
+		json.put("itemId",itemId)
 		return json
 	}	
 }
