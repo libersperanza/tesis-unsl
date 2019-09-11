@@ -95,8 +95,6 @@ class IndexManager
 				items = new HashMap<String,ItemDto>()
 			}
 			createSignatures(fillItemsData)
-			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
-			startTime = System.currentTimeMillis()
 			createIndexFiles()
 			log.info "$ConfigurationHolder.config.strategy|index_creation|${System.currentTimeMillis()-startTime}"
 		}
