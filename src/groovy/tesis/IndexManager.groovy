@@ -275,7 +275,7 @@ class IndexManager
 			pivotsByCateg = ois.readObject()
 		}
 	}
-	public def getAllpivotsByCateg(){
+	public Map getAllpivotsByCateg(){
 		if(!pivotsByCateg){
 			fillPivotsByCategFromFile()
 		}

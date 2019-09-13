@@ -322,18 +322,20 @@ class SearchService {
 		return itemsFound
 	}
 
-	def getHistogramByRadio(String categ,IndexManager mgr, Long percentage = 0.1){
+	def getHistogramByRadio(String categ,IndexManager mgr, Integer percentage = 0.1){
 
 		log.info "sortCandidateByRadio "
 		long startTime   = System.currentTimeMillis()
 		Map<String, Integer> itemsByRadio = [:]
-		def pivotesMap = mgr.getAllpivotsByCateg()
+		Map pivotesMap = mgr.getAllpivotsByCateg()
 	//	log.info "pivotes $pivotesMap"
 		def itemsByCateg = pivotesMap.get(categ)
 		def dist
-		def iPercentage = itemsByCateg.size() * percentage
+		
+		log.info "itemsByCateg ${itemsByCateg.size()}"
+		def iPercentage = (itemsByCateg.size() * percentage) /100
 		def i = 0
-
+log.info "iPercentage ${iPercentage}"
 		for(item in itemsByCateg){
 			if(i < iPercentage){
 				i +=1

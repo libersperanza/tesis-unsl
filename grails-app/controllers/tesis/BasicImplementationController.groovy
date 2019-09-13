@@ -271,6 +271,6 @@ class BasicImplementationController
 		log.info params
 		log.info params.categ.getClass()
 		log.info servletContext["index"].getClass()
-		searchService.getHistogramByRadio(params.categ,servletContext["index"],params.percentage)
+		searchService.getHistogramByRadio(params.categ,servletContext["index"],params.percentage?Integer.valueOf(params.percentage):null)
 	}
 }
