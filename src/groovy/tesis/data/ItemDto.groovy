@@ -13,8 +13,18 @@ import org.codehaus.groovy.grails.web.json.JSONObject;
  */
 class ItemDto extends PivotDto implements Serializable
 {
+	private static final long serialVersionUID = 8319653926557852223L
+	/**
+	 * @serial
+	 */
 	String itemTitle
+	/**
+	 * @serial
+	 */
 	String mainDescription
+	/**
+	 * @serial
+	 */
 	String secDescription
 	
 	@Override
