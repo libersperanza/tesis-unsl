@@ -2,7 +2,7 @@
 
 echo "starting grails..."
 
-. /Users/lsperanza/.sdkman/bin/sdkman-init.sh
+. $HOME/.sdkman/bin/sdkman-init.sh
 
 sdk use grails 1.3.7
 sdk use java 6u65
