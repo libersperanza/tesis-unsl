@@ -26,8 +26,8 @@ class CategsHash
 	private int size;
 	private int elemCount;
 	private ArrayList<CategDto> hash;
-	public final CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,itemQty:0,signatures:null);
-	public final CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,itemQty:0,signatures:null);
+	public final CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,itemQty:0,pivoteQtys:null,signatures:null);
+	public final CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,itemQty:0,pivoteQtys:null,signatures:null);
 	
 	public CategsHash(int n, double loadFactor)
 	{
@@ -40,7 +40,7 @@ class CategsHash
 	{
 		for(int i=0; i < hash.size; i++)
 		{
-			hash[i] = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,itemQty:0,signatures:new ArrayList<ItemSignature>());
+			hash[i] = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,itemQty:0,pivoteQtys:null,signatures:new ArrayList<ItemSignature>());
 		}
 	}
 	

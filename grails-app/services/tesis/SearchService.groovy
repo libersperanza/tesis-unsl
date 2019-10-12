@@ -21,7 +21,7 @@ class SearchService {
 		long id = java.lang.Thread.currentThread().getId();
 		long startTimeCPU = Utils.getCpuTime([id])
 				
-		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,pivoteQtys:null,signatures:null))
 		//Obtengo las firmas de los items para poder buscarlos en el archivo
 		ArrayList<ItemSignature> signatures = mgr.categs.get(pos).signatures
 		ArrayList<ItemDto> items =  getItemsFromFile(signatures, itemTitle, radio, mgr)
@@ -71,7 +71,7 @@ class SearchService {
 		ArrayList<ItemSignature> candidates = new ArrayList<ItemSignature>()
 
 		//Obtengo todas las firmas para la categoria
-		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,pivoteQtys:null,signatures:null))
 		ArrayList<ItemSignature> signatures = mgr.categs.get(pos).signatures
 
 		
@@ -161,7 +161,7 @@ class SearchService {
 		int radio = 0
 		int i = 1
 		List finalResult
-		ArrayList<HashMap<String,Object>> indexData = mgr.categs.get(mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))).signatures.collect{["signature":it]}
+		ArrayList<HashMap<String,Object>> indexData = mgr.categs.get(mgr.categs.search(new CategDto(categName:categ,itemQty:0,pivoteQtys:null,signatures:null))).signatures.collect{["signature":it]}
 		//Calculo la firma para la query
 		ItemSignature querySignature = new ItemSignature(query, mgr.getPivotsForCateg(categ))
 		ArrayList<HashMap<String,Object>> items = new ArrayList<HashMap<String,Object>>()
@@ -287,7 +287,7 @@ class SearchService {
 	
 	ArrayList<ItemDto> getAllItemsByCateg(IndexManager mgr, String categ)
 	{
-		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,signatures:null))
+		int pos = mgr.categs.search(new CategDto(categName:categ,itemQty:0,pivoteQtys:null,signatures:null))
 		
 		ArrayList<ItemSignature> signatures = mgr.categs.get(pos).signatures
 		

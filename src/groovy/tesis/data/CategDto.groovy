@@ -26,6 +26,10 @@ class CategDto implements Serializable
 	/**
 	 * @serial
 	 */
+	 ArrayList<Integer> pivoteQtys
+	/**
+	 * @serial
+	 */
 	ArrayList<ItemSignature> signatures
 	
 
@@ -33,10 +37,11 @@ class CategDto implements Serializable
 	{
 	}
 	
-	public CategDto(String categName, int itemQty, ArrayList<ItemSignature> signatures)
+	public CategDto(String categName, int itemQty, ArrayList<Integer> pivoteQtys, ArrayList<ItemSignature> signatures)
 	{
 		this.categName = categName;
 		this.itemQty = itemQty;
+		this.pivoteQtys = pivoteQtys
 		this.signatures = signatures;
 	}
 
@@ -47,6 +52,7 @@ class CategDto implements Serializable
 		JSONObject json = new JSONObject()
 		json.put("categName", categName)
 		json.put("itemQty", itemQty)
+		json.put("pivoteQtys", pivoteQtys)
 		json.put("signatures", signatures.collect{it.toJSON()})
 		return json
 	}
@@ -54,7 +60,7 @@ class CategDto implements Serializable
 	@Override
 	public String toString()
 	{
-		return "CategDto [categName=" + categName + ", itemQty=" + itemQty + "]";//, signatures=" + signatures + "]";
+		return "CategDto [categName=" + categName + ", itemQty=" + itemQty + ", pivoteQtys=" + pivoteQtys + "]";//, signatures=" + signatures + "]";
 	}
 
 
