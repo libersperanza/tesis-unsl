@@ -10,6 +10,7 @@ sdk use grails 1.3.7
 export GRAILS_OPTS="-Xdebug -Xmx12G -Xmx12G -XX:MaxPermSize=12G"
 
 nohup grails run-app >/dev/null 2>&1 &
+echo $! > grails_pid.txt
 
 sleep 30s
 

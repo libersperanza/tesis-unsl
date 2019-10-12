@@ -1,31 +1,285 @@
 ##### Búsquedas por rango
 
-./scripts/run_search_for_files.sh random_differentPivotes 16 rank
-./scripts/run_search_for_files.sh random_samePivotes 16 rank
-./scripts/run_search_for_files.sh random_differentPivotes 32 rank
-./scripts/run_search_for_files.sh random_differentPivotes 64 rank
-./scripts/run_search_for_files.sh random_samePivotes 64 rank
-./scripts/run_search_for_files.sh random_differentPivotes 128 rank
-./scripts/run_search_for_files.sh random_differentPivotes 256 rank
-./scripts/run_search_for_files.sh random_differentPivotes 512 rank
-./scripts/run_search_for_files.sh random_differentPivotes 1024 rank
+[DONE] ./scripts/run_search_for_files.sh random_differentPivotes 16 rank
+[DONE] ./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA3
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA10
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA11
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA14
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA15
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA[!135]
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_samePivotes 16 rank MLA5726
+
+
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA3
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA10
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA11
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA14
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA15
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA[!135]
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_differentPivotes 32 rank MLA5726
+
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA3
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA10
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA11
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA14
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA15
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA[!135]
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_differentPivotes 64 rank MLA5726
+
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA3
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA10
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA11
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA14
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA15
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA[!135]
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_samePivotes 64 rank MLA5726
+
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA3
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA10
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA11
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA14
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA15
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA[!135]
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_differentPivotes 128 rank MLA5726
+
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA3
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA10
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA11
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA14
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA15
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA[!135]
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_differentPivotes 256 rank MLA5726
+
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA3
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA10
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA11
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA14
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA15
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA[!135]
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_differentPivotes 512 rank MLA5726
+
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA3
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA10
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA11
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA1[2-3]
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA14
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA15
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA1[6-9]
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA[!135]
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh random_differentPivotes 1024 rank MLA5726
+
 
 ./scripts/run_search_for_files.sh incremental_differentPivotes 16 rank
-./scripts/run_search_for_files.sh incremental_samePivotes 16 rank
-./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank
-./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank
-./scripts/run_search_for_files.sh incremental_samePivotes 64 rank
-./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank
-./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank
-./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank
-./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA3
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA10
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA11
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA14
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA15
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_samePivotes 16 rank MLA5726
+
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 rank MLA5726
+
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA3
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA10
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA11
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA14
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA15
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_samePivotes 64 rank MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 rank MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 rank MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 rank MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 rank MLA5726
 
 
 ##### Búsquedas de knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 16 knn MLA5726
+
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 32 knn MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 64 knn MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 128 knn MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 256 knn MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 512 knn MLA5726
+
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA3
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA10
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA11
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA1[2-3]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA14
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA15
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA1[6-9]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA[!135]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA5725.0[!6789]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA5725.0[!12345]
+./scripts/run_search_for_files.sh incremental_differentPivotes 1024 knn MLA5726

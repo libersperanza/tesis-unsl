@@ -1,8 +1,6 @@
 #!/bin/bash
 
-pivotStrategy=$1 # random_differentPivotes
-pivotsQty=$2 # 4
-search_file=$3 # test_data/search_titles/MLA5725.txt
+search_file=$1 # test_data/search_titles/MLA5725.txt
 
 while read title
 do
