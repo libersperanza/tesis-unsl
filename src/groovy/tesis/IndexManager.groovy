@@ -79,7 +79,7 @@ class IndexManager
 			log.info "$ConfigurationHolder.config.strategy|index_creation_from_file|${System.currentTimeMillis()-startTime}"
 		}else{
 
-			createCategsHash(createCategListFromFile());
+			createCategsHash(createCategListFromFile(pivotsQty));
 
 			if("random".equals(strategy)) //La estrategia puede ser mismos pivotes para todas las categorías o distintos pivotes para cada categoría
 			{
@@ -101,7 +101,7 @@ class IndexManager
 
 	}
 	
-	private createCategListFromFile()
+	private createCategListFromFile(int pivotsQty)
 	{
 		long startTime = System.currentTimeMillis()
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.categsBaseFileName, ConfigurationHolder.config.textDataSeparator);
@@ -112,7 +112,10 @@ class IndexManager
 			CategDto dto;
 			while((dto = fm.nextCateg()))
 			{
-				if(dto){list.add(dto)}
+				if(dto != null && dto.pivoteQtys.contains(pivotsQty))
+				{
+					list.add(dto)
+				}
 			}
 			fm.closeFile();
 		}
@@ -291,7 +294,7 @@ class IndexManager
 				if(getPivotsForCateg(curItem.getCateg())) //Para las categs con menos de 50 items
 				{
 					ItemSignature sig = new ItemSignature(curItem.getItemId(), curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
-					CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,signatures:null)
+					CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,pivoteQtys:null,signatures:null)
 					int pos = categs.search(catForSearch)
 					if (categs.get(pos).equals(catForSearch)){
 						categs.get(pos).signatures.add(sig)
@@ -335,8 +338,8 @@ class IndexManager
 	{
 		long startTime = System.currentTimeMillis()
 
-		CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,itemQty:0,signatures:null);
-		CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,itemQty:0,signatures:null);
+		CategDto virgin = new CategDto(categName:ConfigurationHolder.config.VIRGIN_CELL,itemQty:0,pivoteQtys:null,signatures:null);
+		CategDto used = new CategDto(categName:ConfigurationHolder.config.USED_CELL,itemQty:0,pivoteQtys:null,signatures:null);
 		List<CategDto> listCategs = categs.getValues()
 
 		File file = new File(ConfigurationHolder.config.categsFileName.replaceAll("#strategy#","${ConfigurationHolder.config.strategy}"))

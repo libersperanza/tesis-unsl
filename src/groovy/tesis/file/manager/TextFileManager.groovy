@@ -79,7 +79,11 @@ class TextFileManager {
 			String linea;
 			if((linea =  bf.readLine()) != null) {
 				String[] arLinea = linea.split(lineSeparator);
-				dto = new CategDto(categName:arLinea[0],itemQty:Integer.parseInt(arLinea[1]),signatures:new ArrayList<ItemSignature>());
+				dto = new CategDto()
+				dto.categName = arLinea[0]
+				dto.itemQty = Integer.parseInt(arLinea[2])
+				dto.pivoteQtys = arLinea[1].split(",").collect{Integer.parseInt(it.toString())}
+				dto.signatures = new ArrayList<ItemSignature>();
 			}
 			else {
 				return null;
