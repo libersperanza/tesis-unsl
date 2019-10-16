@@ -98,26 +98,24 @@ class TextFileManager {
 
 	public ItemDto nextItem() {
 		ItemDto dto = null;
-		def categ
 		String linea;
 		String[] arLinea;
 		try {
-
-			if((linea = bf.readLine()) != null) {
-				linea = linea
+			linea = bf.readLine()
+			if(linea != null) {
 				arLinea = linea.split(lineSeparator);
 				dto = new ItemDto()
-				def map = getCommonData(arLinea)
+				Map map = getCommonData(arLinea)
 				dto.categ = map.categ
 				dto.itemId = map.itemId
 				dto.searchTitle = map.searchTitle
-				
 				dto.itemTitle = arLinea[2]
-				if (arLinea.size()==5) {
+
+				if (arLinea.size() == 5) {
 					dto.mainDescription = arLinea[3]
 					dto.secDescription = arLinea[4]
 				}
-				if (arLinea.size()==4) {
+				if (arLinea.size() == 4) {
 					dto.mainDescription = arLinea[3]
 				}
 			}else {
@@ -161,7 +159,7 @@ class TextFileManager {
 		return dto;
 	}
 
-	private getCommonData(String[] arLinea) {
+	private Map getCommonData(String[] arLinea) {
 		return [itemId:arLinea[1],categ:arLinea[0],searchTitle:Utils.removeSpecialCharacters(arLinea[2])]
 	}
 }

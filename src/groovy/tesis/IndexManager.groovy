@@ -33,9 +33,9 @@ class IndexManager
 	//Si se utiliza el mismo conjunto de pivotes p/todas
 	//las categorias, se carga el par "ALL",[lista_pivotes]
 	HashMap<String, ArrayList<PivotDto>> pivots = null;
-	HashMap<String,ItemDto> items = null;
+	HashMap<String, ItemDto> items = null;
 
-	Map pivotsByCateg = null;
+	HashMap<String, ArrayList<PivotDto>> allPivotsByCateg = null;
 
 
 	public IndexManager(String initMode)
@@ -81,9 +81,10 @@ class IndexManager
 
 			createCategsHash(createCategListFromFile(pivotsQty));
 
+			fillPivotsByCategFromFile()
 			if("random".equals(strategy)) //La estrategia puede ser mismos pivotes para todas las categorías o distintos pivotes para cada categoría
 			{
-				createPivots(pivotSelection,pivotsQty)
+				createRandomPivots(pivotSelection,pivotsQty)
 			}
 			else
 			{
@@ -123,7 +124,7 @@ class IndexManager
 		{
 			throw new Exception("Error al abrir el archivo")
 		}
-		log.info "$ConfigurationHolder.config.strategy|reading_categs_from_file|${System.currentTimeMillis()-startTime}"
+		log.info "$ConfigurationHolder.config.strategy|reading_categs_from_file|${System.currentTimeMillis()-startTime}|size:${list.size}"
 		return list
 	}
 	
@@ -135,18 +136,18 @@ class IndexManager
 			categs.add(c)
 		}
 	}
-	private void createPivots(String pivotSelection, int pivotsQty)
+	private void createRandomPivots(String pivotSelection, int pivotsQty)
 	{
 		pivots = [:]
 		long startTime = System.currentTimeMillis()
-		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
-		String res;
-		if(fm.openFile(0))
+
+		if("differentPivotes" == pivotSelection)
 		{
-			if("differentPivotes" == pivotSelection)
-			{
-				fillPivotsByCategFromFile()
-				pivotsByCateg.each{ k, v->
+			allPivotsByCateg.each{ k, v ->
+				CategDto catForSearch = new CategDto(categName:k,itemQty:0,pivoteQtys:null,signatures:null)
+				int pos = categs.search(catForSearch)
+				if (categs.get(pos).equals(catForSearch))//La categoría debe considerarse para ese índice
+				{
 					while(v.size() > pivotsQty) {
 						Random rand = new Random()
 						v.remove(rand.nextInt(v.size()))
@@ -154,112 +155,149 @@ class IndexManager
 					pivots.put(k,v)
 				}
 			}
-			else
-			{
-				List pivs = []
-				(1..pivotsQty).each
-				{
-					pivs.add(fm.nextPivot())
-					Random rand = new Random()
-					(1..rand.nextInt(10)).each
-					{
-						fm.nextPivot()
-					}
-				}
-				pivots.put("ALL",pivs)
-			}
-			fm.closeFile()
 		}
 		else
 		{
-			throw new Exception("Error al abrir el archivo")
+			List pivValues = allPivotsByCateg.values().flatten()
+			int index = 0
+			List pivs = []
+			(1..pivotsQty).each
+			{
+				Random rand = new Random()
+				(1..rand.nextInt(10)).each
+				{
+					index = index + 1
+				}
+				pivs.add(pivValues[index])
+			}
+			pivots.put("ALL",pivs)
 		}
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
 	private void createIncrementalPivots(String pivotSelection, int pivotsQty){
-		def (aQty,nQty) = [ConfigurationHolder.config.elementsPairs,ConfigurationHolder.config.sizeSample]
-		pivots = [:]
-		ArrayList<ElementsPairs> elemPairs
-		long startTime = System.currentTimeMillis()
-		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
-		String res;
-		def pivote
-		def max	
 		
-		/*if(pivotsQty <= 128)
-		{*/
-			if(fm.openFile(0))
-			{
-				def pivs = []
+		long startTime = System.currentTimeMillis()
+
+		int aQty = ConfigurationHolder.config.elementsPairs
+		ArrayList<ElementsPairs> elemPairs
+		PivotDto pivote
+		int max	
+		ArrayList<PivotDto> pivs = []
+		pivots = [:]
 	
-				if("differentPivotes" == pivotSelection){
-					
-					fillPivotsByCategFromFile()
-					pivotsByCateg.each{ obj ->
-						pivote = getRandomElement(obj.value)
-						pivs.add(pivote)
-						elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm,obj.value)
-						max = getMediaD(elemPairs,pivs, null)
-
-						if(!pivots.get(obj.key)){
-							pivots.put(obj.key, [])
-						}
-
-						PivotDto piv
-						int indexByCateg = 1
-
-						while(pivots.get(obj.key)?.size() < pivotsQty)
-						{	
-							if(indexByCateg==obj.value.size()){
-								max = 0
-								indexByCateg = 1
-							}
-							
-							if ((piv = getIncrementalPivot(pivs,max,elemPairs,fm,obj.value))){						
-								
-								pivots.get(piv.categ).add(piv)
-								
-							}
-							indexByCateg++
-						}
-					}
-					
-				}else{
-					pivote = getRandomPivot(fm)
+		if("differentPivotes" == pivotSelection){
+			allPivotsByCateg.each{ c, pList ->
+				CategDto catForSearch = new CategDto(categName:c,itemQty:0,pivoteQtys:null,signatures:null)
+				int pos = categs.search(catForSearch)
+				if (categs.get(pos).equals(catForSearch))//La categoría debe considerarse para ese índice
+				{
+					pivote = getRandomElement(pList)
 					pivs.add(pivote)
-					elemPairs = getElementsPairs(aQty,pivotsQty,pivote,fm)
+					elemPairs = getElementsPairs(aQty,pivotsQty,pivote,pList)
 					max = getMediaD(elemPairs,pivs, null)
 
-					while(pivs.size() < pivotsQty){
-						pivote = getIncrementalPivot(pivs,max,elemPairs,fm)
-						if(pivote){
-							pivs.add(pivote)
+					if(!pivots.get(c)){
+						pivots.put(c, [])
+					}
+
+					PivotDto piv
+					int indexByCateg = 1
+
+					while(pivots.get(c).size() < pivotsQty)
+					{	
+						if(indexByCateg == pList.size()){
+							max = 0
+							indexByCateg = 1
 						}
-					}				
-					pivots.put("ALL",pivs)
+						
+						if ((piv = getIncrementalPivot(pivs,max,elemPairs,pList))){						
+							
+							pivots.get(piv.categ).add(piv)
+							
+						}
+						indexByCateg++
+					}
 				}
-				
-				fm.closeFile()
-			}else{
-				throw new Exception("Error al abrir el archivo")
 			}
-		/*}
-		else
-		{
-			throw new Exception("Cantidad de pivotes mayor a la permitida (128)")
-		}*/
+			
+		}else{
+			List pivValues = allPivotsByCateg.values().flatten()
+			pivote = getRandomElement(pivValues)
+			pivs.add(pivote)
+			elemPairs = getElementsPairs(aQty, pivotsQty, pivote, pivValues)
+			max = getMediaD(elemPairs,pivs, null)
+
+			while(pivs.size() < pivotsQty){
+				pivote = getIncrementalPivot(pivs, max, elemPairs, pivValues)
+				if(pivote){
+					pivs.add(pivote)
+				}
+			}				
+			pivots.put("ALL",pivs)
+		}
 
 		log.info "$ConfigurationHolder.config.strategy|pivot_creation|${System.currentTimeMillis()-startTime}"
 	}
+	private PivotDto getRandomElement(ArrayList<PivotDto> elements){
+		Random rand = new Random()
+		return elements[Math.abs(rand.nextInt()) % elements?.size()]
+	}
 	
-	private def getIncrementalPivot(pivs,max,elemPairs,fm,pivots=null){
-		def pCandidate = pivots? getRandomElement(pivots) : getRandomPivot(fm) 
-		while(pivs?.find{it.itemId == pCandidate.itemId}){
-			pCandidate = pivots? getRandomElement(pivots) : getRandomPivot(fm) 
+	private ArrayList<ElementsPairs> getElementsPairs(int pairsQty, int pivotsQty, PivotDto pivot, ArrayList<PivotDto> pivotsList){
+		ArrayList<ElementsPairs> pairs = new ArrayList<ElementsPairs>(pairsQty)
+		ElementsPairs pair
+		for (int i=0; i<pairsQty;i++){
+			pair = new ElementsPairs()
+			pair.a =  getRandomElement(pivotsList)
+			pair.b =  getRandomElement(pivotsList)
+			while (pair.a.itemId == pair.b.itemId){
+				pair.b = getRandomElement(pivotsList)
+			}
+			pair.initDist(pivotsQty,pivot)			
+			pairs.add(pair)
 		}
-		def min = getMediaD(elemPairs,pivs,pCandidate)
-		if(min>=max){
-			max=min
+		return pairs
+	}
+	/**
+	 * return criterio de eficiencia
+	 * @param pairs
+	 * @param pivots
+	 * @param pivotCandidate
+	 * @return
+	 */
+	private int getMediaD(ArrayList<ElementsPairs> pairs, ArrayList<PivotDto> pivots, PivotDto pivotCandidate){
+		int max
+		int value
+		int media = 0
+		List a
+		List b
+		for (pair in pairs){
+			a = pair.aDists.clone()
+			b = pair.bDists.clone()
+			if(pivotCandidate){
+				a[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.a.searchTitle, pivotCandidate.searchTitle)
+				b[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.b.searchTitle, pivotCandidate.searchTitle)
+			}
+			max = (a[0]-b[0]).abs()
+			for(int i=1; i< a.size() && a[i]!=-1; i++){
+				value = (a[i]-b[i]).abs()
+				if(value>max){
+					max=value
+				}
+			}
+			media += max			
+		}		
+		return media/pairs.size()
+	}
+	
+	private PivotDto getIncrementalPivot(ArrayList<PivotDto> pivs, int max, ArrayList<ElementsPairs> elemPairs, ArrayList<PivotDto> pivotsList){
+		PivotDto pCandidate = getRandomElement(pivotsList)
+		while(pivs?.find{it.itemId == pCandidate.itemId}){
+			pCandidate = getRandomElement(pivotsList)
+		}
+		int min = getMediaD(elemPairs, pivs, pCandidate)
+		if(min >= max){
+			max = min
 			for (e in elemPairs){
 				e.addDistance(pCandidate)
 			}
@@ -271,7 +309,7 @@ class IndexManager
 		//El file contiene pivotes (items) para las categorías con más de 50 items
 		File filePv = new File(ConfigurationHolder.config.pivotsFileName.replaceAll("#strategy#","New"))
 		filePv.withObjectInputStream(getClass().classLoader){ ois ->
-			pivotsByCateg = ois.readObject()
+			allPivotsByCateg = ois.readObject()
 		}
 	}
 	private void createSignatures(boolean fillItemsData)
@@ -281,13 +319,13 @@ class IndexManager
 		TextFileManager fm = new TextFileManager(ConfigurationHolder.config.itemsBaseFileName, ConfigurationHolder.config.textDataSeparator);
 		if(fm.openFile(0))
 		{
-			ItemDto curItem
-			def categDescartadas = []
-			while(curItem = fm.nextItem())
+			ItemDto curItem = fm.nextItem()
+			while(curItem != null)
 			{
-				if(getPivotsForCateg(curItem.getCateg())) //Para las categs con menos de 50 items
+				ArrayList<PivotDto> pivsCateg = getPivotsForCateg(curItem.getCateg())
+				if(pivsCateg != null)
 				{
-					ItemSignature sig = new ItemSignature(curItem.getItemId(), curItem.getSearchTitle(), getPivotsForCateg(curItem.getCateg()))
+					ItemSignature sig = new ItemSignature(curItem.getItemId(), curItem.getSearchTitle(), pivsCateg)
 					CategDto catForSearch = new CategDto(categName:curItem.categ,itemQty:0,pivoteQtys:null,signatures:null)
 					int pos = categs.search(catForSearch)
 					if (categs.get(pos).equals(catForSearch)){
@@ -298,16 +336,8 @@ class IndexManager
 						}
 					}
 				}
-				else
-				{
-					if(!categDescartadas.contains(curItem.getCateg()))
-					{
-						categDescartadas.add(curItem.getCateg())
-					}
-					
-				}
+				curItem = fm.nextItem()
 			}
-			//println "Categ descartadas: $categDescartadas"
 			fm.closeFile()
 		}
 		else
@@ -318,17 +348,17 @@ class IndexManager
 		log.info "$ConfigurationHolder.config.strategy|signature_creation|${System.currentTimeMillis()-startTime}"
 	}
 	
-	def getPivotsForCateg(String categName)
+	private ArrayList<PivotDto> getPivotsForCateg(String categName)
 	{
-		def ret = pivots.get(categName)
-		if(!ret)
+		ArrayList<PivotDto> ret = pivots.get(categName)
+		if(ret == null)
 		{
 			ret = pivots.get("ALL")
 		}
 		return ret
 	}
 	
-	def createIndexFiles()
+	private void createIndexFiles()
 	{
 		long startTime = System.currentTimeMillis()
 
@@ -367,66 +397,5 @@ class IndexManager
 		}
 
 		log.info "$ConfigurationHolder.config.strategy|items_file_creation|${System.currentTimeMillis()-startTime}"
-	}
-	
-	def getRandomPivot(fm){
-		Random rand = new Random()
-		(1..rand.nextInt(5)).each
-		{
-			fm.nextPivot()
-		}
-		return fm.nextPivot()
-	}
-	def getRandomElement(elements){
-		Random rand = new Random()
-		return elements[Math.abs(rand.nextInt()) % elements?.size()]
-	}
-	
-	def getElementsPairs(pairsQty,pivotsQty,pivot,file, pivots=null){
-		ArrayList<ElementsPairs> pairs = new ArrayList<ElementsPairs>(pairsQty)
-		ElementsPairs pair
-		for (int i=0; i<pairsQty;i++){
-			pair = new ElementsPairs()
-			pair.a =  pivots? getRandomElement(pivots):getRandomPivot(file) 
-			pair.b =  pivots? getRandomElement(pivots) : getRandomPivot(file) 
-			while (pair.a.itemId == pair.b.itemId){
-				pair.b = pivots? getRandomElement(pivots) : getRandomPivot(file)
-				//log.info "mismo random en el par"
-			}
-			pair.initDist(pivotsQty,pivot)			
-			pairs.add(pair)
-		}
-		return pairs
-	}
-	/**
-	 * return criterio de eficiencia
-	 * @param pairs
-	 * @param pivots
-	 * @param pivotCandidate
-	 * @return
-	 */
-	def getMediaD(pairs,pivots,pivotCandidate){
-		def max
-		def value
-		def media = 0
-		List a
-		List b
-		for (pair in pairs){
-			a = pair.aDists.clone()
-			b = pair.bDists.clone()
-			if(pivotCandidate){
-				a[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.a.searchTitle, pivotCandidate.searchTitle)
-				b[Utils.firtsFree(pair.aDists)] = EditDistance.editDistance(pair.b.searchTitle,pivotCandidate.searchTitle)
-			}
-			max = (a[0]-b[0]).abs()
-			for(int i=1; i< a.size() && a[i]!=-1; i++){
-				value = (a[i]-b[i]).abs()
-				if(value>max){
-					max=value
-				}
-			}
-			media += max			
-		}		
-		return media/pairs.size()
 	}
 }

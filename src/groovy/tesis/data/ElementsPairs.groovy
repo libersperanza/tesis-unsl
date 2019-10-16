@@ -11,16 +11,16 @@ class ElementsPairs {
 	List aDists
 	PivotDto b
 	List bDists
-	public void initDist(pivotsQty,pivot){
+	public void initDist(int pivotsQty, PivotDto pivot){
 		aDists = new int[pivotsQty]
 		bDists = new int[pivotsQty]
 		for (int i=0; i< pivotsQty;i++){
 			aDists[i]=-1
 			bDists[i]=-1
 		}
-		addDistance (pivot)
+		addDistance(pivot)
 	}
-	public void addDistance(pivot){			
+	public void addDistance(PivotDto pivot){			
 		aDists[Utils.firtsFree(aDists)]= EditDistance.editDistance(a.searchTitle, pivot.searchTitle)
 		bDists[Utils.firtsFree(bDists)]= EditDistance.editDistance(b.searchTitle, pivot.searchTitle)
 	}
