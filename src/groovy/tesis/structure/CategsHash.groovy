@@ -59,17 +59,19 @@ class CategsHash
 	{
 		
 		int pos = Integer.valueOf(hashCode(dto.categName)).abs()%size;
-		def h = hash[pos]
+
 		if(hash[pos].equals(dto))
 		{
 			return pos;
 		}
 		
 		boolean found = false;
-		int firstFree=-1;
+		int firstFree = -1;
+		int attempts = 0
 		
-		while(!found)
+		while(!found && attempts < size)
 		{
+			//println "$dto - POS: $pos - FOUND: $found - ATTEMPTS: $attempts"
 			if(!hash[pos].equals(dto))
 			{
 				if(!hash[pos].equals(virgin))
@@ -86,16 +88,18 @@ class CategsHash
 				}
 				else
 				{
-					found =true;
+					found = true;
 				}
 			}
 			else
 			{
 				found = true;
 			}
+			attempts++
 		}
 		
-		return firstFree!=-1?firstFree:pos;
+		//println "FINAL POS: $pos - FIRST_FREE: $firstFree"
+		return (firstFree!=-1)?firstFree:pos;
 	}
 	
 	public int add(CategDto dto)

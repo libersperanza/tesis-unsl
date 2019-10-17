@@ -10,12 +10,11 @@ if [ ! -f grails_pid.txt ]; then
 	. scripts/init_index.sh $pivotStrategy $pivotsQty
 fi
 
-files=$(ls test_data/search_titles/${prefix}*)
-
+files=$(ls test_data/search_titles/ | egrep ${prefix})
 
 for file in $files
 do
-	. scripts/run_"$search".sh $file >/dev/null 2>&1 &
+	. scripts/run_"$search".sh "test_data/search_titles/$file" >/dev/null 2>&1 &
 	#echo -n "."
 done
 
