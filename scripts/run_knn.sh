@@ -9,3 +9,5 @@ do
     curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?response_format=empty&radio=5&neighbors=7&categ=$title"
     #echo -n "."
 done < $search_file
+
+echo "FINISH KNN SEARCH FOR FILE $search_file"
