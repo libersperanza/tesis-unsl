@@ -203,16 +203,19 @@ class BasicImplementationController
 		{
 			ItemDto item 
 			while(item = fm.nextItem()){
-				if(!itemsByCateg.containsKey(item.categ)){
-					itemsByCateg.put(item.categ,new ArrayList<String>())
+				if(["MLA5725", "MLA3025"].contains(item.categ))
+				{
+					if(!itemsByCateg.containsKey(item.categ)){
+						itemsByCateg.put(item.categ,new ArrayList<String>())
+					}
+					itemsByCateg.get(item.categ).add(item.itemTitle)
 				}
-				itemsByCateg.get(item.categ).add(item.itemTitle)
 			}	
 		}
 		fm.closeFile()
 
 		itemsByCateg.each{ categ,items ->
-			File resFileSearchTitles = new File("./test_data/search_titles/${categ}_search_titles.txt")
+			File resFileSearchTitles = new File("./test_data/search_titles/${categ}.txt")
 			log.info "Writing results file ${resFileSearchTitles.name}"
 			resFileSearchTitles.withWriter{ out ->
 				//Obtengo el 10% de la BD

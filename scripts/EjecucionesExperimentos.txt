@@ -1,14 +1,8 @@
 ##### Búsquedas por rango
 
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 rank 'MLA5725.05|MLA5725.06|MLA5725.07|MLA5725.08|MLA5725.09'
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 rank 'MLA5725.01|MLA5725.02|MLA5725.03|MLA5725.04'
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 rank 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08|MLA3025.09'
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 rank 'MLA3025.01|MLA3025.02|MLA3025.03|MLA3025.04'
-
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA5725.07|MLA5725.08|MLA5725.09'
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA5725.04|MLA5725.05|MLA5725.06'
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA3025.09|MLA5725.01|MLA5725.02|MLA5725.03'
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08'
+./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA5725.06|MLA5725.07|MLA5725.08|MLA5725.09'
+./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA5725.01|MLA5725.02|MLA5725.03|MLA5725.04|MLA5725.05'
+./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08|MLA3025.09'
 ./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA3025.01|MLA3025.02|MLA3025.03|MLA3025.04'
 ./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA1574'
 ./scripts/run_search_for_files.sh incremental_differentPivotes 4096 rank 'MLA1430'
@@ -62,15 +56,9 @@
 ./scripts/run_search_for_files.sh incremental_differentPivotes 32 rank 'MLA1039|MLA1403|MLA1540|MLA1743|MLA409431'
 ./scripts/run_search_for_files.sh incremental_differentPivotes 16 rank 'MLA1540|MLA2547'
 
-./scripts/run_search_for_files.sh random_differentPivotes 8192 rank 'MLA5725.05|MLA5725.06|MLA5725.07|MLA5725.08|MLA5725.09'
-./scripts/run_search_for_files.sh random_differentPivotes 8192 rank 'MLA5725.01|MLA5725.02|MLA5725.03|MLA5725.04'
-./scripts/run_search_for_files.sh random_differentPivotes 8192 rank 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08|MLA3025.09'
-./scripts/run_search_for_files.sh random_differentPivotes 8192 rank 'MLA3025.01|MLA3025.02|MLA3025.03|MLA3025.04'
-
-./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA5725.07|MLA5725.08|MLA5725.09'
-./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA5725.04|MLA5725.05|MLA5725.06'
-./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA3025.09|MLA5725.01|MLA5725.02|MLA5725.03'
-./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08'
+./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA5725.06|MLA5725.07|MLA5725.08|MLA5725.09'
+./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA5725.01|MLA5725.02|MLA5725.03|MLA5725.04|MLA5725.05'
+./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08|MLA3025.09'
 ./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA3025.01|MLA3025.02|MLA3025.03|MLA3025.04'
 ./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA1574'
 ./scripts/run_search_for_files.sh random_differentPivotes 4096 rank 'MLA1430'
@@ -133,15 +121,9 @@
 ./scripts/run_search_for_files.sh random_samePivotes 16 rank 'MLA1540|MLA2547'
 
 ##### Búsquedas de knn
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 knn 'MLA5725.05|MLA5725.06|MLA5725.07|MLA5725.08|MLA5725.09'
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 knn 'MLA5725.01|MLA5725.02|MLA5725.03|MLA5725.04'
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 knn 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08|MLA3025.09'
-./scripts/run_search_for_files.sh incremental_differentPivotes 8192 knn 'MLA3025.01|MLA3025.02|MLA3025.03|MLA3025.04'
-
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA5725.07|MLA5725.08|MLA5725.09'
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA5725.04|MLA5725.05|MLA5725.06'
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA3025.09|MLA5725.01|MLA5725.02|MLA5725.03'
-./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08'
+./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA5725.06|MLA5725.07|MLA5725.08|MLA5725.09'
+./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA5725.01|MLA5725.02|MLA5725.03|MLA5725.04|MLA5725.05'
+./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA3025.05|MLA3025.06|MLA3025.07|MLA3025.08|MLA3025.09'
 ./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA3025.01|MLA3025.02|MLA3025.03|MLA3025.04'
 ./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA1574'
 ./scripts/run_search_for_files.sh incremental_differentPivotes 4096 knn 'MLA1430'
