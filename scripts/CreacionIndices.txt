@@ -27,15 +27,19 @@ curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotS
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=1024";
 
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=2048";(Categs: MLA1051,MLA1000,MLA3025,MLA1648,MLA1574)
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=2048";(Categs: MLA1168,MLA5725,MLA407134,MLA1276,MLA1430,MLA1132)
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=2048";(Categs: MLA1051,MLA1000,MLA3025,MLA1648,MLA1574)
+
+curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=2048";(Categs: MLA1168,MLA5725,MLA407134,MLA1276,MLA1430,MLA1132)
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=2048";(Categs: MLA1168,MLA5725,MLA407134,MLA1276,MLA1430,MLA1132)
 
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=4096";(Categ: MLA1430)
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=4096";(Categ: MLA1574)
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=4096";(Categ: MLA5725)
-curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=4096";(Categ: MLA3025)
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=4096";(Categ: MLA1430)
+
+curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=4096";(Categ: MLA1574)
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=4096";(Categ: MLA1574)
+
+curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=4096";(Categ: MLA5725)
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=4096";(Categ: MLA5725)
+
+curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=random_differentPivotes&pivotsQty=4096";(Categ: MLA3025)
 curl "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?pivotStrategy=incremental_differentPivotes&pivotsQty=4096";(Categ: MLA3025)
