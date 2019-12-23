@@ -1,0 +1,95 @@
+ 
+set terminal postscript  eps color "times" 20
+set xlabel "bits por salto (bs)"
+set ylabel "Espacio Total Final(MB)"
+set key top
+set xrange [4:7]
+set yrange [200:300]
+set xtics 1
+set ytics 10
+set pointsize 2.5
+set output "dna50-espacio.ps"
+
+
+plot "CPTP-cont/CPTPcont-dna50MB.cnt" using ($3):($8) title "CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.cnt" using ($3):($7) title "CPTP-cont-sindum " w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.cnt" using ($5):( (($10+$11)*4096) / 1048576) title "CPTP +SA " w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.cnt" using ($5):( (($9+$10)*4096) / 1048576) title "CPTP +SA-sindum " w lp 4
+
+
+set ylabel "Espacio Total (sin pack)(MB)"
+set xrange [4:7]
+set key top
+set output "dna50-espacio-sinpack.ps"
+set yrange [200:600]
+set ytics 50
+plot "CPTP-cont/CPTPcont-dna50MB.spcnt" using ($1):(($2*4096) / 1048576 ) title " CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.spcnt" using ($1):(($2*4096) / 1048576) title " CPTP-cont-sindum" w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.cnt" using ($5):((($9+$11)*4096 )/ 1048576) title " CPTP +SA" w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.cnt" using ($5):(($8+$10)*4096 / 1048576) title " CPTP+SA-sindum" w lp 4
+
+
+set key top
+set ylabel "% reduccion por empaquetado"
+set yrange [0.1:0.8]
+set ytics 0.1
+set output "dna50-redpack.ps"
+
+
+plot "CPTP-cont/CPTPcont-dna50MB.spcnt" using ($1):(1-$3/$2) title " CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.spcnt" using ($1):(1-$3/$2) title " CPTP-cont-sindum" w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.cnt" using ($5):(1-$10/$9) title " CPTP +SA" w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.cnt" using ($5):(1-$9/$8) title " CPTP+SA-sindum" w lp 4
+
+
+set output "dna50-redpack2.ps"
+plot "CPTP-cont/CPTPcont-dna50MB.spcnt" using ($1):(1-$3/$2) title " CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.spcnt" using ($1):(1-$3/$2) title " CPTP-cont-sindum" w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.cnt" using ($5):(1-(($10+$11)/($9+$11))) title " CPTP +SA" w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.cnt" using ($5):(1-(($9+$10)/($8+$10)))title " CPTP+SA-sindum" w lp 4
+
+set yrange [1:40]
+set ylabel "Espacio Desperdiciado(MB)"
+set ytics 10
+set output "dna50-desperdicio.ps"
+plot "CPTP-cont/CPTPcont-dna50MB.cnt" using ($3):($10) title " CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.cnt" using ($3):($9) title " CPTP-cont-sindum" w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.cnt" using ($5):($14) title " CPTP +SA" w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.cnt" using ($5):($13)title " CPTP+SA-sindum" w lp 4
+
+
+set yrange [0:0.1]
+set ylabel "% Espacio Desperdiciado(MB)"
+set ytics 0.01
+set output "dna50-desperdicio(porc).ps"
+plot "CPTP-cont/CPTPcont-dna50MB.cnt" using ($3):($10 / $8) title " CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.cnt" using ($3):($9/$7) title " CPTP-cont-sindum" w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.cnt" using ($5):($14 / ( (($10+$11)*4096) / 1048576)) title " CPTP +SA" w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.cnt" using ($5):($13 /( (($9+$10)*4096) / 1048576))title " CPTP+SA-sindum" w lp 4
+
+
+
+set key top
+set ylabel "BMsalto /Dummy (MB)"
+set yrange [1:50]
+set ytics 10
+set output "dna50-BM_Dummy.ps"
+
+
+plot "CPTP-cont/CPTPcont-dna50MB.cnt" using ($3):(( ($1*$6)/8 ) / 1048576 ) title " CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.spcnt" using ($1):($11) title " CPTP-cont-sindum" w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.cnt" using ($5):( (( ($1*$8)/8 ) / 1048576 )) title " CPTP +SA" w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.spcnt" using ($1):($11) title " CPTP+SA-sindum" w lp 4
+
+
+set key top
+set ylabel "% BMsalto /Dummy (MB)"
+set yrange [0:0.9]
+set ytics 0.1
+set output "dna50-BM_Dummy(porc).ps"
+
+
+plot "CPTP-cont/CPTPcont-dna50MB.cnt" using ($3):((((($1*$6)/8 )/1048576) )/ $8) title " CPTP-cont" w lp 1,\
+     "CPTP-cont-sindum/CPTPcontSD-dna50MB.spcnt" using ($1):($12) title " CPTP-cont-sindum" w lp 2,\
+     "CPTP-leaves/CPTPL-dna50MB.spcnt" using ($1):( $14)  title " CPTP +SA" w lp 3,\
+     "CPTP-leaves-sindum/CPTPLSD-dna50MB.spcnt" using ($1):($12) title " CPTP+SA-sindum" w lp 4
