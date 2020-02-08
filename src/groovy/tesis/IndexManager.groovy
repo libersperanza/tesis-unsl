@@ -313,10 +313,10 @@ class IndexManager
 		}
 	}
 	public Map getAllpivotsByCateg(){
-		if(!pivotsByCateg){
+		if(!allPivotsByCateg){
 			fillPivotsByCategFromFile()
 		}
-		return pivotsByCateg
+		return allPivotsByCateg
 	}
 	private void createSignatures(boolean fillItemsData)
 	{
