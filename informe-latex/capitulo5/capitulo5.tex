@@ -9,7 +9,7 @@ En una primera etapa nos enfocamos en determinar el rango adecuado para las b\'u
 
 \section{Seteo Experimental}
 
-Para los experimentos usamos la base de datos de \textit{"items"} (productos publicados) de Mercadolibre.\\
+Para los experimentos usamos la base de datos de "\textit{items}" (productos publicados) de Mercadolibre.\\
 	
 Agrupamos los productos en categor\'ias que re\'unen productos de similares caracter\'isticas, teniendo como resultado 30 categor\'ias distintas, que de  ahora en adelante las llamaremos bases de datos.\\
 
@@ -20,41 +20,39 @@ Luego, agrupamos las bases de datos en grupos segmentados por el ratio de pivote
 
 \subsection{Selecci\'on del rango de b\'usqueda}
 
-La mayor\'ia de los trabajos de investigaci\'on existentes sobre b\'usqueda por similitud en textos, utilizan como universo de datos diccionarios de palabras como por ejemplo ingl\'es o español. \'Esto genera una base com\'un que puede utilizarse a la hora de generar variaciones sobre algoritmos de b\'usqueda en nuevos trabajos: se comparte la base de datos y las elecciones de los experimentos, lo que permite poder comparar f\'acilmente los resultados de los mismos. Es com\'un encontrar trabajos de b\'usqueda por rango donde la variaci\'on del radio es siempre entre 1 y 5 y la elecci\'on de ese valor no requiere m\'as que una simple decisi\'on azarosa por parte del autor.\\
+La mayor\'ia de los trabajos de investigaci\'on existentes sobre b\'usqueda por similitud en textos, utilizan como universo de datos diccionarios de palabras como por ejemplo ingl\'es o español. Esto genera una base com\'un que puede utilizarse a la hora de generar variaciones sobre algoritmos de b\'usqueda en nuevos trabajos, es decir, se comparte la base de datos y los par\'ametros de los experimentos, lo cual permite poder comparar f\'acilmente los resultados de los mismos.\\
+ 
+Es com\'un encontrar trabajos de b\'usqueda por rango donde la variaci\'on del radio es siempre entre 1 y 5 y la elecci\'on de ese valor no requiere m\'as que una simple decisi\'on azarosa por parte del autor.\\
 
-En nuestro trabajo, el universo de datos es bastante m\'as singular; ya que se trata de t\'itulos de productos reales, cuya redacci\'on est\'a a cargo del usuario que publica el producto para su venta y donde la \'unica limitante es el tama\~no de ese t\'itulo (60 caracteres).\\
+En nuestro trabajo, el universo de datos es bastante m\'as singular, ya que se trata de t\'itulos de productos reales, cuya redacci\'on est\'a a cargo del usuario que publica el producto para su venta y donde la \'unica limitante es el tama\~no de ese t\'itulo (60 caracteres).\\
 
 Esta particularidad tiene como consecuencia un universo de datos variado y heterog\'eneo, donde cada elemento de dicho universo es una combinaci\'on de palabras, abreviaciones, n\'umeros y caracteres especiales. Ante \'esta combinaci\'on de caracter\'isticas, el primer obst\'aculo que debimos sortear para comenzar con la evaluaci\'on experimental fue, precisamente, la selecci\'on del radio de b\'usqueda.\\
 
-Como una primera aproximaci\'on, seleccionamos tres t\'itulos de productos de la categor\'ia con mayor cantidad de elementos y luego procedimos a realizar una b\'usqueda de los k-vecinos con:\\
+Como una primera aproximaci\'on, seleccionamos cuatro t\'itulos de productos de la categor\'ia con mayor cantidad de elementos y luego procedimos a realizar una b\'usqueda de los k-vecinos con:\\
 
 \begin{itemize}
-\item $k= 0.001 \times  cantidad de elementos de la categor\'ia (0.1\%)$
-\item $k= 0.01 \times cantidad de elementos de la categor\'ia (1\%)$
-\item $k= 0.1 \times cantidad de elementos de la categor\'ia (10\%)$
+\item $k= 0.001 \times  cantidad\_de\_elementos\_de\_la\_categoria\ (0.1\%)$
+\item $k= 0.01 \times cantidad\_de\_elementos\_de\_la\_categoria\ (1\%)$
+\item $k= 0.1 \times cantidad\_de\_elementos\_de\_la\_categoria\ (10\%)$
 \end{itemize}
 
 \
 \
 
-El algor\'itmo de b\'usqueda se implement\'o utilizando la estrategia de selecci\'on de pivotes incremental, y la cantidad de pivotes elegida fue de 128.\\
+Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes incremental, y la cantidad de pivotes elegida fue de 128.\\
 
-GRAFICO y TABLA %<<Insertar gr\'afico y tabla con los datos>>
+ TABLA %<<Insertar gr\'afico y tabla con los datos>>
 
-Como podemos visualizar en los resultados, el promedio del radio de b\'usqueda arroja un valor de 27, valor que utilizamos para realizar algunas pocas b\'usquedas sobre el resto de las categor\'ias. Al analizar los resultados obtenidos llegamos a la conclusi\'on de que deb\'iamos disminu\'ir el valor del $r$, ya que en la mayor\'ia de los casos la b\'usqueda retornaba una cantidad de elementos cercana a la totalidad de la base de datos y en otros casos los elementos retornados no eran similares al t\'itulo de b\'usqueda. Ante \'estos hallazgos, tomamos una segunda aproximaci\'on: promediando la longitud de los t\'itulos de cada categor\'ia y a su vez tomando el promedio de todas las categor\'ias.  De esa forma llegamos al rango elegido para todos los experimentos: $r=23$.\\
-
-Hicimos un an\'alisis emp\'irico sobre diferentes categor\'ias
+Como podemos visualizar en los resultados, el promedio del radio de b\'usqueda arroja un valor de 27, valor que utilizamos para realizar algunas pocas b\'usquedas sobre el resto de las categor\'ias. Al analizar los resultados obtenidos llegamos a la conclusi\'on de que deb\'iamos disminu\'ir el valor del $r$, ya que en la mayor\'ia de los casos la b\'usqueda retornaba una cantidad de elementos cercana a la totalidad de la base de datos y en otros casos los elementos retornados no eran similares al t\'itulo de b\'usqueda. Ante \'estos hallazgos, tomamos una segunda aproximaci\'on: primero obtuvimos el promedio de la longitud de los t\'itulos para cada categor\'ia, luego promediamos esos valores para obtener un \'unico resultado y lo dividimos por 2.  De esa forma llegamos al rango elegido para todos los experimentos: $r=23$.\\
 
 
 \subsection{Selecci\'on de los conjuntos de pivotes}
 
 En este trabajo, adem\'as de las t\'ecnicas de selecci\'on de pivotes, random e incremental, consideramos dos pol\'iticas para la elecci\'on de los grupos de pivotes:\\
 
-\noindent  \textit{\textbf{Mismo grupo de pivotes para todas las categor\'ias o bases de datos}}
-Esta estrategia, selecciona el grupo de pivotes considerando todas las bases de datos. Luego, el mismo grupo de pivotes, es utilizado en cada uno de los experimentos sobre las distintas bases de datos.\\
+\noindent  \textit{\textbf{Mismo grupo de pivotes para todas las categor\'ias o bases de datos}}: Esta estrategia, selecciona el grupo de pivotes considerando todas las bases de datos. Luego, el mismo grupo de pivotes, es utilizado en cada uno de los experimentos sobre las distintas bases de datos.\\
 
-\noindent  \textit{\textbf{Diferentes grupos pivotes por categor\'ia o base de datos}}
-Sobre cada una de las bases de datos se seleccionan los conjuntos de pivotes.\\
+\noindent  \textit{\textbf{Diferentes grupos de pivotes por categor\'ia o base de datos}}: Sobre cada una de las bases de datos se seleccionan los conjuntos de pivotes.\\
 
 Para determinar cu\'al estrategia era la m\'as adecuada, se seleccionaron conjuntos de pivotes, random e incremental, seg\'un las pol\'iticas arriba mencionadas para los grupos de 16 y 64 pivotes.\\
 
@@ -78,8 +76,7 @@ Dada la variabilidad de tamaños de las bases de datos, para poder analizar lueg
 
 \begin{table}[htbp]
 \begin{center}
-\begin{tabular}{|m{1.1cm}|m{1.8cm}|m{3.2cm}|m{2.2cm}|m{2.5cm}|}
-
+\begin{tabular}{|p{1.1cm}|p{1.8cm}|p{3.2cm}|p{2.2cm}|p{2.5cm}|}
 \hline
 Grupo & 
 Cantidad de DB & 
@@ -185,4 +182,10 @@ GRAFICAS POR GRUPOS
  conclusiones:
  Como se puede observar, solo en el grupo 1; la t\'ecnica de selecci\'on incremental realiza menos cantidad de evaluaciones de distancia. En los grupos 2, 3 y 4 es mejor la t\'ecnica de selecci\'on random solo por muy poca diferencia.\\
  
+ 
+Dado que el comportamiento para ambas t\'ecnicas de selecci\'on no era el que esperabamos, es decir, incremental no era mucho mejor que random en cuanto a ratio de comparaciones, hicimos un an\'alisis emp\'irico sobre diferentes categor\'ias para entender tal comportamiento. 
+
+
+
+
  
