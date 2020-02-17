@@ -56,23 +56,22 @@ En este trabajo, adem\'as de las t\'ecnicas de selecci\'on de pivotes, random e 
 
 Para determinar cu\'al estrategia era la m\'as adecuada, se seleccionaron conjuntos de pivotes, random e incremental, seg\'un las pol\'iticas arriba mencionadas para los grupos de 16 y 64 pivotes.\\
 
-Para 16 pivotes, se usaron 6 bases de datos (tamaño total: 61.184), por cada base de datos se eligi\'o al azar el 10\% de los t\'itulos como elementos de b\'usqueda y se ejecutaron 12.232 experimentos en total. 
-Para 64 pivotes, se usaron 18 bases de datos (tamaño total: 440.631), por cada base de datos tambi\'en se seleccion\'o al azar el 10\% de los t\'itulos como elementos de b\'usqueda y se ejecutaron 88.114 experimentos en total.\\
+Por cada base de datos se eligi\'o al azar el 10\% de los t\'itulos como elementos de b\'usqueda. Para 16 pivotes, se usaron 6 bases de datos (tamaño total: 61.184) y se ejecutaron 12.232  b\'usquedas en total. Para 64 pivotes, se usaron 18 bases de datos (tamaño total: 440.631) y se ejecutaron 88.114 b\'usquedas en total.\\
 
-A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el porcentaje de comparaciones de realizadas por b\'usqueda, respecto del tamaño de la base de datos para 16 y 64 pivotes respectivamente.\\
+A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el ratio de comparaciones realizadas respecto del tamaño de la base de datos para 16 y 64 pivotes respectivamente.\\
 
 GRAFICAS
 
-Por lo que se puede observar, vemos que la estrategia var\'ia por base de datos y que se comporta mejor, en t\'erminos generales, la pol\'itica de selecci\'on  \textit{diferentes grupos pivotes por categor\'ia o base de datos} para ambas t\'ecnicas; random e incremental.\\
+Por lo que se puede observar, aunque la estrategia var\'ia por cada base de datos, en t\'erminos generales se comporta mejor la pol\'itica de selecci\'on  \textit{diferentes grupos pivotes por categor\'ia o base de datos} para ambas t\'ecnicas; random e incremental.\\
 
 
 \section{Ejecuci\'on experimental}
 
-En una segunda etapa,  nos concentramos en c\'omo \'ibamos a agrupar los datos teniendo en cuenta la variaci\'on de bases de datos para luego poder analizar la informaci\'on segmentada y poder sacar mejores conclusiones.\\
+En una segunda etapa,  nos concentramos en c\'omo agrupar los datos teniendo en cuenta la variaci\'on del tama\~no de las bases de datos para luego poder analizar la informaci\'on segmentada y poder sacar mejores conclusiones.\\
 
 \subsection{Creaci\'on de grupos}
 
-Dada la variabilidad de tamaños de las bases de datos, para poder analizar luego los resultados correctamente, definimos cuatro grupos, segmentados por tamaño de base de datos y por cantidad de pivotes. Esto es, calculamos el ratio de pivotes sobre el tamaño de las base de datos (DB) , quedando la siguiente distribuci\'on:\\
+Dada la variabilidad de tamaños de las bases de datos, para poder analizar luego los resultados correctamente, definimos cuatro grupos segmentados por el tamaño de base de datos y por cantidad de pivotes. Esto es, calculamos el ratio de pivotes sobre el tamaño de las base de datos (DB), quedando la siguiente distribuci\'on:\\
 
 \begin{table}[htbp]
 \begin{center}
@@ -112,14 +111,7 @@ Cantidad de Experimentos\\
 
 En total se ejecutaron 276 experimentos. Esto es, 138 experimentos usando t\'ecnica de selecci\'on de pivotes random y 138 experimentos usando t\'ecnica de selecci\'on de pivotes incremental.\\
 
-
-\subsection{Selecci\'on de elementos de b\'usqueda}
-
-Los elementos de b\'usqueda fueron seleccionados al azar seg\'un un porcentaje de la base de datos. Este porcentaje fue calculado en base al tamaño de las bases de datos, al n\'umero de pivotes y al n\'umero promedio de comparaciones.\\
-
-TABLA
-
-La Cantidad total de b\'usquedas por rango realizadas fueron: 339.899. Este valor incluye las b\'usquedas usadas para descartar la pol\'itica de selecci\'on \textit{Mismo grupo de pivotes para todas las categor\'ias o bases de datos} mencionada anteriormente.\\
+Se seleccion\'o al azar el 10\% de los elementos de cada una de las bases de datos para realizar las b\'usquedas. La cantidad total de b\'usquedas por rango realizadas fue: 339.899. Este valor incluye las b\'usquedas usadas para descartar la pol\'itica de selecci\'on \textit{Mismo grupo de pivotes para todas las categor\'ias o bases de datos} mencionada anteriormente.\\
 
 \section{An\'alisis de resultados}
 
