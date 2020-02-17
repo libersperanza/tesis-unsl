@@ -22,4 +22,19 @@
 \contentsline {section}{\numberline {2.6}Dimensi\'on en Espacios M\'etricos}{18}% 
 \contentsline {subsection}{\numberline {2.6.1}Definici\'on de dimensi\'on intr\'inseca}{18}% 
 \contentsline {subsection}{\numberline {2.6.2}La maldici\'on de la dimensionalidad}{18}% 
-\contentsline {chapter}{Bibliograf\'ia}{20}% 
+\contentsline {chapter}{\numberline {3}Una Aplicaci\'on de Espacios M\'etricos a Comercio Electr\'onico}{20}% 
+\contentsline {chapter}{\numberline {4}Detalles de implementaci\'on}{21}% 
+\contentsline {chapter}{\numberline {5}Evaluaci\'on experimental}{22}% 
+\contentsline {section}{\numberline {5.1}Seteo Experimental}{22}% 
+\contentsline {subsection}{\numberline {5.1.1}Selecci\'on del rango de b\'usqueda}{23}% 
+\contentsline {subsection}{\numberline {5.1.2}Selecci\'on de los conjuntos de pivotes}{24}% 
+\contentsline {section}{\numberline {5.2}Ejecuci\'on experimental}{25}% 
+\contentsline {subsection}{\numberline {5.2.1}Creaci\'on de grupos}{25}% 
+\contentsline {subsection}{\numberline {5.2.2}Selecci\'on de elementos de b\'usqueda}{25}% 
+\contentsline {section}{\numberline {5.3}An\'alisis de resultados}{26}% 
+\contentsline {subsection}{\numberline {5.3.1}Efecto de la cantidad de pivotes}{26}% 
+\contentsline {subsection}{\numberline {5.3.2}Efecto tama\IeC {\~n}o de la base de datos}{26}% 
+\contentsline {subsection}{\numberline {5.3.3}Efecto de las t\'ecnicas de selecci\'on de pivotes}{27}% 
+\contentsline {chapter}{\numberline {6}Conclusiones}{28}% 
+\contentsline {section}{\numberline {6.1}Contribuciones}{28}% 
+\contentsline {chapter}{Bibliograf\'ia}{30}% 
