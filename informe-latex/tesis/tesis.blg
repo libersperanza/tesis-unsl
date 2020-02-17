@@ -1,0 +1,348 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: tesis.aux
+A level-1 auxiliary file: agradecimientos.aux
+A level-1 auxiliary file: resumen.aux
+The style file: thesis.bst
+Database file #1: biblio.bib
+I was expecting a `,' or a `}'---line 51 of file biblio.bib
+ :     
+ :     publisher = {Communications of the ACM 51(12) (2008) 68-74}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 164 of file biblio.bib
+ : 
+ : @book{MaPiMo:11,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 397 of file biblio.bib
+ : @book{AnLih:04
+ :               ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 608 of file biblio.bib
+ :  
+ :  publisher = {Englewood, CO, 2001. Libraries Unlimited.},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Name 1 in "Stuart E. Madnick, Richard Y. Wang, Yang W. Lee, and Hongwei Zhu." has a comma at the end for entry MadWanLeeZhu:09
+while executing---line 1220 of file thesis.bst
+Name 1 in "Stuart E. Madnick, Richard Y. Wang, Yang W. Lee, and Hongwei Zhu." has a comma at the end for entry MadWanLeeZhu:09
+while executing---line 1220 of file thesis.bst
+Name 1 in "Michael Bendersky, W. Bruce Croft, and Yanlei Diao." has a comma at the end for entry BenCroDia:11
+while executing---line 1220 of file thesis.bst
+Name 1 in "Michael Bendersky, W. Bruce Croft, and Yanlei Diao." has a comma at the end for entry BenCroDia:11
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "M. Angélica Caro, Coral Calero, Ismael Caballero, Mario Piattini" for entry MaCcIcMp:05
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "M. Angélica Caro, Coral Calero, Ismael Caballero, Mario Piattini" for entry MaCcIcMp:05
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Gasser, L., & Stvilia, B." for entry GasStv:01
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Gasser, L., & Stvilia, B." for entry GasStv:01
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Gasser, L., & Stvilia, B." for entry GasStv:01
+while executing---line 1220 of file thesis.bst
+Name 1 in "Besiki Stvilia, Michael B. Twidale, Linda C. Smith, and Les Gasser" has a comma at the end for entry StvTwSmGa:05
+while executing---line 1220 of file thesis.bst
+Name 1 in "Besiki Stvilia, Michael B. Twidale, Linda C. Smith, and Les Gasser" has a comma at the end for entry StvTwSmGa:05
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Myshkin Ingawale, Amitava Dutta, Rahul Roy, Priya Seetharaman" for entry InDuRoSe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Myshkin Ingawale, Amitava Dutta, Rahul Roy, Priya Seetharaman" for entry InDuRoSe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Johnson, R., Wichern, D." for entry JoWi:98
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Johnson, R., Wichern, D." for entry JoWi:98
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Johnson, R., Wichern, D." for entry JoWi:98
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Davis, G.F., Yoo, M. and Baker, W.E." for entry DavGf:03
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Davis, G.F., Yoo, M. and Baker, W.E." for entry DavGf:03
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Magdy, A., Wanas, N." for entry MaWa:10
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Magdy, A., Wanas, N." for entry MaWa:10
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Magdy, A., Wanas, N." for entry MaWa:10
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1220 of file thesis.bst
+Name 1 in "B. Stvilia, M. Twidale, L. C. Smith, and L. Gasser." has a comma at the end for entry StTwSmGa:08
+while executing---line 1220 of file thesis.bst
+Name 1 in "B. Stvilia, M. Twidale, L. C. Smith, and L. Gasser." has a comma at the end for entry StTwSmGa:08
+while executing---line 1220 of file thesis.bst
+Name 1 in "Maik Anderka, Benno Stein, and Nedim Lipka." has a comma at the end for entry AndSteLip:11
+while executing---line 1220 of file thesis.bst
+Name 1 in "Maik Anderka, Benno Stein, and Nedim Lipka." has a comma at the end for entry AndSteLip:11
+while executing---line 1220 of file thesis.bst
+Name 1 in "Loris Gaio, Matthijs den Besten, Alessandro Rossi, and Jean-Michel Dalle." has a comma at the end for entry GaBeRoDa:09
+while executing---line 1220 of file thesis.bst
+Name 1 in "Loris Gaio, Matthijs den Besten, Alessandro Rossi, and Jean-Michel Dalle." has a comma at the end for entry GaBeRoDa:09
+while executing---line 1220 of file thesis.bst
+Name 1 in "M. Anderka, B. Stein, and M. Busse" has a comma at the end for entry AndSteBu:12
+while executing---line 1220 of file thesis.bst
+Name 1 in "M. Anderka, B. Stein, and M. Busse" has a comma at the end for entry AndSteBu:12
+while executing---line 1220 of file thesis.bst
+Name 1 in "M. Anderka, B. Stein, and N. Lipka" has a comma at the end for entry AndSteLip:12
+while executing---line 1220 of file thesis.bst
+Name 1 in "M. Anderka, B. Stein, and N. Lipka" has a comma at the end for entry AndSteLip:12
+while executing---line 1220 of file thesis.bst
+Name 1 in "Oliver Ferschke, Iryna Gurevych, and Marc Rittberger" has a comma at the end for entry OfIgMr:12
+while executing---line 1220 of file thesis.bst
+Name 1 in "Oliver Ferschke, Iryna Gurevych, and Marc Rittberger" has a comma at the end for entry OfIgMr:12
+while executing---line 1220 of file thesis.bst
+Name 1 in "Anthony Fader, Stephen Soderland, and Oren Etzioni" has a comma at the end for entry AnStOr:11
+while executing---line 1220 of file thesis.bst
+Name 1 in "Anthony Fader, Stephen Soderland, and Oren Etzioni" has a comma at the end for entry AnStOr:11
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Banko M., Cafarella M. J., Soderland S., Broadhead S. y Etzioni O." for entry BanCafSodBroEtz:07
+while executing---line 1220 of file thesis.bst
+Too many commas in name 1 of "Banko M., Cafarella M. J., Soderland S., Broadhead S. y Etzioni O." for entry BanCafSodBroEtz:07
+while executing---line 1220 of file thesis.bst
+Name 1 in "Anthony Fader, Stephen Soderland, and Oren Etzioni" has a comma at the end for entry AnStOr:11
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in AnStOr:11
+Warning--empty publisher in MaAn:13
+Warning--empty publisher in AndSte:10
+Too many commas in name 1 of "Banko M., Cafarella M. J., Soderland S., Broadhead S. y Etzioni O." for entry BanCafSodBroEtz:07
+while executing---line 1285 of file thesis.bst
+Name 1 in "Besiki Stvilia, Michael B. Twidale, Linda C. Smith, and Les Gasser" has a comma at the end for entry StvTwSmGa:05
+while executing---line 1285 of file thesis.bst
+Name 1 in "B. Stvilia, M. Twidale, L. C. Smith, and L. Gasser." has a comma at the end for entry StTwSmGa:08
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in StTwSmGa:08
+Warning--empty publisher in CappC:02
+Warning--empty publisher in Crawf:01
+Too many commas in name 1 of "Davis, G.F., Yoo, M. and Baker, W.E." for entry DavGf:03
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in EppMue:02
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Etzioni, O., Banko, M., Soderland, S., Weld, D." for entry EtBaSoWe:12
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in EtBaSoWe:12
+Warning--empty year in FincAikp:99
+Warning--empty publisher in FugM:02
+Warning--empty publisher in WuWe:10
+Too many commas in name 1 of "Gasser, L., & Stvilia, B." for entry GasStv:01
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in HaiKor:03
+Too many commas in name 1 of "Johnson, R., Wichern, D." for entry JoWi:98
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Juffinger, A., Granitzer, M., Lex, E." for entry JuGrLe:09
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in JurJ:92
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Lex, E., Völske, M., Errecalde, M., Ferretti, E., Cagnina, L., Horn, C., Stein, B., Granitzer, M." for entry LeVoErFeCaHoGrr:12
+while executing---line 1285 of file thesis.bst
+Name 1 in "Loris Gaio, Matthijs den Besten, Alessandro Rossi, and Jean-Michel Dalle." has a comma at the end for entry GaBeRoDa:09
+while executing---line 1285 of file thesis.bst
+Name 1 in "M. Anderka, B. Stein, and M. Busse" has a comma at the end for entry AndSteBu:12
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in AndSteBu:12
+Too many commas in name 1 of "M. Angélica Caro, Coral Calero, Ismael Caballero, Mario Piattini" for entry MaCcIcMp:05
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in MaCcIcMp:05
+Too many commas in name 1 of "Magdy, A., Wanas, N." for entry MaWa:10
+while executing---line 1285 of file thesis.bst
+Name 1 in "Maik Anderka, Benno Stein, and Nedim Lipka." has a comma at the end for entry AndSteLip:11
+while executing---line 1285 of file thesis.bst
+Name 1 in "M. Anderka, B. Stein, and N. Lipka" has a comma at the end for entry AndSteLip:12
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in MarC:02
+Name 1 in "Michael Bendersky, W. Bruce Croft, and Yanlei Diao." has a comma at the end for entry BenCroDia:11
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Myshkin Ingawale, Amitava Dutta, Rahul Roy, Priya Seetharaman" for entry InDuRoSe:12
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in InDuRoSe:12
+Warning--empty year in MaPiMo:11
+Name 1 in "Oliver Ferschke, Iryna Gurevych, and Marc Rittberger" has a comma at the end for entry OfIgMr:12
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in OfIgMr:12
+Name 1 in "Stuart E. Madnick, Richard Y. Wang, Yang W. Lee, and Hongwei Zhu." has a comma at the end for entry MadWanLeeZhu:09
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1285 of file thesis.bst
+Too many commas in name 1 of "Suchanek, F.M., Kasneci, G., Weikum, G." for entry StKaWe:07
+while executing---line 1285 of file thesis.bst
+Warning--empty publisher in Wiki:15
+Warning--empty year in Wiki:15
+Warning--empty publisher in ZhuBu:02
+Warning--empty year in ZhuBu:02
+(There were 154 error messages)

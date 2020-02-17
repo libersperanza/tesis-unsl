@@ -1,0 +1,200 @@
+% Version ultima de la tesis - 29 de Noviembre de 2009
+
+\documentclass[12pt,twoside]{tesis}
+\usepackage[T1]{fontenc}
+\usepackage{a4}
+\usepackage{t_encab}
+\usepackage{latexsym}
+\usepackage[spanish,activeacute]{babel}
+%\selectlanguage{spanish}
+%\usepackage[latin1]{inputenc}
+
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{boxedminipage}
+
+\usepackage{theorem}
+
+\usepackage{wrapfig}
+\usepackage{subfigure}
+
+\usepackage{psfig}
+\usepackage{appendix}
+
+\usepackage{array}
+
+%ambiente para algoritmos
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\input{spanishAlgorithmic} % mi archivo de traduccion
+
+
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{listings}
+
+\pagestyle{fancyplain}
+
+
+\lhead[\fancyplain{}{\bfseries\leftmark}]{\fancyplain{}{\bfseries\rightmark}}
+
+\rhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries\thepage}}
+
+\chead{}\lfoot{}\rfoot{}\cfoot{}
+
+\newcommand{\clearemptydoublepage}{\newpage\thispagestyle{empty}\cleardoublepage}
+
+
+% Ambientes tipo teoremas
+
+\theoremstyle{break} \newtheorem{teorema}{Teorema}[chapter]
+
+\theoremstyle{plain} \newtheorem{lema}{Lema}[chapter]
+
+{\theoremstyle{break} \theorembodyfont{\rmfamily} \newtheorem{definicion}{Definici\'on}[chapter]}
+
+{\theorembodyfont{\rmfamily}\newtheorem{ejemplo}{Ejemplo}[chapter]}
+
+% Definiciones de s'mbolos matem'aticos
+% Symbols
+
+% define a new math symbol from table on page 207.
+
+\DeclareFontFamily{U}{msb}{}
+\DeclareFontShape{U}{msb}{m}{n}{ <5> <6> <7> <8> <9> gen * msbm
+        <10> <10.95> <12> <14.4> <17.28> <20.74> <24.88> msbm10}{}
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+
+\SetSymbolFont{AMSb}{bold}{U}{msb}{b}{n}
+
+% symbol fot the set of realnumber
+\DeclareMathSymbol{\realset}{\mathbin}{AMSb}{'122}
+
+% alternative for looking up symbols from the table on page 207
+\DeclareSymbolFontAlphabet{\Bbb}{AMSb}
+
+
+%\input{psfig}           % Capability to place PostScript drawings
+
+%........................................................................
+
+\hyphenation{ra-zo-na-mien-to} \hyphenation{Sym-bo-lics} \hyphenation{re-con-si-de-ra-das} \hyphenation{re-pre-sen-ta} \hyphenation{for-ma-lis-mo} \hyphenation{obs-tan-te} \hyphenation{rea-li-za} \hyphenation{ob-ser-va-ble} \hyphenation{si-tua-do} \hyphenation{res-trin-gi-do} \hyphenation{pre-fe-ren-cias} \hyphenation{e-li-mi-na-do} \hyphenation{pro-ba-ble} \hyphenation{respectivos} \hyphenation{di-fe-ren-cia} \hyphenation{cons-trui-das} \hyphenation{si-guien-te} \hyphenation{carre-ra} \hyphenation{ra-cio-na-li-dad} \hyphenation{ge-ne-ran} \hyphenation{fun-cio-na-li-da-des} \hyphenation{re-fe-ren-cia-das} \hyphenation{ne-ce-sa-ria-men-te} \hyphenation{si-mi-lar} \hyphenation{abs-trac-to}  \hyphenation{de-li-be-ra-ti-va} \hyphenation{es-qui-var} \hyphenation{corres-pon-de} \hyphenation{de-no-mi-na-da} \hyphenation{de-sar-rollo} \hyphenation{ma-ne-ra} \hyphenation{Erre-cal-de} \hyphenation{Khe-pe-ra} \hyphenation{ma-na-ge-ment} \hyphenation{ob-te-ner}
+
+\begin{document}
+
+
+%
+% FIGURE: \mFig <postscript file> <height> <caption> <label>
+\newcommand{\mFig}[4]{
+\begin{figure}[htb]
+\centerline{%
+        \hbox{%
+            \epsfig{figure=#1,height=#2}%
+             }%
+           }%
+\vspace*{0.1in}
+\caption{#3}
+\label{#4}
+\end{figure}
+}
+%
+
+
+
+\newcommand{\F}[3]
+  {
+  \begin{center}
+
+    \epsfig{file=#1,height=#2}
+
+    {\small Fig.: {\em #3}}
+
+  \end{center}
+
+  }
+
+
+%%%%% DeLP defs %%%%
+
+\newcommand{\ie}{\textnormal{\emph{i.e.}, }}
+\newcommand{\etal}{\mbox{{\em et al.}}}
+\newcommand{\eg}{\emph{e.g.}, }
+\newcommand{\raya}{\noindent \rule{\textwidth}{.05mm} \\ }
+\newcommand{\comp}[1]{$\overline{#1}$}
+%\newcommand{\delp}{\emph{de.l.p.}}
+\newcommand{\PP}{\mbox{${\mathcal P}$}}
+\newcommand{\DD}{\mbox{$\Delta$}}
+\newcommand{\SSet}{\mbox{$\Pi$}}
+\newcommand{\Srules}{\mbox{${\SSet}_r$}}  % Stricts rules without facts
+\newcommand{\Facts}{\mbox{${\SSet}_f$}}  % set of facts
+\newcommand{\dprog}{\mbox{$(\SSet,\DD)$}}
+%\newcommand{\SD}{\mbox{$(\SSet,\DD)$}}
+\newcommand{\Prog}{\mbox{$\PP = \SD$}}
+
+\newcommand{\Argu}[1]{$\mathcal{A}_#1$}
+\newcommand{\Arg}{\mbox{$\mathcal{A}$}}
+\newcommand{\AL}{\ensuremath{\langle \Arg,L \rangle}}
+
+
+\newcommand{\srule}[2]{\mbox{$#1\!\leftarrow#2$}}
+\newcommand{\drule}[2]{\mbox{$#1\,\defleftarrow\!#2$}}
+\newcommand{\nrule}[2]{\mbox{$#1\,#2$}} % for rules with the Body to big :)
+\newcommand{\defleftarrow}{{\raise.5pt\hbox{\small\defleft}}}
+\newcommand{\defleft}{\mbox{\bf--\hspace{-1.1pt}\raise.0pt\hbox{$\prec$} }}
+\newcommand{\facto}[1]{\mbox{$#1$}}
+\newcommand{\no}{\mbox{$\sim$}}
+\newcommand{\DLP}{\mbox{DeLP}}
+
+%%%%% Fin DeLP defs %%%%
+
+%%%%%%%Poner en castellano Apndice%%%%%%%%
+\renewcommand{\appendixname}{Ap�ndices}
+\renewcommand{\appendixtocname}{Ap�ndices}
+\renewcommand{\appendixpagename}{Ap�ndices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\pagestyle{empty}
+
+
+
+\input{titulo}  %\clearemptydoublepage
+
+\input{prefacio} %\clearemptydoublepage
+
+%\include{agradecimientos} %\clearemptydoublepage
+
+
+
+\pagenumbering{roman}  \setcounter{page}{1}
+
+
+
+%.....................resumen.........................
+
+\include{resumen} %\clearemptydoublepage
+
+\tableofcontents %\clearemptydoublepage
+
+\pagestyle{fancyplain}
+
+\pagenumbering{arabic}   \setcounter{page}{1}
+
+%\input{../introduccion/intro} \clearemptydoublepage %Capitulo 1
+\input{../introduccion/intro-Angi} \clearemptydoublepage %Capitulo 1
+\input{../cap2/capitulo2} \clearemptydoublepage %Capitulo 2
+%\input{../cap3/capitulo3} \clearemptydoublepage %Capitulo 3
+%\input{../cap4/capitulo4} \clearemptydoublepage %Capitulo 4
+%\input{../cap5/capitulo5} \clearemptydoublepage %Capitulo 5
+\input{../conclusiones/conclusiones} \clearemptydoublepage %Capitulo conclusiones
+\listoftables
+
+\addcontentsline{toc}{chapter}{Bibliograf\'ia}
+
+\bibliographystyle{thesis}
+\bibliography{biblio}
+
+
+\end{document}

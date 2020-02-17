@@ -1,0 +1,13 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}Introducci\'on}{2}
+\contentsline {section}{\numberline {1.1}Objetivos}{3}
+\contentsline {section}{\numberline {1.2}Como se organiza la tesis}{3}
+\contentsline {subsection}{\numberline {1.2.1}Primera Parte}{4}
+\contentsline {subsection}{\numberline {1.2.2}Segunda Parte}{4}
+\contentsline {chapter}{\numberline {2}Calidad de la Informaci\'on}{5}
+\contentsline {section}{\numberline {2.1}Calidad de la informaci\'on general}{5}
+\contentsline {section}{\numberline {2.2}Calidad de la informaci\'on en la Web}{5}
+\contentsline {section}{\numberline {2.3}Calidad de la informaci\'on en Wikipedia}{13}
+\contentsline {chapter}{\numberline {3}Conclusiones}{27}
+\contentsline {section}{\numberline {3.1}Contribuciones}{27}
+\contentsline {chapter}{Bibliograf\'ia}{29}

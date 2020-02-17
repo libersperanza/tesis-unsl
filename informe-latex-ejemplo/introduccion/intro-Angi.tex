@@ -1,0 +1,46 @@
+\chapter{Introducci\'on}
+\label{chap:intro}
+
+Las bases de datos tradicionales son construidas bas\'andose en el concepto de b\'usqueda exacta: la base de datos es dividida en registros y cada registro contiene campos completamente comparables. Las consultas a la base de datos retornan todos aquellos registros cuyos campos coinciden exactamente con los aportados en tiempo de b\'usqueda ( b\'usqueda exacta).\\
+				
+A trav\'es del tiempo las bases de datos han evolucionado para incluir la capacidad de almacenar nuevos tipos de datos tales como im\'agenes, sonido, video, etc. Estructurar este tipo de datos en registros para adecuarlos al concepto tradicional de b\'usqueda exacta es dif\'icil en muchos casos y hasta imposible si la base de datos cambia m\'as r\'apido de lo que se puede estructurar (como por ejemplo la web). A\'un cuando pudiera hacerse, las consultas que se pueden satisfacer con la tecnolog\'ia tradicional est\'an limitadas en variaciones de la b\'usqueda exacta.
+					
+Nos interesan las b\'usquedas en donde se puedan recuperar objetos similares a uno dado. Este tipo de b\'usqueda se conoce con el nombre de b\'usqueda por similitud, y surge en diversas \'areas; tales como reconocimiento de voz, reconocimiento de im\'agenes, compresi\'on de texto, biolog\'ia computacional, entre otras.
+					
+Todas estas aplicaciones tienen algunas caracter\'isticas comunes. Existe un universo X de objetos y una funci\'on de distancia $d: X \times X$ que modela la similitud entre los objetos. El par $(X, d)$ es llamado espacio m\'etrico REF. La base de datos es un conjunto $UX$, el cual se preprocesa a fin de resolver b\'usquedas por similitud eficientemente.
+					
+Una de las consultas t\'ipicas en este nuevo modelo que implica recuperar objetos similares de una base de datos es la b\'usqueda por rango, que denotaremos con $(q, r)d$. Dado un elemento de consulta q, al que llamaremos query y un radio de tolerancia r, una b\'usqueda por rango consiste en recuperar aquellos objetos de la base de datos cuya distancia a q no sea mayor que r.
+
+Otra consulta que se utiliza para recuperar objetos similares es la b\'usqueda de los k-vecinos m\'as cercanos, donde tenemos el elemento de consulta q y la cantidad de objetos de base de datos que se quieren recuperar, que llamaremos k. La cercan\'ia de estos k objetos est\'a dada por el valor de la funci\'on de distancia d hasta la query q.
+				
+Los c\'omputos realizados durante una b\'usqueda implican c\'alculos de la funci\'on de distancia d, operaciones adicionales (sumas, restas, comparaciones, etc) y tiempo de I/O si el \'indice y/o los datos se encuentran en memoria secundaria. Las b\'usquedas por similitud pueden ser resueltas trivialmente por medio de una b\'usqueda exhaustiva, con una complejidad $O(n)$. Para evitar esta situaci\'on, se preprocesa la base de datos por medio de un algoritmo de indexaci\'on con el objetivo de construir una estructura de datos o \'indice, diseñada para ahorrar c\'alculos en el momento de resolver una b\'usqueda. 
+					
+B\'asicamente existen dos enfoques para el diseño de algoritmos de indexaci\'on en espacios m\'etricos: uno est\'a basado en Diagramas de Voronoi $[1, 6, 2, 7]$ y el otro est\'a basado en pivotes $[6, 3, 4, 5]$. En este trabajo abordamos el estudio de algoritmos de indexaci\'on basados en pivotes, enfoc\'andonos en una aplicaci\'on que utilice este tipo de algoritmos en el \'ambito del comercio electr\'onico.
+					
+Los algoritmos basados en pivotes construyen el \'indice bas\'andose en la distancia de los objetos de la base de datos a un conjunto de elementos preseleccionados llamados pivotes. 	
+
+\section{Objetivos}
+
+El comercio electr\'onico, tambi\'en conocido como e-commerce consiste en la compra y venta de productos o de servicios a trav\'es de la web. El desarrollo de nuevas tecnolog\'ias ha permitido que la capacidad y volumen de las comunicaciones se expanda de una manera exponencial, esto ha facilitado que el comercio electr\'onico tenga tambi\'en un crecimiento exponencial.
+					
+Para el desarrollo de un sitio de comercio electr\'onico hay varios problemas que deben resolverse tales como administraci\'on de categor\'ias de productos, b\'usqueda de productos, encriptaci\'on de datos, registraci\'on de usuarios, administraci\'on de medios de pago, entre otros. En este trabajo nos hemos centrado espec\'ificamente en el problema de b\'usqueda de productos.
+					
+Nuestra meta es utilizar b\'usquedas por similitud sobre las descripciones asociadas a los productos con el fin de estudiar el desempeño de los algoritmos basados en pivotes en un caso real. 
+
+\section{Como se organiza la tesis}
+
+Hemos organizado este informe en dos partes: En la primera parte se introducen los conceptos necesarios para comprender el informe y en la segunda parte presentamos el trabajo realizado y los resultados que obtuvimos al aplicar los algoritmos de indexaci\'on.
+
+\subsection{Primera Parte}
+
+Cap\'itulo 1: Definimos la motivaci\'on y los objetivos del trabajo.\\
+
+Cap\'itulo 2: Presentamos los conceptos b\'asicos de las b\'usquedas en espacios m\'etricos con el objetivo de dar el marco te\'orico necesario para comprender y fundamentar el desarrollo realizado en este trabajo final. Tambi\'en explicamos la situaci\'on actual del comercio electr\'onico, sobre el cual vamos a aplicar los conceptos te\'oricos.\\
+
+Cap\'itulo 3: Definimos completamente en qu\'e consiste la aplicaci\'on de espacios m\'etricos a esta base de datos real de comercio electr\'onico.
+
+\subsection{Segunda Parte}
+\noindent Cap\'itulo 4: Describimos el trabajo realizado. Presentamos la implementaci\'on de dos algoritmos de indexaci\'on basados en pivotes: Selecci\'on de pivotes en forma random y selecci\'on de pivotes en forma incremental. Tambi\'en detallamos las diversas variaciones implementadas a fin de encontrar la que mejor se adapte al tipo de b\'usqueda que queremos realizar.\\
+Cap\'itulo 5: Mostramos la evaluaci\'on experimental de las variaciones implementadas.\\
+Cap\'itulo 6: Presentamos las conclusiones obtenidas como as\'i tambi\'en algunos puntos interesantes para abordar en futuros trabajos.
+
