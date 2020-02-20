@@ -41,18 +41,80 @@ Como una primera aproximaci\'on, seleccionamos cuatro t\'itulos de productos de 
 
 Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes incremental, y la cantidad de pivotes elegida fue de 128.\\
 
- TABLA %<<Insertar gr\'afico y tabla con los datos>>
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline \multirow{2}{5cm}{\small Tama\~no de base de datos}
+& \multicolumn{3}{p{4cm}|}
+{\centering \small N\'umero de k-vecinos}\tabularnewline \cline{2-4}
+& \multicolumn{1}{p{1.2cm}|}
+{\centering \small 0.001\%}
+& \multicolumn{1}{p{1.2cm}|}
+{\centering \small 0.01\%}
+& \multicolumn{1}{p{1.2cm}|}
+{\centering \small 0.1\%}
+\tabularnewline \hline
+\hline
+\small 31.632 & 32 & 316 & 3163 \\ \hline
+\end{tabular}
+\caption{\small N\'umero de k-vecinos utilizados.}
+\label{tabla:muestra-tamano}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline \multirow{2}{5cm}{\small T\'itulos de b\'usqueda}
+& \multicolumn{3}{p{4cm}|}
+{\centering \small Radio promedio}\tabularnewline \cline{2-4}
+& \multicolumn{1}{p{1.2cm}|}
+{\centering \small 0.001\%}
+& \multicolumn{1}{p{1.2cm}|}
+{\centering \small 0.01\%}
+& \multicolumn{1}{p{1.2cm}|}
+{\centering \small 0.1\%}
+\tabularnewline \hline
+\hline
+\small Libro Te Amo Pero Soy Feliz Sin Ti. Jaime Jaramillo & 32 & 35 & 37 \\ \hline
+\small El Secreto Rhonda Byrne Lvbp13 & 21 & 24 & 26 \\ \hline
+\small Libro De Italiano Forza 2 & 14 & 17 & 23 \\ \hline
+\small Libro La Magia Rhonda Byrne El Secreto Lvbp13 & 28 & 32 & 35 \\ \hline
+\end{tabular}
+\caption{\small Muestra para determinar el radio de b\'usqueda.}
+\label{tabla:muestra-rank}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline 
+\small T\'itulos de b\'usqueda
+&
+\small Radio Promedio\\
+\hline \hline
+\small Libro Te Amo Pero Soy Feliz Sin Ti. Jaime Jaramillo & 32  \\ \hline
+\small El Secreto Rhonda Byrne Lvbp13 & 21  \\ \hline
+\small Libro De Italiano Forza 2 & 14  \\ \hline
+\small Libro La Magia Rhonda Byrne El Secreto Lvbp13 & 28  \\ \hline  \hline
+\hspace{4cm}  \textbf{\small PROMEDIO GENERAL} & \textbf{27} \\ \hline
+\end{tabular}
+\caption{\small Tabla de radio promedio.}
+\label{tabla:promedios-rank}
+\end{center}
+\end{table}
 
 Como podemos visualizar en los resultados, el promedio del radio de b\'usqueda arroja un valor de 27, valor que utilizamos para realizar algunas pocas b\'usquedas sobre el resto de las categor\'ias. Al analizar los resultados obtenidos llegamos a la conclusi\'on de que deb\'iamos disminu\'ir el valor del $r$, ya que en la mayor\'ia de los casos la b\'usqueda retornaba una cantidad de elementos cercana a la totalidad de la base de datos y en otros casos los elementos retornados no eran similares al t\'itulo de b\'usqueda. Ante \'estos hallazgos, tomamos una segunda aproximaci\'on: primero obtuvimos el promedio de la longitud de los t\'itulos para cada categor\'ia, luego promediamos esos valores para obtener un \'unico resultado y lo dividimos por 2.  De esa forma llegamos al rango elegido para todos los experimentos: $r=23$.\\
 
 
 \subsection{Selecci\'on de los conjuntos de pivotes}
 
-En este trabajo, adem\'as de las t\'ecnicas de selecci\'on de pivotes, random e incremental, consideramos dos pol\'iticas para la elecci\'on de los grupos de pivotes:\\
+En este trabajo, adem\'as de las t\'ecnicas de selecci\'on de pivotes, random e incremental, consideramos dos pol\'iticas para la elecci\'on de los grupos de pivotes:
 
-\noindent  \textit{\textbf{Mismo grupo de pivotes para todas las categor\'ias o bases de datos}}: Esta estrategia, selecciona el grupo de pivotes considerando todas las bases de datos. Luego, el mismo grupo de pivotes, es utilizado en cada uno de los experimentos sobre las distintas bases de datos.\\
+\textit{\textbf{Mismo grupo de pivotes para todas las categor\'ias o bases de datos}}: Esta estrategia, selecciona el grupo de pivotes considerando todas las bases de datos. Luego, el mismo grupo de pivotes, es utilizado en cada uno de los experimentos sobre las distintas bases de datos.\\
 
-\noindent  \textit{\textbf{Diferentes grupos de pivotes por categor\'ia o base de datos}}: Sobre cada una de las bases de datos se seleccionan los conjuntos de pivotes.\\
+\textit{\textbf{Diferentes grupos de pivotes por categor\'ia o base de datos}}: Sobre cada una de las bases de datos se seleccionan los conjuntos de pivotes.\\
 
 Para determinar cu\'al estrategia era la m\'as adecuada, se seleccionaron conjuntos de pivotes, random e incremental, seg\'un las pol\'iticas arriba mencionadas para los grupos de 16 y 64 pivotes.\\
 
@@ -60,7 +122,29 @@ Por cada base de datos se eligi\'o al azar el 10\% de los t\'itulos como element
 
 A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el ratio de comparaciones realizadas respecto del tamaño de la base de datos para 16 y 64 pivotes respectivamente.\\
 
-GRAFICAS
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{imagenes/same-vs-diff-Incremental-16Pivotes.png}
+		\caption{\small Estrategia de selecci\'on incremental para 16 pivotes: mismos pivotes vs diferentes}
+		\label{fig:same-vs-diff-Incremental-16Pivotes}
+
+		\includegraphics[width=1\textwidth]{imagenes/same-vs-diff-Random-16Pivotes.png}
+		\caption{\small Estrategia de selecci\'on random para 16 pivotes: mismos pivotes vs diferentes}
+		\label{fig:same-vs-diff-random-16Pivotes}	
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{imagenes/same-vs-diff-Incremental-64Pivotes.png}
+		\caption{\small Estrategia de selecci\'on incremental para 64 pivotes: mismos pivotes vs diferentes}
+		\label{fig:same-vs-diff-Incremental-64Pivotes}
+		
+		\includegraphics[width=1\textwidth]{imagenes/same-vs-diff-Random-64Pivotes.png}
+		\caption{\small Estrategia de selecci\'on random para 64 pivotes: mismos pivotes vs diferentes}
+		\label{fig:same-vs-diff-random-64Pivotes}
+	\end{center}
+\end{figure}
 
 Por lo que se puede observar, aunque la estrategia var\'ia por cada base de datos, en t\'erminos generales se comporta mejor la pol\'itica de selecci\'on  \textit{diferentes grupos pivotes por categor\'ia o base de datos} para ambas t\'ecnicas; random e incremental.\\
 
