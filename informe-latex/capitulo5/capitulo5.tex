@@ -1,6 +1,5 @@
 \chapter{Evaluaci\'on experimental}
 
-
 En este cap\'itulo presentamos los resultados de ejecutar el algoritmo de b\'usqueda por rango usando dos t\'ecnicas de selecci\'on de pivotes: random y incremental.\\
 
 Comenzaremos describiendo el seteo experimental, los experimentos realizados y luego daremos el an\'alisis de los resultados obtenidos.\\
@@ -15,8 +14,7 @@ Agrupamos los productos en categor\'ias que re\'unen productos de similares cara
 
 Por cada base de datos y por cada t\'ecnica de selecci\'on, random e incremental, creamos \'indices y files de pivotes. Los n\'umeros de pivotes elegidos fueron: 16, 32, 64, 128, 256, 512, 1024, 2048 y 4096. Los pivotes seleccionados fueron obtenidos por categor\'ias. Para tomar esta decisi\'on hicimos experimentos que m\'as adelante mostraremos.\\
 
-Luego, agrupamos las bases de datos en grupos segmentados por el ratio de pivotes sobre la base de datos. Esto fue porque tenemos bases de datos que son muy chicas (ejemplo: 1034 items) y el ratio de pivotes era muy alto para esas categor\'ias. De esta segmentaci\'on obtuvimos 4 grupos.\\
-
+Luego, agrupamos las bases de datos en grupos segmentados seg\'un el procentaje que representan el n\'umero de pivotes sobre el tama\~no de la base de datos, a este valor lo llamaremos ratio de pivotes. Esto es as\'i porque tenemos bases de datos que son muy chicas (ejemplo: 1034 items) y el ratio de pivotes era muy alto para esas categor\'ias. De esta segmentaci\'on obtuvimos 4 grupos.\\
 
 \subsection{Selecci\'on del rango de b\'usqueda}
 
@@ -41,7 +39,7 @@ Como una primera aproximaci\'on, seleccionamos cuatro t\'itulos de productos de 
 
 Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes incremental, y la cantidad de pivotes elegida fue de 128.\\
 
-\begin{table}[H]
+\begin{table}[tb!]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline \multirow{2}{5cm}{\small Tama\~no de base de datos}
@@ -62,7 +60,7 @@ Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes
 \end{center}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb!]
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
 \hline \multirow{2}{5cm}{\small T\'itulos de b\'usqueda}
@@ -86,7 +84,7 @@ Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes
 \end{center}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[tb!]
 \begin{center}
 \begin{tabular}{|l|c|}
 \hline 
@@ -120,31 +118,48 @@ Para determinar cu\'al estrategia era la m\'as adecuada, se seleccionaron conjun
 
 Por cada base de datos se eligi\'o al azar el 10\% de los t\'itulos como elementos de b\'usqueda. Para 16 pivotes, se usaron 6 bases de datos (tamaño total: 61.184) y se ejecutaron 12.232  b\'usquedas en total. Para 64 pivotes, se usaron 18 bases de datos (tamaño total: 440.631) y se ejecutaron 88.114 b\'usquedas en total.\\
 
+Como se puede observar en la figura \cite{same-vs-diff-16Pivotes}
 A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el ratio de comparaciones realizadas respecto del tamaño de la base de datos para 16 y 64 pivotes respectivamente.\\
 
-\begin{figure}[H]
+
+
+\begin{figure}[tb!]
+\centering
+\subfigure[\small Selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_incremental.eps}}
+\subfigure[\small Selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_random.eps}}
+		\caption{\small Estrategia de selecci\'on para 16 pivotes: mismos pivotes vs diferentes}
+		\label{fig:same-vs-diff-16Pivotes}
+
+\subfigure[\small Selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_incremental.eps}}
+\subfigure[\small Selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_random.eps}}
+		\caption{\small Estrategia de selecci\'on para 64 pivotes: mismos pivotes vs diferentes}
+		\label{fig:same-vs-diff-64Pivotes}
+\end{figure}
+
+%figuras comentadas
+\begin{comment} 
+
+\begin{figure}[tb!]
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{imagenes/same-vs-diff-Incremental-16Pivotes.png}
+		\includegraphics[width=1\textwidth]{imagenes/same_vs_different/16p_incremental.eps}
 		\caption{\small Estrategia de selecci\'on incremental para 16 pivotes: mismos pivotes vs diferentes}
 		\label{fig:same-vs-diff-Incremental-16Pivotes}
 
-		\includegraphics[width=1\textwidth]{imagenes/same-vs-diff-Random-16Pivotes.png}
+		\includegraphics[width=1\textwidth]{imagenes/same_vs_different/16p_random.eps}
 		\caption{\small Estrategia de selecci\'on random para 16 pivotes: mismos pivotes vs diferentes}
 		\label{fig:same-vs-diff-random-16Pivotes}	
-	\end{center}
-\end{figure}
 
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[width=1\textwidth]{imagenes/same-vs-diff-Incremental-64Pivotes.png}
+		\includegraphics[width=1\textwidth]{imagenes/same_vs_different/64p_incremental.eps}
 		\caption{\small Estrategia de selecci\'on incremental para 64 pivotes: mismos pivotes vs diferentes}
 		\label{fig:same-vs-diff-Incremental-64Pivotes}
 		
-		\includegraphics[width=1\textwidth]{imagenes/same-vs-diff-Random-64Pivotes.png}
+		\includegraphics[width=1\textwidth]{imagenes/same_vs_different/16p_random.eps}
 		\caption{\small Estrategia de selecci\'on random para 64 pivotes: mismos pivotes vs diferentes}
 		\label{fig:same-vs-diff-random-64Pivotes}
 	\end{center}
 \end{figure}
+
+\end{comment}
 
 Por lo que se puede observar, aunque la estrategia var\'ia por cada base de datos, en t\'erminos generales se comporta mejor la pol\'itica de selecci\'on  \textit{diferentes grupos pivotes por categor\'ia o base de datos} para ambas t\'ecnicas; random e incremental.\\
 
@@ -209,7 +224,7 @@ Las siguientes figuras muestran el efecto de la cantidad de pivotes sobre el rat
 
 \noindent Grupo 1
 
-\begin{figure}[H]
+\begin{figure}[t!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_random_ep.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_incremental_ep.eps}}
@@ -219,7 +234,7 @@ Las siguientes figuras muestran el efecto de la cantidad de pivotes sobre el rat
 
 \noindent Grupo 2
 
-\begin{figure}[H]
+\begin{figure}[tb!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_random_ep.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_incremental_ep.eps}}
@@ -229,7 +244,7 @@ Las siguientes figuras muestran el efecto de la cantidad de pivotes sobre el rat
 
 \noindent Grupo 3
 
-\begin{figure}[H]
+\begin{figure}[tb!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_random_ep.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_incremental_ep.eps}}
@@ -240,7 +255,7 @@ Las siguientes figuras muestran el efecto de la cantidad de pivotes sobre el rat
 
 \noindent Grupo 4
 
-\begin{figure}[H]
+\begin{figure}[tb!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_random_ep.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_incremental_ep.eps}}
@@ -256,7 +271,7 @@ En las siguientes figuras mostraremos el efecto del tamaño de la base de datos 
 
 \noindent Grupo 1
 
-\begin{figure}[H]
+\begin{figure}[tb!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_random_edb.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_incremental_edb.eps}}
@@ -266,7 +281,7 @@ En las siguientes figuras mostraremos el efecto del tamaño de la base de datos 
 
 \noindent Grupo 2
 
-\begin{figure}[H]
+\begin{figure}[tb!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_random_edb.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_incremental_edb.eps}}
@@ -276,7 +291,7 @@ En las siguientes figuras mostraremos el efecto del tamaño de la base de datos 
 
 \noindent Grupo 3
 
-\begin{figure}[H]
+\begin{figure}[tb!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_random_edb.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_incremental_edb.eps}}
@@ -286,7 +301,7 @@ En las siguientes figuras mostraremos el efecto del tamaño de la base de datos 
 
 \noindent Grupo 4
 
-\begin{figure}[H]
+\begin{figure}[tb!]
 \centering
 \subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_random_edb.eps}}
 \subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_incremental_edb.eps}}

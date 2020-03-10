@@ -28,12 +28,12 @@
 \contentsline {section}{\numberline {5.1}Seteo Experimental}{22}% 
 \contentsline {subsection}{\numberline {5.1.1}Selecci\'on del rango de b\'usqueda}{23}% 
 \contentsline {subsection}{\numberline {5.1.2}Selecci\'on de los conjuntos de pivotes}{24}% 
-\contentsline {section}{\numberline {5.2}Ejecuci\'on experimental}{28}% 
-\contentsline {subsection}{\numberline {5.2.1}Creaci\'on de grupos}{28}% 
-\contentsline {section}{\numberline {5.3}An\'alisis de resultados}{29}% 
-\contentsline {subsection}{\numberline {5.3.1}Efecto de la cantidad de pivotes}{29}% 
-\contentsline {subsection}{\numberline {5.3.2}Efecto tama\IeC {\~n}o de la base de datos}{31}% 
-\contentsline {subsection}{\numberline {5.3.3}Efecto de las t\'ecnicas de selecci\'on de pivotes}{33}% 
-\contentsline {chapter}{\numberline {6}Conclusiones}{34}% 
-\contentsline {section}{\numberline {6.1}Contribuciones}{34}% 
-\contentsline {chapter}{Bibliograf\'ia}{36}% 
+\contentsline {section}{\numberline {5.2}Ejecuci\'on experimental}{25}% 
+\contentsline {subsection}{\numberline {5.2.1}Creaci\'on de grupos}{25}% 
+\contentsline {section}{\numberline {5.3}An\'alisis de resultados}{26}% 
+\contentsline {subsection}{\numberline {5.3.1}Efecto de la cantidad de pivotes}{27}% 
+\contentsline {subsection}{\numberline {5.3.2}Efecto tama\IeC {\~n}o de la base de datos}{28}% 
+\contentsline {subsection}{\numberline {5.3.3}Efecto de las t\'ecnicas de selecci\'on de pivotes}{29}% 
+\contentsline {chapter}{\numberline {6}Conclusiones}{32}% 
+\contentsline {section}{\numberline {6.1}Contribuciones}{32}% 
+\contentsline {chapter}{Bibliograf\'ia}{34}% 

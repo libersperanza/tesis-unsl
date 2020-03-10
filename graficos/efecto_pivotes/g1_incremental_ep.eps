@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0 EPSF-2.0
 %%Title: efecto_pivotes/g1_incremental_ep.eps
 %%Creator: gnuplot 5.2 patchlevel 8
-%%CreationDate: Thu Feb 20 15:50:10 2020
+%%CreationDate: Tue Mar  3 07:43:47 2020
 %%DocumentFonts: (atend)
 %%BoundingBox: 50 50 410 302
 %%EndComments
@@ -28,7 +28,7 @@ gnudict begin
 /Gamma 1.0 def
 /BackgroundColor {-1.000 -1.000 -1.000} def
 %
-/vshift -66 def
+/vshift -80 def
 /dl1 {
   10.0 Dashlength userlinewidth gnulinewidth div mul mul mul
   Rounded { currentlinewidth 0.75 mul sub dup 0 le { pop 0.01 } if } if
@@ -429,6 +429,64 @@ Level1 {Level1PatternFill} {Level2PatternFill} ifelse
 dup length dict begin {1 index /FID eq {pop pop} {def} ifelse} forall
 currentdict end definefont pop
 %
+%
+% Base ISO8859-1 character encoding plus support macros for UTF-8 encoding
+% via the glyphshow operator
+%
+/reencodeISO {
+dup dup findfont dup length dict begin
+{ 1 index /FID ne { def }{ pop pop } ifelse } forall
+currentdict /CharStrings known {
+	CharStrings /Idieresis known {
+		/Encoding ISOLatin1Encoding def } if
+} if
+currentdict end definefont
+} def
+/ISOLatin1Encoding [
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/space/exclam/quotedbl/numbersign/dollar/percent/ampersand/quoteright
+/parenleft/parenright/asterisk/plus/comma/minus/period/slash
+/zero/one/two/three/four/five/six/seven/eight/nine/colon/semicolon
+/less/equal/greater/question/at/A/B/C/D/E/F/G/H/I/J/K/L/M/N
+/O/P/Q/R/S/T/U/V/W/X/Y/Z/bracketleft/backslash/bracketright
+/asciicircum/underscore/quoteleft/a/b/c/d/e/f/g/h/i/j/k/l/m
+/n/o/p/q/r/s/t/u/v/w/x/y/z/braceleft/bar/braceright/asciitilde
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/dotlessi/grave/acute/circumflex/tilde/macron/breve
+/dotaccent/dieresis/.notdef/ring/cedilla/.notdef/hungarumlaut
+/ogonek/caron/space/exclamdown/cent/sterling/currency/yen/brokenbar
+/section/dieresis/copyright/ordfeminine/guillemotleft/logicalnot
+/hyphen/registered/macron/degree/plusminus/twosuperior/threesuperior
+/acute/mu/paragraph/periodcentered/cedilla/onesuperior/ordmasculine
+/guillemotright/onequarter/onehalf/threequarters/questiondown
+/Agrave/Aacute/Acircumflex/Atilde/Adieresis/Aring/AE/Ccedilla
+/Egrave/Eacute/Ecircumflex/Edieresis/Igrave/Iacute/Icircumflex
+/Idieresis/Eth/Ntilde/Ograve/Oacute/Ocircumflex/Otilde/Odieresis
+/multiply/Oslash/Ugrave/Uacute/Ucircumflex/Udieresis/Yacute
+/Thorn/germandbls/agrave/aacute/acircumflex/atilde/adieresis
+/aring/ae/ccedilla/egrave/eacute/ecircumflex/edieresis/igrave
+/iacute/icircumflex/idieresis/eth/ntilde/ograve/oacute/ocircumflex
+/otilde/odieresis/divide/oslash/ugrave/uacute/ucircumflex/udieresis
+/yacute/thorn/ydieresis
+] def
+
+/Gshow { dup type /stringtype eq { show } { glyphshow } ifelse } def
+
+/Gsall { {Gshow} forall } def
+/Gwidth {
+	dup currentpoint pop exch
+	gsave 6 array currentmatrix nulldevice setmatrix Gsall currentpoint pop grestore sub
+	} def
+/GLshow {currentpoint stroke M 0 vshift R 
+	Blacktext {gsave 0 setgray Gsall grestore} {Gsall} ifelse} def
+/GRshow {currentpoint stroke M dup Gwidth vshift R
+	Blacktext {gsave 0 setgray Gsall grestore} {Gsall} ifelse} def
+/GCshow {currentpoint stroke M dup Gwidth 2 div vshift R 
+	Blacktext {gsave 0 setgray Gsall grestore} {Gsall} ifelse} def
 /Metrics {ExtendTextBox Gswidth} def
 /Lwidth {currentpoint stroke M 0 vshift R Metrics} def
 /Rwidth {currentpoint stroke M dup stringwidth pop neg vshift R Metrics} def
@@ -469,6 +527,7 @@ currentdict end definefont pop
   Blacktext {gsave 0 setgray MFshow grestore} {MFshow} ifelse } bind def
 /XYsave    { [( ) 1 2 true false 3 ()] } bind def
 /XYrestore { [( ) 1 2 true false 4 ()] } bind def
+/Times-Roman reencodeISO def
 Level1 SuppressPDFMark or 
 {} {
 /SDict 10 dict def
@@ -481,7 +540,7 @@ SDict begin [
   /Creator (gnuplot 5.2 patchlevel 8)
 %  /Producer (gnuplot)
 %  /Keywords ()
-  /CreationDate (Thu Feb 20 15:50:10 2020)
+  /CreationDate (Tue Mar  3 07:43:47 2020)
   /DOCINFO pdfmark
 end
 } ifelse
@@ -521,176 +580,170 @@ doclip
 0.050 0.050 scale
 0 setgray
 newpath
-(times) findfont 200 scalefont setfont
+(Times-Roman) findfont 240 scalefont setfont
 BackgroundColor 0 lt 3 1 roll 0 lt exch 0 lt or or not {BackgroundColor C 1.000 0 0 7200.00 5040.00 BoxColFill} if
 1.000 UL
 LTb
 LCb setrgbcolor
-980 640 M
+1176 768 M
 63 0 V
-4413 0 R
+5528 0 R
 -63 0 V
 stroke
-860 640 M
-[ [(times) 200.0 0.0 true true 0 ( 0)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
-/vshift -66 def
+1032 768 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 0)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
+/vshift -80 def
 1.000 UL
 LTb
 LCb setrgbcolor
-980 1400 M
+1176 1574 M
 63 0 V
-4413 0 R
+5528 0 R
 -63 0 V
 stroke
-860 1400 M
-[ [(times) 200.0 0.0 true true 0 ( 0.2)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+1032 1574 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.2)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-980 2160 M
+1176 2380 M
 63 0 V
-4413 0 R
+5528 0 R
 -63 0 V
 stroke
-860 2160 M
-[ [(times) 200.0 0.0 true true 0 ( 0.4)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+1032 2380 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.4)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-980 2919 M
+1176 3187 M
 63 0 V
-4413 0 R
+5528 0 R
 -63 0 V
 stroke
-860 2919 M
-[ [(times) 200.0 0.0 true true 0 ( 0.6)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+1032 3187 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.6)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-980 3679 M
+1176 3993 M
 63 0 V
-4413 0 R
+5528 0 R
 -63 0 V
 stroke
-860 3679 M
-[ [(times) 200.0 0.0 true true 0 ( 0.8)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+1032 3993 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.8)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-980 4439 M
+1176 4799 M
 63 0 V
-4413 0 R
+5528 0 R
 -63 0 V
 stroke
-860 4439 M
-[ [(times) 200.0 0.0 true true 0 ( 1)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+1032 4799 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 1)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-1614 640 M
+1176 768 M
 0 63 V
-0 3736 R
+0 3968 R
 0 -63 V
 stroke
-1614 440 M
-[ [(times) 200.0 0.0 true true 0 ( 50)]
-] -66.7 MCshow
-/times findfont 200 scalefont setfont
+1176 528 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 16)]
+] -80.0 MCshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-2547 640 M
+1549 768 M
 0 63 V
-0 3736 R
+0 3968 R
 0 -63 V
 stroke
-2547 440 M
-[ [(times) 200.0 0.0 true true 0 ( 100)]
-] -66.7 MCshow
-/times findfont 200 scalefont setfont
+1549 528 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 32)]
+] -80.0 MCshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-3479 640 M
+2294 768 M
 0 63 V
-0 3736 R
+0 3968 R
 0 -63 V
 stroke
-3479 440 M
-[ [(times) 200.0 0.0 true true 0 ( 150)]
-] -66.7 MCshow
-/times findfont 200 scalefont setfont
+2294 528 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 64)]
+] -80.0 MCshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-4412 640 M
+3785 768 M
 0 63 V
-0 3736 R
+0 3968 R
 0 -63 V
 stroke
-4412 440 M
-[ [(times) 200.0 0.0 true true 0 ( 200)]
-] -66.7 MCshow
-/times findfont 200 scalefont setfont
+3785 528 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 128)]
+] -80.0 MCshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
-5344 640 M
+6767 768 M
 0 63 V
-0 3736 R
+0 3968 R
 0 -63 V
 stroke
-5344 440 M
-[ [(times) 200.0 0.0 true true 0 ( 250)]
-] -66.7 MCshow
-/times findfont 200 scalefont setfont
+6767 528 M
+[ [(Times-Roman) 240.0 0.0 true true 0 ( 256)]
+] -80.0 MCshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UL
 LTb
 LCb setrgbcolor
 1.000 UL
 LTB
 LCb setrgbcolor
-980 4439 N
-980 640 L
-4476 0 V
-0 3799 V
--4476 0 V
+1176 4799 N
+0 -4031 V
+5591 0 V
+0 4031 V
+-5591 0 V
 Z stroke
 1.000 UP
 1.000 UL
 LTb
 LCb setrgbcolor
 LCb setrgbcolor
-190 2539 M
+228 2783 M
 currentpoint gsave translate -270 rotate 0 0 moveto
-[ [(times) 200.0 0.0 true true 0 (Ratio de comparaciones)]
-] -66.7 MCshow
+[ [(Times-Roman) 240.0 0.0 true true 0 (Ratio de comparaciones)]
+] -80.0 MCshow
 grestore
-/times findfont 200 scalefont setfont
+/Times-Roman findfont 240 scalefont setfont
 LTb
 LCb setrgbcolor
-3218 140 M
-[ [(times) 200.0 0.0 true true 0 (Cantidad de Pivotes)]
-] -66.7 MCshow
-/times findfont 200 scalefont setfont
-LTb
-LCb setrgbcolor
-3218 4739 M
-[ [(times) 200.0 0.0 true true 0 ( )]
-] -66.7 MCshow
-/times findfont 200 scalefont setfont
+3971 168 M
+[ [(Times-Roman) 240.0 0.0 true true 0 (Cantidad de Pivotes)]
+] -80.0 MCshow
+/Times-Roman findfont 240 scalefont setfont
 LTb
 % Begin plot #1
 1.000 UP
@@ -698,27 +751,27 @@ LTb
 LTb
 0.58 0.00 0.83 C
 LCb setrgbcolor
-6296 4339 M
-[ [(times) 200.0 0.0 true true 0 (1034)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+5696 2151 M
+[ [(Times-Roman) 240.0 0.0 true true 0 (1034)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UP
 1.000 UL
 LTb
 0.58 0.00 0.83 C
-6416 4339 M
-543 0 V
-980 4069 M
-298 -513 V
-597 -321 V
-3069 2717 L
-5456 2197 L
-980 4069 Pls
-1278 3556 Pls
-1875 3235 Pls
-3069 2717 Pls
-5456 2197 Pls
-6687 4339 Pls
+5840 2151 M
+639 0 V
+1176 4406 M
+373 -544 V
+745 -340 V
+3785 2972 L
+6767 2420 L
+1176 4406 Pls
+1549 3862 Pls
+2294 3522 Pls
+3785 2972 Pls
+6767 2420 Pls
+6159 2151 Pls
 % End plot #1
 % Begin plot #2
 1.000 UP
@@ -726,27 +779,27 @@ LTb
 LTb
 0.00 0.62 0.45 C
 LCb setrgbcolor
-6296 4139 M
-[ [(times) 200.0 0.0 true true 0 (2943)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+5696 1911 M
+[ [(Times-Roman) 240.0 0.0 true true 0 (2943)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UP
 1.000 UL
 LTb
 0.00 0.62 0.45 C
-6416 4139 M
-543 0 V
-980 3674 M
-298 -346 V
-597 -116 V
-3069 3012 L
-5456 2550 L
-980 3674 Crs
-1278 3328 Crs
-1875 3212 Crs
-3069 3012 Crs
-5456 2550 Crs
-6687 4139 Crs
+5840 1911 M
+639 0 V
+1176 3988 M
+373 -367 V
+745 -124 V
+3785 3285 L
+6767 2794 L
+1176 3988 Crs
+1549 3621 Crs
+2294 3497 Crs
+3785 3285 Crs
+6767 2794 Crs
+6159 1911 Crs
 % End plot #2
 % Begin plot #3
 1.000 UP
@@ -754,27 +807,27 @@ LTb
 LTb
 0.34 0.71 0.91 C
 LCb setrgbcolor
-6296 3939 M
-[ [(times) 200.0 0.0 true true 0 (12354)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+5696 1671 M
+[ [(Times-Roman) 240.0 0.0 true true 0 (12354)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UP
 1.000 UL
 LTb
 0.34 0.71 0.91 C
-6416 3939 M
-543 0 V
-980 3346 M
-298 10 V
-597 -368 V
-3069 2788 L
-5456 2564 L
-980 3346 Star
-1278 3356 Star
-1875 2988 Star
-3069 2788 Star
-5456 2564 Star
-6687 3939 Star
+5840 1671 M
+639 0 V
+1176 3640 M
+373 10 V
+745 -390 V
+3785 3047 L
+6767 2809 L
+1176 3640 Star
+1549 3650 Star
+2294 3260 Star
+3785 3047 Star
+6767 2809 Star
+6159 1671 Star
 % End plot #3
 % Begin plot #4
 1.000 UP
@@ -782,27 +835,27 @@ LTb
 LTb
 0.90 0.62 0.00 C
 LCb setrgbcolor
-6296 3739 M
-[ [(times) 200.0 0.0 true true 0 (13093)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+5696 1431 M
+[ [(Times-Roman) 240.0 0.0 true true 0 (13093)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UP
 1.000 UL
 LTb
 0.90 0.62 0.00 C
-6416 3739 M
-543 0 V
-980 4117 M
-298 -528 V
-597 8 V
-3069 3451 L
-5456 3232 L
-980 4117 Box
-1278 3589 Box
-1875 3597 Box
-3069 3451 Box
-5456 3232 Box
-6687 3739 Box
+5840 1431 M
+639 0 V
+1176 4458 M
+373 -561 V
+745 9 V
+3785 3751 L
+6767 3519 L
+1176 4458 Box
+1549 3897 Box
+2294 3906 Box
+3785 3751 Box
+6767 3519 Box
+6159 1431 Box
 % End plot #4
 % Begin plot #5
 1.000 UP
@@ -810,27 +863,27 @@ LTb
 LTb
 0.94 0.89 0.26 C
 LCb setrgbcolor
-6296 3539 M
-[ [(times) 200.0 0.0 true true 0 (15796)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+5696 1191 M
+[ [(Times-Roman) 240.0 0.0 true true 0 (15796)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UP
 1.000 UL
 LTb
 0.94 0.89 0.26 C
-6416 3539 M
-543 0 V
-980 3657 M
-298 -20 V
-597 -98 V
-3069 3324 L
-5456 3186 L
-980 3657 BoxF
-1278 3637 BoxF
-1875 3539 BoxF
-3069 3324 BoxF
-5456 3186 BoxF
-6687 3539 BoxF
+5840 1191 M
+639 0 V
+1176 3969 M
+373 -21 V
+745 -104 V
+3785 3616 L
+6767 3470 L
+1176 3969 BoxF
+1549 3948 BoxF
+2294 3844 BoxF
+3785 3616 BoxF
+6767 3470 BoxF
+6159 1191 BoxF
 % End plot #5
 % Begin plot #6
 1.000 UP
@@ -838,27 +891,27 @@ LTb
 LTb
 0.00 0.45 0.70 C
 LCb setrgbcolor
-6296 3339 M
-[ [(times) 200.0 0.0 true true 0 (15964)]
-] -66.7 MRshow
-/times findfont 200 scalefont setfont
+5696 951 M
+[ [(Times-Roman) 240.0 0.0 true true 0 (15964)]
+] -80.0 MRshow
+/Times-Roman findfont 240 scalefont setfont
 1.000 UP
 1.000 UL
 LTb
 0.00 0.45 0.70 C
-6416 3339 M
-543 0 V
-980 3794 M
-298 -119 V
-597 -207 V
-1194 -63 V
-5456 3156 L
-980 3794 Circle
-1278 3675 Circle
-1875 3468 Circle
-3069 3405 Circle
-5456 3156 Circle
-6687 3339 Circle
+5840 951 M
+639 0 V
+1176 4114 M
+373 -126 V
+745 -219 V
+1491 -68 V
+6767 3438 L
+1176 4114 Circle
+1549 3988 Circle
+2294 3769 Circle
+3785 3701 Circle
+6767 3438 Circle
+6159 951 Circle
 % End plot #6
 2.000 UL
 LTb
@@ -866,11 +919,11 @@ LCb setrgbcolor
 1.000 UL
 LTB
 LCb setrgbcolor
-980 4439 N
-980 640 L
-4476 0 V
-0 3799 V
--4476 0 V
+1176 4799 N
+0 -4031 V
+5591 0 V
+0 4031 V
+-5591 0 V
 Z stroke
 1.000 UP
 1.000 UL
@@ -881,4 +934,4 @@ grestore
 end
 showpage
 %%Trailer
-%%DocumentFonts: times
+%%DocumentFonts: Times-Roman

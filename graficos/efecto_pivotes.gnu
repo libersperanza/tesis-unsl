@@ -1,12 +1,16 @@
-set terminal postscript  eps color "times" 20
+reset
+set terminal postscript eps colortext "Times Roman,24"
+set encoding locale
 set xlabel "Cantidad de Pivotes"
 set ylabel "Ratio de comparaciones"
-set key outside right top
+set key right bottom
 set yrange [0:1]
 
-set title "Selección incremental - Grupo 1"
+
 set xrange [16:256]
+set xtics (16,32,64,128,256)
 set output "efecto_pivotes/g1_incremental_ep.eps"
+
 
 
 plot "efecto_pivotes/g1_incremental_ep.tsv" using ($1):($2) title "1034" w lp,\
@@ -16,8 +20,9 @@ plot "efecto_pivotes/g1_incremental_ep.tsv" using ($1):($2) title "1034" w lp,\
 "efecto_pivotes/g1_incremental_ep.tsv" using ($1):($6) title "15796" w lp,\
 "efecto_pivotes/g1_incremental_ep.tsv" using ($1):($7) title "15964" w lp
 
-set title "Selección incremental - Grupo 2"
+set key right bottom horizontal
 set xrange [64:1024]
+set xtics (64,128,256,512,1024)
 set output "efecto_pivotes/g2_incremental_ep.eps"
 
 plot "efecto_pivotes/g2_incremental_ep.tsv" using ($1):($2) title "19032" w lp,\
@@ -33,8 +38,9 @@ plot "efecto_pivotes/g2_incremental_ep.tsv" using ($1):($2) title "19032" w lp,\
 "efecto_pivotes/g2_incremental_ep.tsv" using ($1):($12) title "39612" w lp,\
 "efecto_pivotes/g2_incremental_ep.tsv" using ($1):($13) title "46530" w lp
 
-set title "Selección incremental - Grupo 3"
+
 set xrange [256:2048]
+set xtics (256,512,1024,2048)
 set output "efecto_pivotes/g3_incremental_ep.eps"
 
 plot "efecto_pivotes/g3_incremental_ep.tsv" using ($1):($2) title "57198" w lp,\
@@ -46,8 +52,9 @@ plot "efecto_pivotes/g3_incremental_ep.tsv" using ($1):($2) title "57198" w lp,\
 "efecto_pivotes/g3_incremental_ep.tsv" using ($1):($8) title "106511" w lp,\
 "efecto_pivotes/g3_incremental_ep.tsv" using ($1):($9) title "136323" w lp
 
-set title "Selección incremental - Grupo 4"
+
 set xrange [512:4096]
+set xtics (512,1024,2048,4096)
 set output "efecto_pivotes/g4_incremental_ep.eps"
 
 plot "efecto_pivotes/g4_incremental_ep.tsv" using ($1):($2) title "167995" w lp,\
@@ -55,8 +62,9 @@ plot "efecto_pivotes/g4_incremental_ep.tsv" using ($1):($2) title "167995" w lp,
 "efecto_pivotes/g4_incremental_ep.tsv" using ($1):($4) title "200375" w lp,\
 "efecto_pivotes/g4_incremental_ep.tsv" using ($1):($5) title "213578" w lp
 
-set title "Selección random - Grupo 1"
+
 set xrange [16:256]
+set xtics (16,32,64,128,256)
 set output "efecto_pivotes/g1_random_ep.eps"
 
 
@@ -67,8 +75,9 @@ plot "efecto_pivotes/g1_random_ep.tsv" using ($1):($2) title "1034" w lp,\
 "efecto_pivotes/g1_random_ep.tsv" using ($1):($6) title "15796" w lp,\
 "efecto_pivotes/g1_random_ep.tsv" using ($1):($7) title "15964" w lp
 
-set title "Selección random - Grupo 2"
+
 set xrange [64:1024]
+set xtics (64,128,256,512,1024)
 set output "efecto_pivotes/g2_random_ep.eps"
 
 plot "efecto_pivotes/g2_random_ep.tsv" using ($1):($2) title "19032" w lp,\
@@ -84,8 +93,8 @@ plot "efecto_pivotes/g2_random_ep.tsv" using ($1):($2) title "19032" w lp,\
 "efecto_pivotes/g2_random_ep.tsv" using ($1):($12) title "39612" w lp,\
 "efecto_pivotes/g2_random_ep.tsv" using ($1):($13) title "46530" w lp
 
-set title "Selección random - Grupo 3"
 set xrange [256:2048]
+set xtics (256,512,1024,2048)
 set output "efecto_pivotes/g3_random_ep.eps"
 
 plot "efecto_pivotes/g3_random_ep.tsv" using ($1):($2) title "57198" w lp,\
@@ -97,8 +106,9 @@ plot "efecto_pivotes/g3_random_ep.tsv" using ($1):($2) title "57198" w lp,\
 "efecto_pivotes/g3_random_ep.tsv" using ($1):($8) title "106511" w lp,\
 "efecto_pivotes/g3_random_ep.tsv" using ($1):($9) title "136323" w lp
 
-set title "Selección random - Grupo 4"
+
 set xrange [512:4096]
+set xtics (512,1024,2048,4096)
 set output "efecto_pivotes/g4_random_ep.eps"
 
 plot "efecto_pivotes/g4_random_ep.tsv" using ($1):($2) title "167995" w lp,\
