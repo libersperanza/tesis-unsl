@@ -32,3 +32,4 @@ prodDb.script
 newrelic.log
 target-eclipse/
 item_titles.csv
+.DS_Store

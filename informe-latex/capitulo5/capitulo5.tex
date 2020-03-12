@@ -39,7 +39,7 @@ Como una primera aproximaci\'on, seleccionamos cuatro t\'itulos de productos de 
 
 Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes incremental, y la cantidad de pivotes elegida fue de 128.\\
 
-\begin{table}[tb!]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline \multirow{2}{5cm}{\small Tama\~no de base de datos}
@@ -60,7 +60,7 @@ Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes
 \end{center}
 \end{table}
 
-\begin{table}[tb!]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
 \hline \multirow{2}{5cm}{\small T\'itulos de b\'usqueda}
@@ -84,7 +84,7 @@ Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes
 \end{center}
 \end{table}
 
-\begin{table}[tb!]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|l|c|}
 \hline 
@@ -123,13 +123,16 @@ A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el ratio de compara
 
 
 
-\begin{figure}[tb!]
+\begin{figure}[H]
 \centering
 \subfigure[\small Selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_incremental.eps}}
 \subfigure[\small Selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_random.eps}}
 		\caption{\small Estrategia de selecci\'on para 16 pivotes: mismos pivotes vs diferentes}
 		\label{fig:same-vs-diff-16Pivotes}
+\end{figure}
 
+\begin{figure}[H]
+\centering
 \subfigure[\small Selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_incremental.eps}}
 \subfigure[\small Selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_random.eps}}
 		\caption{\small Estrategia de selecci\'on para 64 pivotes: mismos pivotes vs diferentes}
@@ -139,7 +142,7 @@ A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el ratio de compara
 %figuras comentadas
 \begin{comment} 
 
-\begin{figure}[tb!]
+\begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=1\textwidth]{imagenes/same_vs_different/16p_incremental.eps}
 		\caption{\small Estrategia de selecci\'on incremental para 16 pivotes: mismos pivotes vs diferentes}
@@ -218,99 +221,6 @@ Vamos a presentar los resultados segmentados en cuatro grupos y analizaremos tre
 
 Llamaremos ratio de comparaciones al porcentaje de comparaciones respecto del tamaño de la base de datos, esto es porcentaje de filtrado.\\
 
-\subsection{Efecto de la cantidad de pivotes}
-
-Las siguientes figuras muestran el efecto de la cantidad de pivotes sobre el ratio de comparaciones por cada base de datos para los distintos grupos. Cada una de las l\'ineas es una base de datos, y estas bases de datos est\'an representadas por su tamaño como se muestra en las gr\'aficas.\\
-
-\noindent Grupo 1
-
-\begin{figure}[t!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_incremental_ep.eps}}
-		\caption{\small Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
-		\label{fig:EP-g1}
-\end{figure}
-
-\noindent Grupo 2
-
-\begin{figure}[tb!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_incremental_ep.eps}}
-		\caption{\small Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
-		\label{fig:EP-g2}
-\end{figure} 
-
-\noindent Grupo 3
-
-\begin{figure}[tb!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_incremental_ep.eps}}
-		\caption{\small Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
-		\label{fig:EP-g3}
-\end{figure}
-
-
-\noindent Grupo 4
-
-\begin{figure}[tb!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_incremental_ep.eps}}
-		\caption{\small Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
-		\label{fig:EP-g4}
-\end{figure}
-
-Como conclusion se puede observar que para todas las bases de datos de los diferentes grupos a medida que aumenta el n\'umero de pivotes, el ratio de comparaciones es menor.\\
-
-\subsection{Efecto tamaño de la base de datos}
-
-En las siguientes figuras mostraremos el efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.\\
-
-\noindent Grupo 1
-
-\begin{figure}[tb!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_incremental_edb.eps}}
-		\caption{\small Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
-		\label{fig:EDB-g1}
-\end{figure}
-
-\noindent Grupo 2
-
-\begin{figure}[tb!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_incremental_edb.eps}}
-		\caption{\small Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
-		\label{fig:EDB-g2}
-\end{figure}
-
-\noindent Grupo 3
-
-\begin{figure}[tb!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_incremental_edb.eps}}
-		\caption{\small Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
-		\label{fig:EDB-g3}
-\end{figure}
-
-\noindent Grupo 4
-
-\begin{figure}[tb!]
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_incremental_edb.eps}}
-		\caption{\small Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
-		\label{fig:EDB-g4}
-\end{figure}
-
-Como conclusi\'on se observa que a medida que aumenta el tamaño de la base de datos, disminuye el porcentaje de filtrado para los distintos grupos de pivotes, en otras palabras aumenta el porcentaje de comparaciones respecto del tamaño de la base de datos.\\
-
 \subsection{Efecto de las t\'ecnicas de selecci\'on de pivotes}
 
 En las figuras 5.5.x.y comparamos las t\'ecnicas de selecci\'on de pivotes, random e incremental, usando como m\'etrica el n\'umero de evaluaciones de distancia para cada unos de los pivotes. De cada grupo mostraremos a continuaci\'on solo las base de datos de mayor tamaño; el resto se adjuntan en el anexo XX.\\
@@ -324,6 +234,77 @@ GRAFICAS POR GRUPOS
  
  
 Dado que el comportamiento para ambas t\'ecnicas de selecci\'on no era el que esperabamos, es decir, incremental no era mucho mejor que random en cuanto a ratio de comparaciones, hicimos un an\'alisis emp\'irico sobre diferentes categor\'ias para entender tal comportamiento. 
+
+\subsection{Efecto de la cantidad de pivotes}
+
+Las siguientes figuras muestran el efecto de la cantidad de pivotes sobre el ratio de comparaciones por cada base de datos para los distintos grupos. Cada una de las l\'ineas es una base de datos, y estas bases de datos est\'an representadas por su tamaño como se muestra en las gr\'aficas.\\
+
+\begin{figure}[H]
+\centering
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_random_ep.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_incremental_ep.eps}}
+		\caption{\small Grupo 1: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+		\label{fig:EP-g1}
+
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_random_ep.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_incremental_ep.eps}}
+		\caption{\small Grupo 2: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+		\label{fig:EP-g2}
+
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+		
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_random_ep.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_incremental_ep.eps}}
+		\caption{\small Grupo 3: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+		\label{fig:EP-g3}
+		
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_random_ep.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_incremental_ep.eps}}
+		\caption{\small Grupo 4: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+		\label{fig:EP-g4}
+\end{figure}
+
+Como conclusion se puede observar que para todas las bases de datos de los diferentes grupos a medida que aumenta el n\'umero de pivotes, el ratio de comparaciones es menor.\\
+
+\subsection{Efecto tamaño de la base de datos}
+
+En las siguientes figuras mostraremos el efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.\\
+
+\begin{figure}[H]
+\centering
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_random_edb.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_incremental_edb.eps}}
+		\caption{\small Grupo 1: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+		\label{fig:EDB-g1}
+
+\centering
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_random_edb.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_incremental_edb.eps}}
+		\caption{\small Grupo 2: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+		\label{fig:EDB-g2}
+
+\centering
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_random_edb.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_incremental_edb.eps}}
+		\caption{\small Grupo 3: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+		\label{fig:EDB-g3}
+		
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_random_edb.eps}}
+\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_incremental_edb.eps}}
+		\caption{\small Grupo 4: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+		\label{fig:EDB-g4}
+\end{figure}
+
+Como conclusi\'on se observa que a medida que aumenta el tamaño de la base de datos, disminuye el porcentaje de filtrado para los distintos grupos de pivotes, en otras palabras aumenta el porcentaje de comparaciones respecto del tamaño de la base de datos.\\
+
 
 
 
