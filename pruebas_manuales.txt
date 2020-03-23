@@ -1,0 +1,43 @@
+Pruebas manuales
+----------------
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/readPivotes"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/createFileSearchTitles"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/createFilePivotes"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/editDistanceTime?title1=Revista+Lucera+N%C2%BA7+%2F+Saer%2C+Villoro%2C+Gorodischer%2C+Tiz%C3%B3n&title2=Porta+Aberta%3A+Hist%C3%B3ria+-+4%C2%BA+Ano+De+Mirna+Lima+Ftd+%28didaticos"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/editDistanceTime?title1=Chic%20Stays%2C%20Conde%20Nast%20Travel%20-%20Melinda%20Stevens&title2=Hems%20Juana%20De%20Arco%20Para%20J%C3%B3venes%20Principiantes%0A"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?initMode=load&pivotStrategy=incremental_differentPivotes&pivotsQty=4"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?initMode=load&pivotStrategy=incremental_differentPivotes&pivotsQty=32"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?initMode=load&pivotStrategy=random_differentPivotes&pivotsQty=32"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?initMode=load&pivotStrategy=incremental_differentPivotes&pivotsQty=1024"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/initIndex?initMode=load&pivotStrategy=random_differentPivotes&pivotsQty=4096"
+
+
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?response_format=empty&radio=5&neighbors=1854&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?response_format=ids&radio=5&neighbors=10&categ=MLA2547&itemTitle=Entradas+Uruguay+Argentina+Popular+Colombes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?response_format=ids&radio=5&neighbors=10&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?response_format=empty&radio=5&neighbors=5&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes";curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?response_format=empty&radio=5&neighbors=6&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes";curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/knnRankSearch?response_format=empty&radio=5&neighbors=7&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes";
+
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?response_format=empty&radio=23&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?response_format=empty&radio=23&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?radio=25&categ=MLA1540&itemTitle=Programacion+Reparaci%C3%B3n++Ajuste+De+Od%C3%B3metro+Km"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?response_format=size&radio=23&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?radio=23&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?radio=27&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?response_format=empty&radio=23&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?response_format=ids&radio=23&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/sequentialSearch?response_format=size&radio=23&categ=MLA3025&itemTitle=Hems+Juana+De+Arco+Para+J%C3%B3venes+Principiantes"
+
+curl -sS "http://localhost:8080/TesisFullGroovy/basicImplementation/rankSearch?response_format=ids&radio=23&categ=MLA2547&itemTitle=Entradas+Uruguay+Argentina+Popular+Colombes"
