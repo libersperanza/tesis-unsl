@@ -39,6 +39,7 @@
 
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{appendix}
 
 \pagestyle{fancyplain}
 
@@ -188,6 +189,8 @@
 
 \pagenumbering{arabic}   \setcounter{page}{1}
 
+\listoffigures
+\listoftables
 
 %\input{../introduccion/intro} \clearemptydoublepage %Capitulo 1
 \input{../introduccion/introduccion} 
@@ -197,9 +200,14 @@
 \input{../capitulo5/capitulo5} 
 \input{../conclusiones/conclusiones} 
 
-\listoffigures
-\listoftables
+\appendix
+\renewcommand{\appendixname}{Anexos}
+\renewcommand{\appendixtocname}{Anexos}
+\renewcommand{\appendixpagename}{Anexos}
+\addappheadtotoc
+\appendixpage
 
+\input{../anexos/anexos} 
 \addcontentsline{toc}{chapter}{Bibliograf\'ia}
 
 \bibliographystyle{thesis}

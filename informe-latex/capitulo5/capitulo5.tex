@@ -26,7 +26,7 @@ En nuestro trabajo, el universo de datos es bastante m\'as singular, ya que se t
 
 Esta particularidad tiene como consecuencia un universo de datos variado y heterog\'eneo, donde cada elemento de dicho universo es una combinaci\'on de palabras, abreviaciones, n\'umeros y caracteres especiales. Ante \'esta combinaci\'on de caracter\'isticas, el primer obst\'aculo que debimos sortear para comenzar con la evaluaci\'on experimental fue, precisamente, la selecci\'on del radio de b\'usqueda.\\
 
-Como una primera aproximaci\'on, seleccionamos cuatro t\'itulos de productos de la categor\'ia con mayor cantidad de elementos y luego procedimos a realizar una b\'usqueda de los k-vecinos con:\\
+Como una primera aproximaci\'on, seleccionamos cuatro t\'itulos de productos (cuadro: \ref{tabla:muestra-rank}) de la categor\'ia con mayor cantidad de elementos (cuadro: \ref{tabla:muestra-tamano}) y luego procedimos a realizar una b\'usqueda de los k-vecinos con:\\
 
 \begin{itemize}
 \item $k= 0.001 \times  cantidad\_de\_elementos\_de\_la\_categoria\ (0.1\%)$
@@ -103,12 +103,12 @@ Las b\'usquedas se realizaron utilizando la estrategia de selecci\'on de pivotes
 \end{center}
 \end{table}
 
-Como podemos visualizar en los resultados, el promedio del radio de b\'usqueda arroja un valor de 27, valor que utilizamos para realizar algunas pocas b\'usquedas sobre el resto de las categor\'ias. Al analizar los resultados obtenidos llegamos a la conclusi\'on de que deb\'iamos disminu\'ir el valor del $r$, ya que en la mayor\'ia de los casos la b\'usqueda retornaba una cantidad de elementos cercana a la totalidad de la base de datos y en otros casos los elementos retornados no eran similares al t\'itulo de b\'usqueda. Ante \'estos hallazgos, tomamos una segunda aproximaci\'on: primero obtuvimos el promedio de la longitud de los t\'itulos para cada categor\'ia, luego promediamos esos valores para obtener un \'unico resultado y lo dividimos por 2.  De esa forma llegamos al rango elegido para todos los experimentos: $r=23$.\\
+Como podemos visualizar en los resultados de la tabla \ref{tabla:promedios-rank}, el promedio del radio de b\'usqueda arroja un valor de 27, valor que utilizamos para realizar algunas pocas b\'usquedas sobre el resto de las categor\'ias. Al analizar los resultados obtenidos llegamos a la conclusi\'on de que deb\'iamos disminu\'ir el valor del $r$, ya que en la mayor\'ia de los casos la b\'usqueda retornaba una cantidad de elementos cercana a la totalidad de la base de datos y en otros casos los elementos retornados no eran similares al t\'itulo de b\'usqueda. Ante \'estos hallazgos, tomamos una segunda aproximaci\'on: primero obtuvimos el promedio de la longitud de los t\'itulos para cada categor\'ia, luego promediamos esos valores para obtener un \'unico resultado y lo dividimos por 2.  De esa forma llegamos al rango elegido para todos los experimentos: $r=23$.\\
 
 
 \subsection{Selecci\'on de los conjuntos de pivotes}
 
-En este trabajo, adem\'as de las t\'ecnicas de selecci\'on de pivotes, random e incremental, consideramos dos pol\'iticas para la elecci\'on de los grupos de pivotes:
+En este trabajo, adem\'as de las t\'ecnicas de selecci\'on de pivotes, random e incremental, consideramos dos pol\'iticas para la elecci\'on de los grupos de pivotes:\\
 
 \textit{\textbf{Mismo grupo de pivotes para todas las categor\'ias o bases de datos}}: Esta estrategia, selecciona el grupo de pivotes considerando todas las bases de datos. Luego, el mismo grupo de pivotes, es utilizado en cada uno de los experimentos sobre las distintas bases de datos.\\
 
@@ -116,25 +116,24 @@ En este trabajo, adem\'as de las t\'ecnicas de selecci\'on de pivotes, random e 
 
 Para determinar cu\'al estrategia era la m\'as adecuada, se seleccionaron conjuntos de pivotes, random e incremental, seg\'un las pol\'iticas arriba mencionadas para los grupos de 16 y 64 pivotes.\\
 
-Por cada base de datos se eligi\'o al azar el 10\% de los t\'itulos como elementos de b\'usqueda. Para 16 pivotes, se usaron 6 bases de datos (tamaño total: 61.184) y se ejecutaron 12.232  b\'usquedas en total. Para 64 pivotes, se usaron 18 bases de datos (tamaño total: 440.631) y se ejecutaron 88.114 b\'usquedas en total.\\
+Por cada base de datos se eligi\'o al azar el 10\% de los t\'itulos como elementos de b\'usqueda. Para las b\'usquedas con 16 pivotes, se usaron 6 bases de datos (tamaño total: 61.184) y se ejecutaron 12.232  b\'usquedas en total. Para las b\'usquedas con 64 pivotes, se usaron 18 bases de datos (tamaño total: 440.631) y se ejecutaron un total de 88.114 b\'usquedas.\\
 
-Como se puede observar en la figura \cite{same-vs-diff-16Pivotes}
-A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el ratio de comparaciones realizadas respecto del tamaño de la base de datos para 16 y 64 pivotes respectivamente.\\
+En la figura \ref{fig:same-vs-diff-16Pivotes}, se muestra el ratio de comparaciones para las b\'usquedas con 16 pivotes. Para la t\'ecnica de selecci\'on incremental (a) se puede observar que se comporto mejor la pol\'itica \textit{Mismo grupo de pivotes para todas las categor\'ias o bases de datos} y para la t\'ecnica de selecci\'on random (b) fue mejor la pol\'itica \textit{Diferentes grupos de pivotes por categor\'ia o base de datos}.\\
 
-
+En la figura \ref{fig:same-vs-diff-64Pivotes}, se visualiza el ratio de comparaciones para las b\'usquedas con 64 pivotes. Para ambas t\'ecnica de selecci\'on, incremental (a) y random (b), se puede observar que se comporto mejor la pol\'itica \textit{Diferentes grupos de pivotes por categor\'ia o base de datos}. Esto es, el ratio de comparaciones realizadas directamente con los objetos de la base de datos es menor al usar diferentes pivotes por categor\'ia o base de datos.\\
 
 \begin{figure}[H]
 \centering
-\subfigure[\small Selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_incremental.eps}}
-\subfigure[\small Selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_random.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_incremental.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/16p_random.eps}}
 		\caption{\small Estrategia de selecci\'on para 16 pivotes: mismos pivotes vs diferentes}
 		\label{fig:same-vs-diff-16Pivotes}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\subfigure[\small Selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_incremental.eps}}
-\subfigure[\small Selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_random.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on incremental]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_incremental.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on random]{\includegraphics[width=71.5mm]{imagenes/same_vs_different/64p_random.eps}}
 		\caption{\small Estrategia de selecci\'on para 64 pivotes: mismos pivotes vs diferentes}
 		\label{fig:same-vs-diff-64Pivotes}
 \end{figure}
@@ -163,9 +162,6 @@ A continuaci\'on, en las figura x.y.z y x.y.z’, se muestra el ratio de compara
 \end{figure}
 
 \end{comment}
-
-Por lo que se puede observar, aunque la estrategia var\'ia por cada base de datos, en t\'erminos generales se comporta mejor la pol\'itica de selecci\'on  \textit{diferentes grupos pivotes por categor\'ia o base de datos} para ambas t\'ecnicas; random e incremental.\\
-
 
 \section{Ejecuci\'on experimental}
 
@@ -223,90 +219,118 @@ Llamaremos ratio de comparaciones al porcentaje de comparaciones respecto del ta
 
 \subsection{Efecto de las t\'ecnicas de selecci\'on de pivotes}
 
-En las figuras 5.5.x.y comparamos las t\'ecnicas de selecci\'on de pivotes, random e incremental, usando como m\'etrica el n\'umero de evaluaciones de distancia para cada unos de los pivotes. De cada grupo mostraremos a continuaci\'on solo las base de datos de mayor tamaño; el resto se adjuntan en el anexo XX.\\
+En esta secci\'on vamos a comparar las t\'ecnicas de selecci\'on de pivotes random e incremental, usando como m\'etrica el n\'umero de evaluaciones de distancia para cada unos de los grupos de pivotes elegidos. Se realizaron las comparaciones para todas las bases de datos con las que trabajamos (30) pero a continuaci\'on s\'olo analizaremos la base de datos de mayor tama\~no de cada uno de los grupos que mencionamos anteriormente, el resto se adjuntan en el Anexo \ref{anexo.A}.\\
 
-GRAFICAS POR GRUPOS
+Para el grupo 1, figura \ref{fig:ETS-1}(a), observamos que para una base de datos de aproximadamente 16 mil elementos,  usando la t\'ecnica de selecci\'on incremental se realizan menos evaluaciones de distancia que la t\'ecnica de selecci\'on random para todos los grupos de pivotes, excepto para 128 pivotes. Tambi\'en se puede observar que la diferencia entre ambas t\'ecnicas es amplia.\\
 
- GRAFICA: Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia
+Para el grupo 2, figura \ref{fig:ETS-1}(b), para una base de datos de aproximadamente 45 mil elementos, la t\'ecnica de selecci\'on incremental es mejor solo en dos grupos de pivotes, 64 y 256. Para los grupos de pivotes de 128, 512 y 1024, la t\'ecnica de selecci\'on random realiza menos evaluaciones de distancia que incremental. Tambi\'en se puede observar que a partir del grupo de pivotes 256, la diferencia de evaluaciones de distancia no es tan grande entre ambas t\'ecnicas.\\
+
+Para el grupo 3, figura \ref{fig:ETS-2}(a), con una base de datos de aproximadamente 136 mil elementos, la t\'ecnica de selecci\'on incremental en general realiza menos cantidad de evaluaciones de distancia, salvo para 2048 pivotes. Para este ultimo grupo de pivotes, la t\'ecnica de selecci\'on random esta por debajo de incremental pero solo por muy poca diferencia.\\
+
+Para el grupo 4, figura \ref{fig:ETS-2}(b), con una base de datos de aproximadamente 213 mil elementos, en general, la t\'ecnica de selecci\'on random, por muy poca diferencia (excepto para 4096, donde la diferencia es mas marcada), realiza menos cantidad de evaluaciones de distancia que la t\'ecnica de selecci\'on incremental.\\
+
+
+\begin{figure}[H]
+\centering
+\subfigure[\scriptsize Grupo 1]{\includegraphics[width=71.5mm]{imagenes/random_vs_incremental/g1_15964.eps}}
+\subfigure[\scriptsize Grupo 2]{\includegraphics[width=71.5mm]{imagenes/random_vs_incremental/g2_46530.eps}}
+\caption{\small Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}
+\label{fig:ETS-1}
+\end{figure}
+\begin{figure}[H]
+\centering
+\subfigure[\scriptsize Grupo 3]{\includegraphics[width=71.5mm]{imagenes/random_vs_incremental/g3_136323.eps}}
+\subfigure[\scriptsize Grupo 4]{\includegraphics[width=71.5mm]{imagenes/random_vs_incremental/g4_213578.eps}}
+\caption{\small Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}
+\label{fig:ETS-2}
+
+\end{figure}
+
+Como conclusi\'on general, se puede observar que la t\'ecnica de selecci\'on random realiza menos cantidad de evaluaciones de distancia, aunque por muy poca diferencia.\\
  
- conclusiones:
- Como se puede observar, solo en el grupo 1; la t\'ecnica de selecci\'on incremental realiza menos cantidad de evaluaciones de distancia. En los grupos 2, 3 y 4 es mejor la t\'ecnica de selecci\'on random solo por muy poca diferencia.\\
- 
- 
-Dado que el comportamiento para ambas t\'ecnicas de selecci\'on no era el que esperabamos, es decir, incremental no era mucho mejor que random en cuanto a ratio de comparaciones, hicimos un an\'alisis emp\'irico sobre diferentes categor\'ias para entender tal comportamiento. 
+Dado que el comportamiento para ambas t\'ecnicas de selecci\'on no era el que esperabamos, es decir, incremental no era mucho mejor que random en cuanto a ratio de comparaciones, hicimos un an\'alisis emp\'irico sobre diferentes categor\'ias para entender tal comportamiento. Este an\'alisis lo veremos mas adelante en detalle.
 
 \subsection{Efecto de la cantidad de pivotes}
 
-Las siguientes figuras muestran el efecto de la cantidad de pivotes sobre el ratio de comparaciones por cada base de datos para los distintos grupos. Cada una de las l\'ineas es una base de datos, y estas bases de datos est\'an representadas por su tamaño como se muestra en las gr\'aficas.\\
+A continuaci\'on vamos a analizar el efecto de la cantidad de pivotes sobre el ratio de comparaciones para cada base de datos. Cada l\'ineas representa una base de datos y estas bases de datos est\'an representadas por su tamaño como se muestra en las gr\'aficas.\\
+
+En la figura \ref{fig:EP-g1}, observamos que tanto para selecci\'on de pivotes random (a) como para selecci\'on de pivotes incremental (b), para $16, 32, 64, 128$ y $256$ pivotes, a media que aumenta el n\'umero de pivotes el ratio de comparaciones disminuye. Tambi\'en vemos que las 3 bases de datos mas grandes, tienen un comportamiento similar, es decir el ratio de comparaciones oscila entre $0,7$ y $0,93$ aproximadamente y para las 3 bases de datos mas chicas, oscila entre $0,4$ y $0,8$ aproximadamente.\\
+
+En la figura \ref{fig:EP-g2}, observamos que para los pivotes $64, 128, 256, 512$ y $1024$ ambas t\'ecnicas de selecci\'on de pivotes se comportan semejantes, a mayor n\'umero de pivotes menor ratio de comparaciones. El ratio de comparaciones est\'a entre $0,6$ y $0,8$ para todas las bases de datos excepto la $27788$ que se encuentra entre $0,4$ y $0,6$.\\
+
+En la figura \ref{fig:EP-g3}, observamos el mismo comportamiento que para los grupos 1 y 2 mencionados anteriormente. En ambas t\'ecnicas de selecci\'on de pivotes, para la mayor\'ia de las bases de datos el ratio de comparaciones est\'a entre $0,6$ y $0,8$. Para pivotes de este grupo, $256, 512, 1024$ y $2048$, tambi\'en, a mayor n\'umero de pivotes menor ratio de comparaciones.\\
+
+En la figura \ref{fig:EP-g4}, observamos que a media que aumenta el n\'umero de pivotes el ratio de comparaciones disminuye, similar al resto de los grupos. Tambi\'en vemos que 3 de las 4 bases de datos que estamos analizando, para los pivotes 512, 1024 y 2048; el ratio de comparaciones esta entre $0,6$ y $0,75$ aproximadamente y para 4096 pivotes, entre $0,5$ $0,6$.\\
+
+A modo de resumen, analizando el efecto de la cantidad de pivotes en general para los cuatro grupos, vemos que cuando aumenta el n\'umero de pivotes se decrementa el ratio de comparaciones pero las t\'ecnicas de selecci\'on random e incremental, no muestran diferencias entre ellas.
 
 \begin{figure}[H]
 \centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_incremental_ep.eps}}
-		\caption{\small Grupo 1: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_random_ep.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g1_incremental_ep.eps}}
+		\caption{\small Grupo 1 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
 		\label{fig:EP-g1}
-
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_incremental_ep.eps}}
-		\caption{\small Grupo 2: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
-		\label{fig:EP-g2}
-
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_random_ep.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_incremental_ep.eps}}
+		\caption{\small Grupo 2 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+		\label{fig:EP-g2}
+\end{figure}
 
 \begin{figure}[H]
 \centering
-		
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_incremental_ep.eps}}
-		\caption{\small Grupo 3: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_random_ep.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g3_incremental_ep.eps}}
+		\caption{\small Grupo 3 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
 		\label{fig:EP-g3}
-		
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_random_ep.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_incremental_ep.eps}}
-		\caption{\small Grupo 4: Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
+\end{figure}
+
+\begin{figure}[H]
+\centering	
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_random_ep.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g4_incremental_ep.eps}}
+		\caption{\small Grupo 4 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
 		\label{fig:EP-g4}
 \end{figure}
 
-Como conclusion se puede observar que para todas las bases de datos de los diferentes grupos a medida que aumenta el n\'umero de pivotes, el ratio de comparaciones es menor.\\
-
 \subsection{Efecto tamaño de la base de datos}
 
-En las siguientes figuras mostraremos el efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.\\
+A continuaci\'on vamos a analizar cual es el efecto del tama\~no de las bases de datos sobre el ratio de comparaciones por pivotes. Las l\'ineas de las graficas son el n\'umero de pivotes con los que se ejecutaron las b\'usquedas.\\
+
+En la figura \ref{fig:EDB-g1} tenemos el grupo 1; donde el rango del tama\~no de las bases de datos es $[1.034-15.964]$ y los pivotes usados son $16, 32, 64, 128$ y $256$. Para la t\'ecnica de selecci\'on de pivotes random (a), en la base de datos mas chica, el ratio de comparaciones esta entre $0,4$ y $0,8$ y para las base de datos m\'as grandes, entre $0,7$ y $0,9$. Por otro lado, si miramos la gr\'afica para $256$ pivotes podemos observar que para las base de datos mas chica el ratio de comparaciones es $0,4$ y a medida que crece en tama\~no de la base de datos el ratio de comparaciones tambien aumenta ($0,7$ en las bases de datos mas grandes).\
+Para la t\'ecnica de selecci\'on de pivotes incremental (b), el comportamiento es similar, a menor cantidad de pivotes, mayor ratio de comparaciones.\\
+
+En la figura \ref{fig:EDB-g2}, donde el tama\~no de las bases de datos van desde $19032$ a $46530$ elementos y los pivotes usados son $64, 128, 256, 512$ y $1024$, el ratio de comparaciones no tiene mucha variabilidad desde la base de datos mas chica a las mas grande.\
+Por ejemplo: para t\'ecnica de selecci\'on de pivotes random, 512 pivotes y una bade de datos de 19 mil elementos el ratio de comparaciones es $0,58$ aproximadamente y para una base de datos de 46 mil elementos, el ratio es $0,67$. Estos valores son similares para el caso de t\'ecnica de selecci\'on de pivotes incremental.\
+A nivel general, para t\'ecnica de selecci\'on de pivotes random, podemos ver que para la base de datos mas chica, el ratio de comparaciones varia entre 0,49 y 0,79; y para las base de datos mas grande, entre 0,6 y 0,84. Para t\'ecnica de selecci\'on de pivotes incremental los rangos de ratios de comparaciones estan entre $[0,5 - 0,77]$ y $[0,61 - 0,79]$. \\
+
+Para las figuras \ref{fig:EDB-g3} y \ref{fig:EDB-g4}, donde se muestran los grupos 3 y 4 respectivamente, el comportamiento es similar al de los grupos antes mencionados.	\
+A medida que el tama\~no de las base de datos aumenta, el ratio de comparaciones tambi\'en crece, aunque la variabilidad de este \'ultimo es muy baja. Esto es similiar en ambas  t\'ecnica de selecci\'on de pivotes.
 
 \begin{figure}[H]
 \centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_incremental_edb.eps}}
-		\caption{\small Grupo 1: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_random_edb.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g1_incremental_edb.eps}}
+		\caption{\small Grupo 1 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
 		\label{fig:EDB-g1}
-
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_incremental_edb.eps}}
-		\caption{\small Grupo 2: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_random_edb.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g2_incremental_edb.eps}}
+		\caption{\small Grupo 2 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
 		\label{fig:EDB-g2}
-
-\centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_incremental_edb.eps}}
-		\caption{\small Grupo 3: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_random_edb.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g3_incremental_edb.eps}}
+		\caption{\small Grupo 3 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
 		\label{fig:EDB-g3}
-		
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\subfigure[\small T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_random_edb.eps}}
-\subfigure[\small T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_incremental_edb.eps}}
-		\caption{\small Grupo 4: Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes random]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_random_edb.eps}}
+\subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_db/g4_incremental_edb.eps}}
+		\caption{\small Grupo 4 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}
 		\label{fig:EDB-g4}
 \end{figure}
-
-Como conclusi\'on se observa que a medida que aumenta el tamaño de la base de datos, disminuye el porcentaje de filtrado para los distintos grupos de pivotes, en otras palabras aumenta el porcentaje de comparaciones respecto del tamaño de la base de datos.\\
-
-
-
-
-
  
