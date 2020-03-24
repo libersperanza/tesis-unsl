@@ -31,23 +31,23 @@
 \contentsline {section}{\numberline {4.2}Procesamiento inicial de los datos de entrada}{26}%
 \contentsline {section}{\numberline {4.3}Estructuras de datos}{27}%
 \contentsline {section}{\numberline {4.4}Software desarrollado}{28}%
-\contentsline {subsection}{\numberline {4.4.1}Creaci\'on de \'indices para las b\'usquedas}{28}%
-\contentsline {subsection}{\numberline {4.4.2}Busqueda por similitud}{29}%
-\contentsline {section}{\numberline {4.5}Re-particionado del universo}{29}%
-\contentsline {chapter}{\numberline {5}Evaluaci\'on experimental}{31}%
-\contentsline {section}{\numberline {5.1}Seteo Experimental}{31}%
-\contentsline {subsection}{\numberline {5.1.1}Selecci\'on del rango de b\'usqueda}{32}%
-\contentsline {subsection}{\numberline {5.1.2}Selecci\'on de los conjuntos de pivotes}{34}%
-\contentsline {section}{\numberline {5.2}Ejecuci\'on experimental}{35}%
-\contentsline {subsection}{\numberline {5.2.1}Creaci\'on de grupos}{35}%
-\contentsline {section}{\numberline {5.3}An\'alisis de resultados}{36}%
-\contentsline {subsection}{\numberline {5.3.1}Efecto de las t\'ecnicas de selecci\'on de pivotes}{36}%
-\contentsline {subsection}{\numberline {5.3.2}Efecto de la cantidad de pivotes}{38}%
-\contentsline {subsection}{\numberline {5.3.3}Efecto tamaño de la base de datos}{41}%
-\contentsline {section}{\numberline {5.4}Histogramas de frecuencia}{43}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{44}%
-\contentsline {section}{\numberline {6.1}Contribuciones}{44}%
-\contentsline {chapter}{Anexos}{44}%
-\contentsline {chapter}{\numberline {A}T\'ecnicas de selecci\'on de pivotes}{46}%
-\contentsline {chapter}{\numberline {B}Histogramas de frecuencia}{51}%
-\contentsline {chapter}{Bibliograf\'ia}{51}%
+\contentsline {subsection}{\numberline {4.4.1}Creaci\'on de \'indices para las b\'usquedas}{29}%
+\contentsline {subsection}{\numberline {4.4.2}Busqueda por similitud}{31}%
+\contentsline {section}{\numberline {4.5}Re-particionado del universo}{33}%
+\contentsline {chapter}{\numberline {5}Evaluaci\'on experimental}{34}%
+\contentsline {section}{\numberline {5.1}Seteo Experimental}{34}%
+\contentsline {subsection}{\numberline {5.1.1}Selecci\'on del rango de b\'usqueda}{35}%
+\contentsline {subsection}{\numberline {5.1.2}Selecci\'on de los conjuntos de pivotes}{37}%
+\contentsline {section}{\numberline {5.2}Ejecuci\'on experimental}{38}%
+\contentsline {subsection}{\numberline {5.2.1}Creaci\'on de grupos}{38}%
+\contentsline {section}{\numberline {5.3}An\'alisis de resultados}{39}%
+\contentsline {subsection}{\numberline {5.3.1}Efecto de las t\'ecnicas de selecci\'on de pivotes}{39}%
+\contentsline {subsection}{\numberline {5.3.2}Efecto de la cantidad de pivotes}{41}%
+\contentsline {subsection}{\numberline {5.3.3}Efecto tamaño de la base de datos}{44}%
+\contentsline {section}{\numberline {5.4}Histogramas de frecuencia}{46}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{47}%
+\contentsline {section}{\numberline {6.1}Contribuciones}{47}%
+\contentsline {chapter}{Anexos}{47}%
+\contentsline {chapter}{\numberline {A}T\'ecnicas de selecci\'on de pivotes}{49}%
+\contentsline {chapter}{\numberline {B}Histogramas de frecuencia}{54}%
+\contentsline {chapter}{Bibliograf\'ia}{54}%

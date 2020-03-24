@@ -3,58 +3,51 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces \small Estructuras de datos utilizadas}}{28}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize Rebalse de categor\'ias}}}{28}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize Mapa de productos}}}{28}%
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {\scriptsize Mapa de pivotes por categor\'ias}}}{28}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces \small Estructuras de datos utilizadas\relax }}{28}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces \small Estrategia de selecci\'on para 16 pivotes: mismos pivotes vs diferentes}}{35}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on incremental}}}{35}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on random}}}{35}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces \small Estrategia de selecci\'on para 64 pivotes: mismos pivotes vs diferentes}}{35}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on incremental}}}{35}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on random}}}{35}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces \small Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{37}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize Grupo 1}}}{37}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize Grupo 2}}}{37}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces \small Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{38}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize Grupo 3}}}{38}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize Grupo 4}}}{38}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces \small Grupo 1 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}}{39}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{39}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{39}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces \small Grupo 2 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}}{40}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{40}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{40}%
-\contentsline {figure}{\numberline {5.7}{\ignorespaces \small Grupo 3 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}}{40}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{40}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{40}%
-\contentsline {figure}{\numberline {5.8}{\ignorespaces \small Grupo 4 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}}{40}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{40}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{40}%
-\contentsline {figure}{\numberline {5.9}{\ignorespaces \small Grupo 1 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}}{42}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{42}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{42}%
-\contentsline {figure}{\numberline {5.10}{\ignorespaces \small Grupo 2 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}}{42}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{42}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{42}%
-\contentsline {figure}{\numberline {5.11}{\ignorespaces \small Grupo 3 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}}{42}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{42}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{42}%
-\contentsline {figure}{\numberline {5.12}{\ignorespaces \small Grupo 4 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.}}{43}%
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{43}%
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{43}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces \small Estrategia de selecci\'on para 16 pivotes: mismos pivotes vs diferentes\relax }}{38}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces \small Estrategia de selecci\'on para 64 pivotes: mismos pivotes vs diferentes\relax }}{38}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces \small Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{40}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces \small Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{41}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces \small Grupo 1 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.\relax }}{42}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces \small Grupo 2 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.\relax }}{43}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces \small Grupo 3 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.\relax }}{43}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces \small Grupo 4 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.\relax }}{43}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces \small Grupo 1 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.\relax }}{45}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces \small Grupo 2 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.\relax }}{45}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces \small Grupo 3 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.\relax }}{45}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces \small Grupo 4 - Efecto del tamaño de la base de datos sobre el ratio de comparaciones por pivotes.\relax }}{46}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces \small Grupo 1 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{46}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces \small Grupo 1 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{47}%
-\contentsline {figure}{\numberline {A.3}{\ignorespaces \small Grupo 2 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{47}%
-\contentsline {figure}{\numberline {A.4}{\ignorespaces \small Grupo 2 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{48}%
-\contentsline {figure}{\numberline {A.5}{\ignorespaces \small Grupo 3 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{49}%
-\contentsline {figure}{\numberline {A.6}{\ignorespaces \small Grupo 4 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.}}{50}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces \small Grupo 1 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize Grupo 1}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize Grupo 2}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize Grupo 3}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize Grupo 4}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes random}}}{49}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\scriptsize T\'ecnica de selecci\'on de pivotes incremental}}}{49}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces \small Grupo 1 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{50}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces \small Grupo 2 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{50}%
+\contentsline {figure}{\numberline {A.4}{\ignorespaces \small Grupo 2 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{51}%
+\contentsline {figure}{\numberline {A.5}{\ignorespaces \small Grupo 3 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{52}%
+\contentsline {figure}{\numberline {A.6}{\ignorespaces \small Grupo 4 - Efecto de las t\'ecnicas de selecci\'on de pivotes random vs incremental respecto de evaluaciones de distancia.\relax }}{53}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {B.1}{\ignorespaces \small Grupo 1 - Histogramas de frecuencia.}}{52}%
-\contentsline {figure}{\numberline {B.2}{\ignorespaces \small Grupo 2 - Histogramas de frecuencia.}}{53}%
-\contentsline {figure}{\numberline {B.3}{\ignorespaces \small Grupo 2 - Histogramas de frecuencia.}}{54}%
-\contentsline {figure}{\numberline {B.4}{\ignorespaces \small Grupo 3 - Histogramas de frecuencia.}}{55}%
-\contentsline {figure}{\numberline {B.5}{\ignorespaces \small Grupo 4 - Histogramas de frecuencia.}}{56}%
+\contentsline {figure}{\numberline {B.1}{\ignorespaces \small Grupo 1 - Histogramas de frecuencia.\relax }}{55}%
+\contentsline {figure}{\numberline {B.2}{\ignorespaces \small Grupo 2 - Histogramas de frecuencia.\relax }}{56}%
+\contentsline {figure}{\numberline {B.3}{\ignorespaces \small Grupo 2 - Histogramas de frecuencia.\relax }}{57}%
+\contentsline {figure}{\numberline {B.4}{\ignorespaces \small Grupo 3 - Histogramas de frecuencia.\relax }}{58}%
+\contentsline {figure}{\numberline {B.5}{\ignorespaces \small Grupo 4 - Histogramas de frecuencia.\relax }}{59}%
