@@ -1,5 +1,3 @@
-% Version ultima de la tesis - 29 de Noviembre de 2009
-
 \documentclass[12pt,twoside]{tesis}
 \usepackage[T1]{fontenc}
 \usepackage{a4}
@@ -26,10 +24,6 @@
 \usepackage{appendix}
 \usepackage{verbatim}%comentarios multilinea
 
-%ambiente para algoritmos
-\usepackage{algorithm}
-\usepackage{algorithmic}
-\input{spanishAlgorithmic} % mi archivo de traduccion
 
 \usepackage{enumerate}
 \usepackage{color}
@@ -40,6 +34,34 @@
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{appendix}
+
+\usepackage{float}
+
+%Agregado para pseudocodigo
+\usepackage{caption}
+\newcounter{nalg}[chapter] % defines algorithm counter for chapter-level
+\renewcommand{\thenalg}{\thechapter .\arabic{nalg}} %defines appearance of the algorithm counter
+\DeclareCaptionLabelFormat{algocaption}{Algoritmo \thenalg} % defines a new caption label as Algorithm x.y
+\lstnewenvironment{algorithm}[1][] %defines the algorithm listing environment
+{   
+    \refstepcounter{nalg} %increments algorithm number
+    \captionsetup{labelformat=algocaption,labelsep=colon} %defines the caption setup for: it ises label format as the declared caption label above and makes label and caption text to be separated by a ':'
+    \lstset{ %this is the stype
+        mathescape=true,
+        aboveskip=20pt,
+        belowskip=20pt,
+        frame=tB,
+        numbers=left, 
+        numberstyle=\tiny,
+        basicstyle=\scriptsize, 
+        keywordstyle=\color{black}\bfseries\em,
+        keywords={, in, if, else, forall, while, begin, end, to, return, for, } %add the keywords you want, or load a language as Rubens explains in his comment above.
+        numbers=left,
+        xleftmargin=.04\textwidth,
+        #1 % this is to add specific settings to an usage of this environment (for instnce, the caption and referable label)
+    }
+}
+{}
 
 \pagestyle{fancyplain}
 
@@ -54,16 +76,6 @@
 \newcommand{\clearemptydoublepage}{\newpage\thispagestyle{empty}\cleardoublepage}
 
 \renewcommand{\multirowsetup}{\centering}
-
-% Ambientes tipo teoremas
-
-\theoremstyle{break} \newtheorem{teorema}{Teorema}[chapter]
-
-\theoremstyle{plain} \newtheorem{lema}{Lema}[chapter]
-
-{\theoremstyle{break} \theorembodyfont{\rmfamily} \newtheorem{definicion}{Definici\'on}[chapter]}
-
-{\theorembodyfont{\rmfamily}\newtheorem{ejemplo}{Ejemplo}[chapter]}
 
 % Definiciones de s'mbolos matem'aticos
 % Symbols
@@ -83,12 +95,6 @@
 % alternative for looking up symbols from the table on page 207
 \DeclareSymbolFontAlphabet{\Bbb}{AMSb}
 
-
-%\input{psfig}           % Capability to place PostScript drawings
-
-%........................................................................
-
-\hyphenation{ra-zo-na-mien-to} \hyphenation{Sym-bo-lics} \hyphenation{re-con-si-de-ra-das} \hyphenation{re-pre-sen-ta} \hyphenation{for-ma-lis-mo} \hyphenation{obs-tan-te} \hyphenation{rea-li-za} \hyphenation{ob-ser-va-ble} \hyphenation{si-tua-do} \hyphenation{res-trin-gi-do} \hyphenation{pre-fe-ren-cias} \hyphenation{e-li-mi-na-do} \hyphenation{pro-ba-ble} \hyphenation{respectivos} \hyphenation{di-fe-ren-cia} \hyphenation{cons-trui-das} \hyphenation{si-guien-te} \hyphenation{carre-ra} \hyphenation{ra-cio-na-li-dad} \hyphenation{ge-ne-ran} \hyphenation{fun-cio-na-li-da-des} \hyphenation{re-fe-ren-cia-das} \hyphenation{ne-ce-sa-ria-men-te} \hyphenation{si-mi-lar} \hyphenation{abs-trac-to}  \hyphenation{de-li-be-ra-ti-va} \hyphenation{es-qui-var} \hyphenation{corres-pon-de} \hyphenation{de-no-mi-na-da} \hyphenation{de-sar-rollo} \hyphenation{ma-ne-ra} \hyphenation{Erre-cal-de} \hyphenation{Khe-pe-ra} \hyphenation{ma-na-ge-ment} \hyphenation{ob-te-ner}
 
 \begin{document}
 
