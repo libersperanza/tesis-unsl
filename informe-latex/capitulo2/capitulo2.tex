@@ -318,7 +318,6 @@ valor de la suma de los pesos de las operaciones at\'omicas necesarias para tran
 $. Si los pesos asignados a cada operaci\'on difieren, la distancia de edici\'on no es sim\'etrica 
 (violando la propiedad (b) del punto 2.1) y por lo tanto, no es una funci\'on m\'etrica.\\
 
-
 A los fines del presente trabajo, a todas las operaciones se le asigna un peso equivalente de uno.\\
 
 \noindent \textbf{\textit{Distancia de Edici\'on de \'arbol}}\\
@@ -463,8 +462,7 @@ x ~ p_i  y \Leftrightarrow d(x,p_i) = d(y,p_i) \forall_{i = 1....k}
 
 Se puede ver que cada clase de equivalencia est\'a definida por la intersecci\'on de varias capas de esferas centradas en los puntos $p_i$ como se muestra en la Figura \ref{fig:piv1}.\\
 
-Veamos ahora cu\'al ser\'ia una funci\'on de distancia $D$ para las clases de equivalencia.  
-Por la desigualdad triangular, para cualquier $x \in X$, se cumple que:
+Veamos ahora cu\'al ser\'ia una funci\'on de distancia $D$ para las clases de equivalencia.  Por la desigualdad triangular, para cualquier $x \in X$, se cumple que:
 
 \begin{itemize}
 \item 1. $d(p,x) \leq d(p,y) + d(y,x) \Leftrightarrow d(p,x) - d(p,y) \leq d(y,x)$
@@ -472,9 +470,7 @@ Por la desigualdad triangular, para cualquier $x \in X$, se cumple que:
 \item 3. $d(p,x) - d(p,y) \leq d(y,x) \wedge d(p,y) - d(p,x) \leq d(x,y) \Leftrightarrow |d(x,p) - d(y,p)| \leq d(x,y)$
 \end{itemize}
 
-Esto significa que, para cualquier elemento $p$ la distancia $d(x,y)$ no puede ser menor que  
-$|d(x,p) - d(y,p)|$. Luego  $D([x],[y]) = |d(x,p) - d(y,p)|$  es un l\'imite inferior seguro 
-para $D_0$. Si extendemos $D$ para $k$ los pivotes:
+Esto significa que, para cualquier elemento $p$ la distancia $d(x,y)$ no puede ser menor que $|d(x,p) - d(y,p)|$. Luego  $D([x],[y]) = |d(x,p) - d(y,p)|$  es un l\'imite inferior seguro para $D_0$. Si extendemos $D$ para $k$ los pivotes:
 
 \[
 D([x],[y]) = max_{1 \leq i \leq k} \{ |d(x,p_i) - d(y,p_i)|\} 
@@ -490,12 +486,9 @@ max_{1 \leq i \leq k} \{ |d(x,p_i) - d(q,p_i)| \} = L_{\infty}(\delta(x),\delta(
 \]
 
 
-Esto significa que hemos proyectado el espacio m\'etrico original $(X, d)$ en el espacio
- vectorial $\Re^k$ con la funci\'on de distancia $L_{\infty}$. La Figura \ref{piv1} 
- ilustra estas ideas para un conjunto de puntos usando s\'olo dos pivotes.\\
+Esto significa que hemos proyectado el espacio m\'etrico original $(X, d)$ en el espacio vectorial $\Re^k$ con la funci\'on de distancia $L_{\infty}$. La Figura \ref{piv1}  ilustra estas ideas para un conjunto de puntos usando s\'olo dos pivotes.\\
 
 \subsection{Algoritmos Basados en Particiones Compactas}
-
 
 \begin{figure}[tb]
 \centerline{%
@@ -545,21 +538,13 @@ Dada la condici\'on (3), se pueden descartar las zonas cuyo centro $c_i$ satisfa
 
 \section{Dimensi\'on en Espacios M\'etricos}
 
-Uno de los grandes obst\'aculos en el dise\~no de algoritmos de b\'usqueda por similitud es la
-llamada maldici\'on de la dimensionalidad \cite{oursurvey}. Si se pudiera representa el conjunto
-de elementos de un espacio m\'etrico como puntos en un espacio vectorial, su dimensi\'on 
-corresponder\'ia al n\'umero de coordenadas que tienen los puntos que lo componen. \\
+Uno de los grandes obst\'aculos en el dise\~no de algoritmos de b\'usqueda por similitud es la llamada maldici\'on de la dimensionalidad \cite{oursurvey}. Si se pudiera representar el conjunto de elementos de un espacio m\'etrico como puntos en un espacio vectorial, su dimensi\'on corresponder\'ia al n\'umero de coordenadas que tienen los puntos que lo componen. \\
+
 Todos los algoritmos de b\'usqueda por similitud disminuyen su rendimiento cuando aumenta la  dimensi\'on del conjunto, hecho conocido como maldici\'on de la dimensionalidad. \\
 
-En \cite{oursurvey} se muestra que
-el concepto de dimensi\'on de un espacio vectorial se puede extender a espacios m\'etricos generales utilizando el concepto de dimensi\'on intr\'inseca, y que la maldici\'on de la dimensionalidad
-tiene consecuencias similares en dichos espacios.\\
+En \cite{oursurvey} se muestra que el concepto de dimensi\'on de un espacio vectorial se puede extender a espacios m\'etricos generales utilizando el concepto de dimensi\'on intr\'inseca, y que la maldici\'on de la dimensionalidad tiene consecuencias similares en dichos espacios.\\
 
-
-La distribuci\'on de distancias de un espacio m\'etrico se define como la probabilidad 
-de que dos elementos se encuentre a cierta distancia $l$. Una aproximaci\'on a 
-esta distribuci\'on es el \textit{histograma de distancias}, el cual se construye
- desde un subconjunto del espacio m\'etrico, calculando las distancias entre los elementos del subconjunto (ver figura \ref{defineH}).
+La distribuci\'on de distancias de un espacio m\'etrico se define como la probabilidad de que dos elementos se encuentre a cierta distancia $l$. Una aproximaci\'on a esta distribuci\'on es el \textit{histograma de distancias}, el cual se construye desde un subconjunto del espacio m\'etrico, calculando las distancias entre los elementos del subconjunto (ver figura \ref{defineH}).\\
  
  \begin{figure}[tb!]
 \centerline{%
@@ -569,10 +554,7 @@ esta distribuci\'on es el \textit{histograma de distancias}, el cual se construy
 \label{defineH}
 \end{figure}
 
-El histograma de distancias permite visualizar la distribuci\'on de los 
-elementos del espacio m\'etrico y se menciona en varios art\'iculos como una medida
- fundamental relacionada a la dimensi\'on intr\'inseca del espacio \cite{Bri95, CM97, cn00,alenex,CPZ98a}. A medida que la dimensi\'on intr\'inseca de un espacio m\'etrico aumenta
-la media  $\mu$ del histograma crece y su varianza $\sigma^{2}$ se reduce.\\
+El histograma de distancias permite visualizar la distribuci\'on de los elementos del espacio m\'etrico y se menciona en varios art\'iculos como una medida fundamental relacionada a la dimensi\'on intr\'inseca del espacio \cite{Bri95, CM97, cn00,alenex,CPZ98a}. A medida que la dimensi\'on intr\'inseca de un espacio m\'etrico aumenta la media  $\mu$ del histograma crece y su varianza $\sigma^{2}$ se reduce.\\
 
 \noindent En \cite{oursurvey} se define la dimensi\'on intr\'inseca de un espacio m\'etrico como:
 
@@ -582,26 +564,11 @@ la media  $\mu$ del histograma crece y su varianza $\sigma^{2}$ se reduce.\\
 
 Los par\'ametros $\mu$ y $\sigma 2$ son la media y la varianza, respectivamente, del histograma de distancias de los puntos que conforman dicho espacio m\'etrico.\\
 
+La figura \ref{dim1} da una idea intuitiva de por qu\'e el problema de b\'usqueda se torna m\'as dif\'icil cuando el histograma es m\'as concentrado. Consideremos una b\'usqueda $(q,r)_{d}$ y un \'indice
+basado en pivotes elegidos aleatoriamente.\
+En la figura se ejemplifican dos posibles casos para el histograma local respecto del punto $p$. Si $p$ es un pivote, estas gr\'aficas representan dos posibles distribuciones para los valores de $d(q,p)$. La regla de eliminaci\'on dice que podemos descartar aquellos puntos $y$ tales que  $y \notin [d(p,q)-r, d(p,q) + r]$. Las \'areas sombreadas muestran  los puntos que no podr\'an descartarse. Esto significa que a medida que el histograma se concentra m\'as alrededor de su media disminuye la cantidad de puntos que pueden descartarse usando como dato $d(p,q)$.\\
 
-
-La figura \ref{dim1} da una idea intuitiva de por qu\'e el problema
-de b\'usqueda se torna m\'as dif\'icil cuando el histograma es m\'as
-concentrado. Consideremos una b\'usqueda $(q,r)_{d}$ y un \'indice
-basado en pivotes elegidos aleatoriamente.\\
-En la figura se ejemplifican dos posibles casos para el histograma
-local respecto del punto $p$. Si $p$ es un pivote, estas gr\'aficas
-representan dos posibles distribuciones para los valores de
-$d(q,p)$. La regla de eliminaci\'on dice que podemos descartar aquellos
-puntos $y$ tales que  $y \notin [d(p,q)-r, d(p,q) + r]$. Las \'areas sombreadas
-muestran  los puntos que no podr\'an descartarse. Esto significa que a medida
-que el histograma se concentra m\'as alrededor de su media disminuye la
-cantidad de puntos que pueden descartarse usando como dato $d(p,q)$.\\
-
-Este fen\'omeno es independiente de la naturaleza del espacio
-m\'etrico,  y nos brinda una forma de cuantificar cu\'an dif\'icil es una
-b\'usqueda sobre el mismo. Tal como se muestra experimental y anal\'iticamente
-en \cite{oursurvey}, todos los algoritmos degradan  sistem\'aticamente
-cuando la media $\rho$ del espacio se incrementa.
+Este fen\'omeno es independiente de la naturaleza del espacio m\'etrico,  y nos brinda una forma de cuantificar cu\'an dif\'icil es una b\'usqueda sobre el mismo. Tal como se muestra experimental y anal\'iticamente en \cite{oursurvey}, todos los algoritmos degradan  sistem\'aticamente cuando la media $\rho$ del espacio se incrementa.\\
 
 \begin{figure}[tb]
 \centerline{%
