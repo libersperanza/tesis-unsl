@@ -9,11 +9,11 @@ similitud.\\
 \section{Espacios M\'etricos}
 
 En este trabajo se aborda el tema de b\'usqueda no convencional, es decir, dentro de un universo 
-de datos, nos interesa encontrar aquellos objetos que son 'similares' a un objeto dado. El modelo 
+de datos, nos interesa encontrar aquellos objetos que son ``similares'' a un objeto dado. El modelo 
 formal que abarca este tipo de b\'usquedas se denomina Espacio M\'etrico.\\
 
 Espacio M\'etrico:
-Sea $X$ un universo de objetos v\'alidos y sea $U \subseteq X$ un subconjunto finito de tama\~no n 
+Sea $X$ un universo de objetos v\'alidos y sea $U \subseteq X$ un subconjunto finito de tama\~no $n$ 
 sobre el que se realizar\'an b\'usquedas. Llamaremos $U$ a las base de datos, diccionario o 
 simplemente conjunto de elementos.
 Definimos una funci\'on $d:(X \times X) \rightarrow \Re$ que denotar\'a una medida de distancia 
@@ -33,7 +33,7 @@ en la mayor\'ia de los casos:
 
 
 Estas propiedades s\'olo aseguran una definici\'on consistente de la funci\'on, pero no pueden 
-usarse para evitar comparaciones durante una b\'usqueda por similitud. Para que la funci\'on d sea 
+usarse para evitar comparaciones durante una b\'usqueda por similitud. Para que la funci\'on $d$ sea 
 realmente una m\'etrica debe satisfacer la siguiente propiedad:
 
 \begin{enumerate}
@@ -81,7 +81,7 @@ espacios m\'etricos \cite{oursurvey}:
          m\'axima para que los objetos sean inclu\'idos en la respuesta. Existen 
          casos donde puede ser dif\'icil especificar el radio sin conocimiento
           sobre los datos y la funci\'on de distancia. 
-          Se no presenta entonces la situaci\'on en donde, si especificamos 
+          Se nos presenta entonces la situaci\'on en donde, si especificamos 
           un radio de b\'usqueda muy peque\~no no obtendremos ning\'un resultado, 
           y deberemos repetir la b\'usqueda con un radio mayor. 
           Por otro lado, si especificamos un radio de b\'usqueda 
@@ -139,7 +139,8 @@ mantenidos en memoria principal, y cuando es necesario utilizar memoria secundar
 para almacenar los datos y/o el \'indice. Para los algoritmos de indexaci\'on
 en memoria principal, el objetivo principal es reducir el n\'umero de c\'alculos de distancia
 (se adec\'ua al modelo que mencion\'aramos anteriormente).\\
-  Para los algoritmos en memoria secundaria, adem\'as
+
+Para los algoritmos en memoria secundaria, adem\'as
 de realizar pocos c\'alculos de distancia, se requiere que tambi\'en realicen
 pocos accesos a disco. 
 
@@ -460,7 +461,7 @@ x ~ p_i  y \Leftrightarrow d(x,p_i) = d(y,p_i) \forall_{i = 1....k}
 \label{piv1}
 \end{figure} 
 
-Se puede ver que cada clase de equivalencia est\'a definida por la intersecci\'on de varias capas de esferas centradas en los puntos $p_i$ como se muestra en la Figura \ref{fig:piv1}.\\
+Se puede ver que cada clase de equivalencia est\'a definida por la intersecci\'on de varias capas de esferas centradas en los puntos $p_i$ como se muestra en la Figura \ref{piv1}.\\
 
 Veamos ahora cu\'al ser\'ia una funci\'on de distancia $D$ para las clases de equivalencia.  Por la desigualdad triangular, para cualquier $x \in X$, se cumple que:
 
@@ -562,7 +563,7 @@ El histograma de distancias permite visualizar la distribuci\'on de los elemento
 \gamma = \frac{\mu^2}{2\sigma^2}
 \]
 
-Los par\'ametros $\mu$ y $\sigma 2$ son la media y la varianza, respectivamente, del histograma de distancias de los puntos que conforman dicho espacio m\'etrico.\\
+Los par\'ametros $\mu$ y $\sigma^2$ son la media y la varianza, respectivamente, del histograma de distancias de los puntos que conforman dicho espacio m\'etrico.\\
 
 La figura \ref{dim1} da una idea intuitiva de por qu\'e el problema de b\'usqueda se torna m\'as dif\'icil cuando el histograma es m\'as concentrado. Consideremos una b\'usqueda $(q,r)_{d}$ y un \'indice
 basado en pivotes elegidos aleatoriamente.\
@@ -602,107 +603,6 @@ Este fen\'omeno es independiente de la naturaleza del espacio m\'etrico,  y nos 
 % dimensionalidad}, y es independiente de la naturaleza del espacio m\'etrico al cual pertenecen 
 % los elementos.
 
-
-%PARA CAP 3
-%\section{T\'ecnicas de Selecci\'on de Pivotes}
-%En este trabajo nos hemos centrado en algoritmos basados en pivotes, por lo que
-%analizaremos el tema de c\'omo seleccionar los pivotes al momento de indexar el espacio 
-%m\'estrico.
-%
-%La forma en que los pivotes son seleccionados puede afectar dr\'asticamente la performance de un 
-%algoritmo. Una buena elecci\'on de pivotes puede en gran parte reducir los tiempos de b\'usqueda.
-%
-%\subsection{Criterios de eficiencia}
-%
-%Es necesario minimizar el n\'umero de evaluaciones de distancia que se realizan al momento de 
-%hacer una b\'usqueda por rango. Para lograr esto, los pivotes elegidos deben descartar la mayor 
-%cantidad de los elementos posibles antes de realizar una b\'usqueda dentro de una lista de 
-%elementos candidatos. En s\'intesis, un buen conjunto de pivotes debe generar una lista peque\~na 
-%de elementos candidatos.
-%
-%Sea $(X,d)$ un espacio m\'etrico. Un conjunto de pivotes $\{p_1,p_2,...,p_k\} \in X$ definen un 
-%espacio $P$ de tuplas de distancias entre pivotes y elementos del conjunto. Un elemento $x \in P$ 
-%se denotar\'a como $[x]$ que es igual a la siguiente ecuaci\'on:
-%
-%\begin{equation}
-%[x] = (d(x,p_1),d(x,p_2),........,d(x,p_k)), x \in X, [x] \in P
-%\end{equation}
-%
-%
-%\noindent Definimos la m\'etrica $D = D_{\{p_1,...,p_k\}}$ del espacio $P$ como:
-%
-%\begin{equation}
-%D([q],[x]) = max_{i=1}^k |d(q,p_i) - d(x,p_i)|
-%\end{equation}
-%
-%Luego, obtenemos el espacio m\'etrico $(X,D)$ que resulta ser $(\Re^k, L_{\infty})$. Dada una consulta por rango $(q,r)$ es f\'acil ver este nuevo espacio m\'etrico, que seg\'un la condici\'on de la ecuaci\'on 2-6, no se pueden excluir aquellos elementos  $x \in E$ que cumplen con:
-%
-%\begin{equation}
-%D_{\{p_1,...,p_k\}}([q],[x]) \leq r
-%\end{equation}
-%
-%Para lograr que la cantidad de elementos elegidos sea peque\~na se debe maximizar la probabilidad de que $D_{\{p_1,...,p_k\}}([q],[x]) > r$. Una forma de lograr esto es maximizar la media de la distribuci\'on de distancias en $P$, la cual la llamaremos $\mu_p$.
-% 
-%\subsection{Estimaci\'on del $\mu_p$}
-%
-%\noindent La estimaci\'on del $\mu_p$ se realiza de ls siguiente manera:
-%
-%\begin{itemize}
-%
-%\item Elegir $A$ pares de elementos $\{(a_1,a'_1),(a_2,a'_2),.......,(a_A,a'_A)\}$ 
-%del conjunto $E$, distintos entre s\'i.
-%
-%\item Mapear los $A$ pares de elementos al espacio $P$ y calcular la distancia $D$ entre
-% cada par de elementos, esto produce como resultado el conjunto finito de distancias
-%  $\{D_1,D_2,...,D_A\}$.
-%  
-%\item Luego de obtener las $A$ distancias se estima el valor de $p$ de la siguiente forma:
-%\end{itemize}
-%
-%\begin{equation}
-%\mu_p = \frac{\sum_{i=1}^A D_i}{A}
-%\end{equation}
-%
-%De las ecuaciones 2.5.1 y 2.5.2, se puede deducir que dados un  par de elementos $(a,a')$ 
-%el costo de calcular $D([a],[a'])$ es $2k$ evaluaciones de la funci\'on $d$.
-%
-%Se se utilizan $A$ pares de elementos para estimar el valor de $\mu_p$ , se puede ver
-% que el costo total de la estimaci\'on es de $2kA$ evaluaciones de la funci\'on $d$.
-%
-%\subsection{M\'etodos de selecci\'on de pivotes}
-%
-%En este trabajo vamos a describir los dos m\'etodos de selecci\'on utilizados y sus costos en funci\'on al n\'umero de evaluaciones de la distancia $d$.
-%
-%\noindent \textit{\textbf{Selecci\'on Random}}
-%
-%Esta t\'ecnica consiste en la elecci\'on al azar de los pivotes, no se usa ning\'un criterio de selecci\'on. 
-%\
-%En este trabajo mostraremos la diferencia o beneficios en las b\'usquedas al usar pivotes seleccionados usando t\'ecnicas incrementales versus la selecci\'on aleatoria de pivotes.
-%\
-%El costo de optimizar los pivotes usando selecci\'on random es $0$
-%
-%\noindent \textit{\textbf{Selecci\'on Incremental}}
-%
-%El m\'etodo consiste en elegir un pivote $p_1$ utilizando $A$ pares de elementos del espacio $E$ mapeados a $P$, tal que \'ese pivote maximice el $\mu_p$. Luego elegir un segundo pivote $p_2$, tal que $\{p_1,p_2\}$ maximicen $\mu_p$ pero $p_1$ ya queda fijo. Luego elegir un tercer pivote $p_3$, tal que $\{p_1,p_2,p_3\}$  maximicen $\mu_p$ pero con $p_1$ y  $p_2$ fijos. Repetir el proceso hasta elegir los $k$ pivotes.
-%
-%En cada iteraci\'on se elige un pivote de una muestra de tama\~no $X$ del espacio $E$, 
-%dado que buscar un elemento que maximice $\mu_p$ dentro del todo el conjunto 
-%$E$  ser\'ia muy costoso.
-%
-%\noindent \textit{Costo del algoritmo}:
-%
-%Si bien en cada iteraci\'on se estima el $\mu_p$ con los $i$ pivotes seleccionados hasta el 
-%momento, no es necesario rehacer el c\'alculo completo si se almacena $D_{\{p_1,...,p_{i-1}\}}
-%([a_r],[a'_r]) \forall r \in 1..A$, es decir, para cada valor de $r=1..A$ el valor m\'aximo de $|
-%d(a'_r, p_j) - d(a_r, p_j)|, j = 1..i-1$. En este caso solo se calcula la distancia con respecto a 
-%los pivotes candidatos $|d(a'_r, p_{cand}) - d(a_r, p_{cand})|, r = 1..A$ y se toma el valor m
-%\'aximo entre las dos distancias para el calculo de $D\{p_1, ...,p_i\}$. Entonces, si la muestra 
-%de donde se toman los pivotes candidatos es de tama\~no $X$, en cada iteraci\'on se realizan $2AX$ 
-%evaluaciones de la funci\'on $d$. Luego, si se eligen $k$ pivotes, el trabajo total realizado por 
-%el algoritmo tiene un costo de $2kAX$ evaluaciones de la funci\'on $d$.
-%
-%
-%
 
 %\section{B\'usquedas por Similitud}
 %

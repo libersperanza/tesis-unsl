@@ -8,7 +8,7 @@ Dentro de los desaf\'ios que implica construir un sitio de e-commerce exitoso, s
 
 En este trabajo nos focalizamos en dicho problema, utilizando la b\'usqueda por similitud sobre los t\'itulos de los productos, con el fin de obtener productos relacionados.
 
-\section{Problema Abordado: Sistema de Recomendaci\'on}
+\section{Sistema de Recomendaci\'on}
 
 Con el crecimiento de la web y la democratizaci\'on del negocio, el volumen de datos e informaci\'on que se maneja ha crecido exponencialmente, con lo cual las b\'usquedas se enfrentan a desaf\'ios de rendimiento y velocidad de respuesta, dejando en segundo plano la congruencia de datos que ofrecen los modelos relacionales (b\'usquedas exactas).\\
 
@@ -21,16 +21,96 @@ Un sistema de recomendaci\'on es un software que filtra informaci\'on de inter\'
 Las recomendaciones pretenden ser una forma de ayudar al usuario a encontrar productos de su agrado realizando una preselecci\'on bas\'andose, por ejemplo, en su historial de b\'usquedas. Esto proporciona un alivio a los consumidores, ya que les evita tener que recorrer una lista interminable de ofertas poco relevantes. Por otro lado, se espera que estos beneficios para los usuarios se terminen reflejando en aumentos de tr\'afico y ventas, ya que en el e-commerce, las buenas recomendaciones siempre conducen a incrementos en las compras y, por ende, en los m\'argenes de ganancia. Es por ello que la efectividad del sistema de recomendaci\'on elegido es crucial.\\
 
 El funcionamiento de un sistema de recomendaci\'on est\'a basado en cierta informaci\'on que es procesada por los algoritmos de filtrado; y dependiendo de la naturaleza de dicha informaci\'on, podemos clasificar estos algoritmos en: basados en contenido, colaborativos, sensibles al contexto, entre otros.
-Los algoritmos basados en contenido filtran objetos o contenidos similares a los que el usuario ya ha buscado, comprado o calificado positivamente. Por ejemplo, en las plataformas de reproducci\'on de m\'usica online, el software eval\'ua las piezas musicales analizando su estructura interna para encontrar piezas similares que podr\'ian tener una l\'inea de bajo parecida.\
+Los algoritmos basados en contenido filtran objetos o contenidos similares a los que el usuario ya ha buscado, comprado o calificado positivamente. Por ejemplo, en las plataformas de reproducci\'on de m\'usica online, el software eval\'ua las piezas musicales analizando su estructura interna para encontrar piezas similares que podr\'ian tener una l\'inea de bajo parecida.\\
 
 Los algoritmos colaborativos, en cambio, filtran objetos basados en usuarios que han valorado estos objetos de manera similar; es decir, si un usuario muestra inter\'es por determinado producto, el sistema lo recomienda a otros usuarios. Por ello, en este tipo de sistemas no es necesaria la informaci\'on del producto en s\'i. Un ejemplo de la utilizaci\'on de este sistema es Amazon.\\
 
 \section{Problema abordado}
 
-En la plataforma de e-commerce Mercado Libre los usuarios publican productos dentro de un \'arbol de categor\'ias; dichos productos constan de un t\'itulo principal, un t\'itulo secundario y una descripci\'on.
-El problema que abordaremos en este trabajo es c\'omo encontrar los productos similares a un producto espec\'ifico, obteniendo de esa manera recomendaciones para los usuarios. Aplicaremos la teor\'ia de espacios m\'etricos a este caso de e-commerce real; donde nuestro universo de datos ser\'a un conjunto de productos disponibles en la plataforma Mercado Libre, y la funci\'on que provee la medida de distancia, ser\'a la distancia de edici\'on (o Levenstein) aplicada al t\'itulo de dichos productos.
+En la plataforma de e-commerce Mercado Libre los usuarios publican productos dentro de un \'arbol de categor\'ias; dichos productos constan de un t\'itulo principal, un t\'itulo secundario y una descripci\'on.\\
+
+El problema que abordaremos en este trabajo es c\'omo encontrar los productos similares a un producto espec\'ifico, obteniendo de esa manera recomendaciones para los usuarios. Aplicaremos la teor\'ia de espacios m\'etricos a este caso de e-commerce real; donde nuestro universo de datos ser\'a un conjunto de productos disponibles en la plataforma Mercado Libre, y la funci\'on que provee la medida de distancia, ser\'a la distancia de edici\'on (o Levenshtein) aplicada al t\'itulo de dichos productos.\\
+
 El objetivo principal ser\'a encontrar la forma m\'as eficiente de resolver la b\'usqueda por similitud, comparando distintos algoritmos y usando como criterio de eficiencia la cantidad de comparaciones realizadas para obtener los resultados de la b\'usqueda.\\
 
-A la hora de hacer una b\'usqueda podemos tomar dos criterios: buscar en todo el universo, lo cual implica un costo muy alto, o segmentar el conjunto de datos y realizar una b\'usqueda m\'as acotada. En este trabajo nos enfocaremos en este \'ultimo punto.\
+A la hora de hacer una b\'usqueda podemos tomar dos criterios: buscar en todo el universo, lo cual implica un costo muy alto, o segmentar el conjunto de datos y realizar una b\'usqueda m\'as acotada. En este trabajo nos enfocaremos en este \'ultimo punto.\\
 
-Dividiremos la b\'usqueda en dos etapas: filtrar por categor\'ia y realizar la b\'usqueda por similitud en la categor\'ia elegida.
+Dividiremos la b\'usqueda en dos etapas: filtrar por categor\'ia y realizar la b\'usqueda por similitud en la categor\'ia elegida.\\
+
+\section{T\'ecnicas de Selecci\'on de Pivotes}
+En este trabajo nos hemos centrado en algoritmos basados en pivotes, por lo que analizaremos el tema de c\'omo seleccionar los pivotes al momento de indexar el espacio m\'estrico.\\
+
+La forma en que los pivotes son seleccionados puede afectar dr\'asticamente la performance de un algoritmo. Una buena elecci\'on de pivotes puede en gran parte reducir los tiempos de b\'usqueda.
+
+\subsection{Criterios de eficiencia}
+
+Es necesario minimizar el n\'umero de evaluaciones de distancia que se realizan al momento de hacer una b\'usqueda por rango. Para lograr esto, los pivotes elegidos deben descartar la mayor cantidad de los elementos posibles antes de realizar una b\'usqueda dentro de una lista de elementos candidatos. En s\'intesis, un buen conjunto de pivotes debe generar una lista peque\~na de elementos candidatos.\\
+
+Sea $(X,d)$ un espacio m\'etrico. Un conjunto de pivotes $\{p_1,p_2,...,p_k\} \in X$ definen un espacio $P$ de tuplas de distancias entre pivotes y elementos del conjunto. Un elemento $x \in P$ se denotar\'a como $[x]$ que es igual a la siguiente ecuaci\'on:
+
+\begin{equation}
+[x] = (d(x,p_1),d(x,p_2),........,d(x,p_k)), x \in X, [x] \in P
+\label{eq-mapeo}
+\end{equation}
+
+\noindent Definimos la m\'etrica $D = D_{\{p_1,...,p_k\}}$ del espacio $P$ como:
+
+\begin{equation}
+D([q],[x]) = max_{i=1}^k |d(q,p_i) - d(x,p_i)|
+\label{eq-met-esp}
+\end{equation}
+
+Luego, obtenemos el espacio m\'etrico $(X,D)$ que resulta ser $(\Re^k, L_{\infty})$. 
+%Comente esta parte porque no tenemos la ecuacion 2-6 definida en ningun lado
+%Dada una consulta por rango $(q,r)$ es f\'acil ver este nuevo espacio m\'etrico, que seg\'un la condici\'on de la ecuaci\'on 2-6, no se pueden excluir aquellos elementos  $x \in E$ que cumplen con:
+
+%\begin{equation}
+%D_{\{p_1,...,p_k\}}([q],[x]) \leq r
+%\end{equation}
+
+Para lograr que la cantidad de elementos elegidos sea peque\~na se debe maximizar la probabilidad de que $D_{\{p_1,...,p_k\}}([q],[x]) > r$. Una forma de lograr esto es maximizar la media de la distribuci\'on de distancias en $P$, la cual la llamaremos $\mu_p$.
+ 
+\subsection{Estimaci\'on del $\mu_p$}
+
+\noindent La estimaci\'on del $\mu_p$ se realiza de ls siguiente manera:
+
+\begin{itemize}
+
+\item Elegir $A$ pares de elementos $\{(a_1,a'_1),(a_2,a'_2),.......,(a_A,a'_A)\}$ del conjunto $E$, distintos entre s\'i.
+
+\item Mapear los $A$ pares de elementos al espacio $P$ y calcular la distancia $D$ entre cada par de elementos, esto produce como resultado el conjunto finito de distancias $\{D_1,D_2,...,D_A\}$.
+  
+\item Luego de obtener las $A$ distancias se estima el valor de $p$ de la siguiente forma:
+\end{itemize}
+
+\begin{equation}
+\mu_p = \frac{\sum_{i=1}^A D_i}{A}
+\end{equation}
+
+De las ecuaciones \ref{eq-mapeo} y \ref{eq-met-esp}, se puede deducir que dados un par de elementos $(a,a')$ el costo de calcular $D([a],[a'])$ es $2k$ evaluaciones de la funci\'on $d$.\\
+
+Se se utilizan $A$ pares de elementos para estimar el valor de $\mu_p$ , se puede ver que el costo total de la estimaci\'on es de $2kA$ evaluaciones de la funci\'on $d$.\\
+
+\subsection{M\'etodos de selecci\'on de pivotes}
+
+En este trabajo vamos a describir los dos m\'etodos de selecci\'on utilizados y sus costos en funci\'on al n\'umero de evaluaciones de la distancia $d$.\\
+
+\noindent \textit{\textbf{Selecci\'on Random}}\\
+
+Esta t\'ecnica consiste en la elecci\'on al azar de los pivotes, no se usa ning\'un criterio de selecci\'on.\\
+
+En este trabajo mostraremos la diferencia o beneficios en las b\'usquedas al usar pivotes seleccionados usando t\'ecnicas incrementales versus la selecci\'on aleatoria de pivotes.\\
+
+El costo de optimizar los pivotes usando selecci\'on random es $0$.\\
+
+\noindent \textit{\textbf{Selecci\'on Incremental}}\\
+
+El m\'etodo consiste en elegir un pivote $p_1$ utilizando $A$ pares de elementos del espacio $E$ mapeados a $P$, tal que \'ese pivote maximice el $\mu_p$. Luego elegir un segundo pivote $p_2$, tal que $\{p_1,p_2\}$ maximicen $\mu_p$ pero $p_1$ ya queda fijo. Luego elegir un tercer pivote $p_3$, tal que $\{p_1,p_2,p_3\}$  maximicen $\mu_p$ pero con $p_1$ y  $p_2$ fijos. Repetir el proceso hasta elegir los $k$ pivotes.\\
+
+En cada iteraci\'on se elige un pivote de una muestra de tama\~no $X$ del espacio $E$, dado que buscar un elemento que maximice $\mu_p$ dentro del todo el conjunto $E$  ser\'ia muy costoso.\\
+
+\noindent \textit{Costo del algoritmo}:\\
+
+Si bien en cada iteraci\'on se estima el $\mu_p$ con los $i$ pivotes seleccionados hasta el momento, no es necesario rehacer el c\'alculo completo si se almacena $D_{\{p_1,...,p_{i-1}\}}([a_r],[a'_r]) \forall r \in 1..A$, es decir, para cada valor de $r=1..A$ el valor m\'aximo de $|d(a'_r, p_j) - d(a_r, p_j)|, j = 1..i-1$. En este caso solo se calcula la distancia con respecto a los pivotes candidatos $|d(a'_r, p_{cand}) - d(a_r, p_{cand})|, r = 1..A$ y se toma el valor m\'aximo entre las dos distancias para el calculo de $D\{p_1, ...,p_i\}$.\\
+
+Entonces, si la muestra de donde se toman los pivotes candidatos es de tama\~no $X$, en cada iteraci\'on se realizan $2AX$ evaluaciones de la funci\'on $d$. Luego, si se eligen $k$ pivotes, el trabajo total realizado por el algoritmo tiene un costo de $2kAX$ evaluaciones de la funci\'on $d$.
