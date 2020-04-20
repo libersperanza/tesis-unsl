@@ -59,8 +59,8 @@ Sea $(X,d)$ un espacio m\'etrico. Un conjunto de pivotes $\{p_1,p_2,...,p_k\} \i
 D([q],[x]) = max_{i=1}^k |d(q,p_i) - d(x,p_i)|
 \label{eq-met-esp}
 \end{equation}
-
-Luego, obtenemos el espacio m\'etrico $(X,D)$ que resulta ser $(\Re^k, L_{\infty})$. 
+\\
+Luego, obtenemos el espacio m\'etrico $(X,D)$ que resulta ser $(\Re^k, L_{\infty})$. \\
 %Comente esta parte porque no tenemos la ecuacion 2-6 definida en ningun lado
 %Dada una consulta por rango $(q,r)$ es f\'acil ver este nuevo espacio m\'etrico, que seg\'un la condici\'on de la ecuaci\'on 2-6, no se pueden excluir aquellos elementos  $x \in E$ que cumplen con:
 
@@ -82,11 +82,10 @@ Para lograr que la cantidad de elementos elegidos sea peque\~na se debe maximiza
   
 \item Luego de obtener las $A$ distancias se estima el valor de $p$ de la siguiente forma:
 \end{itemize}
-
 \begin{equation}
 \mu_p = \frac{\sum_{i=1}^A D_i}{A}
 \end{equation}
-
+\\
 De las ecuaciones \ref{eq-mapeo} y \ref{eq-met-esp}, se puede deducir que dados un par de elementos $(a,a')$ el costo de calcular $D([a],[a'])$ es $2k$ evaluaciones de la funci\'on $d$.\\
 
 Se se utilizan $A$ pares de elementos para estimar el valor de $\mu_p$ , se puede ver que el costo total de la estimaci\'on es de $2kA$ evaluaciones de la funci\'on $d$.\\

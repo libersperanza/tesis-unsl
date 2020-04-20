@@ -15,7 +15,7 @@ Cuando hablamos de datos de entrada, nos referimos a los productos ofrecidos en 
 
 La informaci\'on relevante a \'este trabajo obtenida de los productos fue la siguiente: categor\'ia, identificador del producto, t\'itulo, descripci\'on principal y descripci\'on secundaria.\\
 
-Para optimizar el desarrollo de creaci\'on de \'indices, los datos de entrada tuvieron que ser pre-procesados para crear los archivos necesarios para el correcto funcionamiento de dicho proceso. De este pre-procesamiento obtuvimos:\\
+Para optimizar el desarrollo de creaci\'on de \'indices, los datos de entrada tuvieron que ser pre-procesados para crear los archivos necesarios para el correcto funcionamiento de dicho proceso. De este pre-procesamiento obtuvimos:
 
 \begin{enumerate}[1.]
 \item  Archivo de productos: texto plano conteniendo toda la informaci\'on pertinente de los productos, separada por comas.
@@ -44,11 +44,9 @@ Como \'ultima estructura de datos auxiliar, se eligi\'o un mapa cuya clave es la
 
 El desarrollo realizado consta de dos partes complementarias: la funcionalidad de creaci\'on de \'indices y la funcionalidad de b\'usqueda propiamente dicha, que utiliza los \'indices creados por la primera funcionalidad.\\
 
-
-
 \subsection{Creaci\'on de \'indices para las b\'usquedas}
 
-La funcionalidad de creaci\'on de \'indices se desarroll\'o en forma gen\'erica, preparada para recibir los siguientes par\'ametros: \textit{tipo de pivotes} (random o incremental), \textit{cantidad de pivotes} y \textit{conjunto de pivotes} (mismo conjunto para todas las categor\'ias o diferentes conjuntos para cada categor\'ia)\\
+La funcionalidad de creaci\'on de \'indices se desarroll\'o en forma gen\'erica, preparada para recibir los siguientes par\'ametros: \textit{tipo de pivotes} (random o incremental), \textit{cantidad de pivotes} y \textit{conjunto de pivotes} (mismo conjunto para todas las categor\'ias o diferentes conjuntos para cada categor\'ia).\\
 
 La l\'ogica b\'asica del algoritmo de creaci\'on de \'indices carga los archivos descritos en la secci\'on  \ref{proc-inic} en las estructuras de datos correspondientes, y procede a generar las firmas de los items; utilizando, en primera instancia, la estrategia de selecci\'on de pivotes en conjunci\'on con el resto de los par\'ametros (cantidad y conjunto de pivotes).\\
 
@@ -263,7 +261,7 @@ begin
 end
 \end{algorithm}
 
-Como funcionalidad auxiliar, se implement\'o un proceso de carga que puede ser utilizado al iniciar el programa, para cargar los archivos de \'indices previamente generados.\\
+Como funcionalidad auxiliar, se implement\'o un proceso de carga que puede ser utilizado al iniciar el programa, para cargar los archivos de \'indices previamente generados.
 
 
 \section{Re-particionado del universo}
