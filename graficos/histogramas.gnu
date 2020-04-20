@@ -1,5 +1,5 @@
 reset
-set terminal postscript eps colortext "Times Roman,20"
+set terminal postscript eps color "Times Roman,20"
 set encoding locale
 set xlabel "Distancia"
 set ylabel "Objetos"
@@ -7,6 +7,7 @@ set style fill solid 0.13
 set boxwidth 1
 
 set grid ytics
+set format y "%6.0f"
 
 set output "histogramas/1034_items.eps"
 set title "Tamaño de Base de Datos: 1034 objetos"
