@@ -43,8 +43,8 @@
 \contentsline {section}{\numberline {5.4}Histogramas de distancia}{48}% 
 \contentsline {section}{\numberline {5.5}B\'usqueda de los k-vecinos}{50}% 
 \contentsline {chapter}{\numberline {6}Conclusiones}{51}% 
-\contentsline {section}{\numberline {6.1}Contribuciones}{51}% 
-\contentsline {chapter}{Anexos}{51}% 
-\contentsline {chapter}{\numberline {A}T\'ecnicas de selecci\'on de pivotes}{53}% 
-\contentsline {chapter}{\numberline {B}Histogramas de frecuencia}{58}% 
-\contentsline {chapter}{Bibliograf\'ia}{58}% 
+\contentsline {section}{\numberline {6.1}Trabajos futuros}{52}% 
+\contentsline {chapter}{Anexos}{52}% 
+\contentsline {chapter}{\numberline {A}T\'ecnicas de selecci\'on de pivotes}{54}% 
+\contentsline {chapter}{\numberline {B}Histogramas de frecuencia}{59}% 
+\contentsline {chapter}{Referencias}{59}% 

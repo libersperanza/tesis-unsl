@@ -24,7 +24,6 @@
 \usepackage{appendix}
 \usepackage{verbatim}%comentarios multilinea
 
-
 \usepackage{enumerate}
 \usepackage{color}
 \usepackage{textcomp}
@@ -187,7 +186,7 @@
 
 %.....................resumen.........................
 
-\include{resumen} %\clearemptydoublepage
+%\include{resumen} %\clearemptydoublepage
 
 \tableofcontents \clearemptydoublepage
 
@@ -214,10 +213,11 @@
 \appendixpage
 
 \input{../anexos/anexos} 
-\addcontentsline{toc}{chapter}{Bibliograf\'ia}
+\addcontentsline{toc}{chapter}{Referencias}
 
 \bibliographystyle{thesis}
-\bibliography{biblio}
+%\bibliographystyle{plain}
+\bibliography{bibliografia}
 
 
 \end{document}
