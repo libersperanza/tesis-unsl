@@ -1,6 +1,6 @@
 \chapter{Conclusiones}
 
-En este trabajo hemos abordado la aplicaci\'on del algoritmo de b\'usqueda por rango (y su variaci\'on de la b\'usqueda de k-vecinos) para obtener los objetos/ productos similares a uno dado un caso real de e-commerce, con el fin de estudiar el desempeño de dicho algoritmo comparando las t\'ecnicas de selecci\'on de pivotes aleatoria e incremental.\\
+En este trabajo hemos abordado la aplicaci\'on del algoritmo de b\'usqueda por rango (y su variaci\'on de la b\'usqueda de k-vecinos) para obtener los productos similares a otro espec\'ifico en un caso real de e-commerce, con el fin de estudiar el desempeño de dicho algoritmo comparando las t\'ecnicas de selecci\'on de pivotes aleatoria e incremental.\\
 
 Para poder estudiar el desempeño del algoritmo, se realizaron los siguientes pasos:
 
@@ -11,13 +11,13 @@ Para poder estudiar el desempeño del algoritmo, se realizaron los siguientes pa
 \item Se implement\'o el algoritmo de b\'usqueda por rango y  se seleccion\'o como criterio para analizar su desempeño, la cantidad de evaluaciones de la funci\'on de distancia.
 \end{enumerate}
 
-Se ha demostrado experimentalmente que a medida que aumenta el n\'umero de pivotes que compone el \'indice utilizado para las b\'usquedas, la cantidad de evaluaciones de la funci\'on de distancia disminuye. Esto es independiente de la t\'ecnica de selecci\'on de pivotes utilizada para la construcci\'on de dicho \'indice y del tamaño de la base de datos analizada.\\
+Se ha demostrado experimentalmente en el presente trabajo, que a medida que aumenta el n\'umero de pivotes que compone el \'indice utilizado para las b\'usquedas, la cantidad de evaluaciones de la funci\'on de distancia disminuye. Esto es independiente de la t\'ecnica de selecci\'on de pivotes utilizada para la construcci\'on de dicho \'indice y del tamaño de la base de datos analizada.\\
 
-Por otro lado, si analizamos los resultados experimentales de las t\'ecnicas de selecci\'on, no es posible observar una diferencia significativa en el comportamiento de ambas, por lo cual no podemos afirmar que una t\'ecnica es mejor que la otra. Esto se contrapone con las conclusiones expuestas en [Benjamin], donde queda demostrado que la t\'ecnica de selecci\'on incremental es mejor que la t\'ecnica de selecci\'on aleatoria.\\
+Por otro lado, si analizamos los resultados experimentales de las t\'ecnicas de selecci\'on, no es posible observar una diferencia significativa en el comportamiento de ambas, por lo cual no podemos afirmar que una t\'ecnica es mejor que la otra. Esto se contrapone con las conclusiones expuestas en \cite{BNCsccc01}, donde queda demostrado que la t\'ecnica de selecci\'on incremental es mejor que la t\'ecnica de selecci\'on aleatoria.\\
 
 Como \'ultimo punto, relevando los mejores resultados obtenidos por cada t\'ecnica de selecci\'on en cada una de las categor\'ias, podemos determinar que la elevada cantidad de evaluaciones de la funci\'on de distancia hace imposible la aplicaci\'on de estas t\'ecnicas a un sistema de recomendaciones eficiente.\\
 
-Las conclusiones mencionadas pueden ser explicadas por la llamada maldici\'on de la dimensionalidad. La aproximaci\'on de los histogramas de distancia de los espacios conformados por cada una de las categor\'ias dieron indicios de que las mismas constitu\'ian espacios de alta dimensionalidad, donde est\'a demostrado que los algoritmos basados en pivotes no tienen buen desempeño [Benjamin]\\
+Las conclusiones mencionadas pueden ser explicadas por la llamada maldici\'on de la dimensionalidad. La aproximaci\'on de los histogramas de distancia de los espacios conformados por cada una de las categor\'ias dieron indicios de que las mismas constitu\'ian espacios de alta dimensionalidad, donde est\'a demostrado que los algoritmos basados en pivotes no tienen buen desempeño \cite{BNCsccc01}\\
 
 \section{Trabajos futuros}
 

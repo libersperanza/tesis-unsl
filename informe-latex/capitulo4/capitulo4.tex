@@ -1,4 +1,4 @@
-	\chapter{Detalles de implementaci\'on}
+\chapter{Detalles de implementaci\'on}
 
 \section{Introducci\'on}
 
@@ -11,11 +11,11 @@ Todas las estructuras de datos fueron manejadas en memoria principal, tanto para
 
 \section{Procesamiento inicial de los datos de entrada} \label{proc-inic}
 
-Cuando hablamos de datos de entrada, nos referimos a los productos ofrecidos en el sitio MercadoLibre (a los que tambi\'en llamaremos items). Estos productos est\'an clasificados dentro de un \'arbol de categor\'ias, donde cada categor\'ia re\'une productos relacionados. Remitiendonos a los n\'umeros, obtuvimos alrededor de 2 millones de productos, distribuidos en 12.000 categor\'ias (hojas).\\
+Cuando hablamos de datos de entrada, nos referimos a los productos ofrecidos en el sitio Mercado Libre (a los que tambi\'en llamaremos items). Estos productos est\'an clasificados dentro de un \'arbol de categor\'ias, donde cada categor\'ia re\'une productos relacionados. Remitiendonos a los n\'umeros, obtuvimos alrededor de 2 millones de productos, distribuidos en 12.000 categor\'ias (hojas).\\
 
 La informaci\'on relevante a \'este trabajo obtenida de los productos fue la siguiente: categor\'ia, identificador del producto, t\'itulo, descripci\'on principal y descripci\'on secundaria.\\
 
-Para optimizar el desarrollo de creaci\'on de \'indices, los datos de entrada tuvieron que ser pre-procesados para crear los archivos necesarios para el correcto funcionamiento de dicho proceso. De este pre-procesamiento obtuvimos:
+Para optimizar el desarrollo de creaci\'on de \'indices, los datos de entrada tuvieron que ser pre procesados de manera de crear los archivos necesarios para el correcto funcionamiento de dicho proceso. De este pre procesamiento obtuvimos:
 
 \begin{enumerate}[1.]
 \item  Archivo de productos: texto plano conteniendo toda la informaci\'on pertinente de los productos, separada por comas.
@@ -36,8 +36,8 @@ Como \'ultima estructura de datos auxiliar, se eligi\'o un mapa cuya clave es la
 \subfigure[\scriptsize Rebalse de categor\'ias]{\includegraphics[width=90mm]{imagenes/estructuras/categs-hash.png}}
 \subfigure[\scriptsize Mapa de productos]{\includegraphics[width=90mm]{imagenes/estructuras/map-items.png}}
 \subfigure[\scriptsize Mapa de pivotes por categor\'ias]{\includegraphics[width=90mm]{imagenes/estructuras/categs-pivots.png}}
-		\caption{\small Estructuras de datos utilizadas}
-		\label{fig:estructuras}
+    \caption{\small Estructuras de datos utilizadas}
+    \label{fig:estructuras}
 \end{figure}
 
 \section{Software desarrollado}
@@ -46,7 +46,7 @@ El desarrollo realizado consta de dos partes complementarias: la funcionalidad d
 
 \subsection{Creaci\'on de \'indices para las b\'usquedas}
 
-La funcionalidad de creaci\'on de \'indices se desarroll\'o en forma gen\'erica, preparada para recibir los siguientes par\'ametros: \textit{tipo de pivotes} (random o incremental), \textit{cantidad de pivotes} y \textit{conjunto de pivotes} (mismo conjunto para todas las categor\'ias o diferentes conjuntos para cada categor\'ia).\\
+La funcionalidad de creaci\'on de \'indices se desarroll\'o en forma gen\'erica, preparada para recibir los siguientes par\'ametros: \textit{tipo de pivotes} (aleatorio o incremental), \textit{cantidad de pivotes} y \textit{conjunto de pivotes} (mismo conjunto para todas las categor\'ias o diferentes conjuntos para cada categor\'ia).\\
 
 La l\'ogica b\'asica del algoritmo de creaci\'on de \'indices carga los archivos descritos en la secci\'on  \ref{proc-inic} en las estructuras de datos correspondientes, y procede a generar las firmas de los items; utilizando, en primera instancia, la estrategia de selecci\'on de pivotes en conjunci\'on con el resto de los par\'ametros (cantidad y conjunto de pivotes).\\
 
@@ -59,9 +59,9 @@ begin
  Hash categsHash = inicializarHashCategorias(fCategs)
  Map pivotesPorCateg
  /* Se obtiene el conjunto de pivotes en base a la estrategia */
- if(estSel == "random")
+ if(estSel == "aleatorio")
  begin
-  pivotesPorCateg = obtConjPivsRandom(fPivs, cantPivs)
+  pivotesPorCateg = obtConjPivsAleatorio(fPivs, cantPivs)
  end
 
  if(estSel == "incremental")
@@ -86,20 +86,20 @@ begin
 end
 \end{algorithm}
 
-A continuaci\'on se presenta el pseudo-c\'odigo de los algoritmos de selecci\'on de pivotes, para facilitar la lectura de los mismos solo se incluy\'o la variante de distinto conjunto de pivotes para cada categor\'ia.
+A continuaci\'on se presenta el pseudo-c\'odigo de los algoritmos de selecci\'on de pivotes. Para facilitar la lectura de los mismos solo se incluy\'o la variante de distinto conjunto de pivotes para cada categor\'ia.
 
-\begin{algorithm}[caption={Selecci\'on de pivotes random}, label={alg2}]
-obtConjPivsRandom(File fPivs, int cantPivs)
+\begin{algorithm}[caption={Selecci\'on de pivotes aleatoria}, label={alg2}]
+obtConjPivsAleatorio(File fPivs, int cantPivs)
 begin
  Map conjuntoFinal
  Map pivotesPorCateg = obtenerPivotesPorCateg(fPivs)
  for(categ, pivotes in pivotesPorCateg)
  begin
-  /* Se eliminan elementos random hasta alcanzar la cantidad de 
-   * pivotes deseada */
+  /* Se eliminan elementos aleatoriamente hasta 
+   * alcanzar la cantidad de pivotes deseada */
   while(pivotes.size > cantPivs)
   begin
-   eliminarElementoRandom(pivotes)
+   eliminarElementoAleatorio(pivotes)
   end
   conjuntoFinal.put(categ, pivotes)
  end
@@ -158,7 +158,7 @@ Como se puede inferir entonces, el algoritmo de creaci\'on de indices particiona
 
 Se implementaron dos funcionalidades de b\'usqueda: b\'usqueda por rango, que recibe por par\'ametro el radio de b\'usqueda, la categor\'ia del producto y el t\'itulo de un producto existente; y b\'usqueda de los k-vecinos, que recibe por par\'ametro la cantidad de elementos a retornar (k), la categor\'ia del producto y el t\'itulo de un producto existente.\\
 
-La b\'usqueda por rango calcula la distancia del t\'itulo del producto dado por par\'ametro, a cada uno de los pivotes, y luego compara esa firma contra las firmas de los productos de la categor\'ia seleccionada. Este paso devuelve los productos candidatos a formar parte de la respuesta final, los cuales son utilizados para calcular la distancia real de edici\'on contra el producto buscado, descartando aquellos que est\'en fuera del rango especificado.\\
+La b\'usqueda por rango calcula la distancia del t\'itulo del producto dado por par\'ametro a cada uno de los pivotes, y luego compara esa firma contra las firmas de los productos de la categor\'ia seleccionada. Este paso retorna los productos candidatos a formar parte de la respuesta final, los cuales son utilizados para calcular la distancia real de edici\'on contra el producto buscado, descartando aquellos que est\'en fuera del rango especificado.\\
 
 \begin{algorithm}[caption={B\'usqueda por rango}, label={alg4}]
 busquedaPorRango(String q, String categ, int radio)
@@ -266,9 +266,9 @@ Como funcionalidad auxiliar, se implement\'o un proceso de carga que puede ser u
 
 \section{Re-particionado del universo}
 
-Luego de planificar y diseñar e implementar todas las estructuras de datos, realizamos pruebas manuales para asegurarnos del correcto funcionamiento del software completo.\\
+Luego de planificar, diseñar e implementar todas las estructuras de datos, realizamos pruebas manuales para asegurarnos del correcto funcionamiento del software completo.\\
 
-Ante \'estas pruebas, detectamos que el particionado no era sem\'anticamente correcto, ya que al elegir la categor\'ia hoja del \'arbol, estabamos restringiendo demasiado el universo de b\'usqueda.\\
+Ante estas pruebas, detectamos que el particionado no era sem\'anticamente correcto, ya que al elegir la categor\'ia hoja del \'arbol, estabamos restringiendo demasiado el universo de b\'usqueda.\\
 
 Representando la situaci\'on con un ejemplo, supongamos que deseamos recomendar productos similares al producto \textit{“Samsung Galaxy A30 32 GB Blanco 3 GB RAM”}, la categor\'ia hoja de dicho producto es \textit{“A30”}, dentro del \'arbol: \textit{“Celulares y Tel\'efonos > Celulares y Smartphones > Samsung > A30”}, si solo tenemos en cuenta los productos que pertenecen a la categor\'ia \textit{“A30”}, es probable que no encontremos, por ejemplo, celulares blancos de 32 GB de la marca Motorola.
 Por \'este motivo, definimos volver a particionar el universo de productos, \'esta vez utilizando la categor\'ia inicial del \'arbol (Celulares y Tel\'efonos en el ejemplo anterior).\\

@@ -4,8 +4,6 @@
 \usepackage{t_encab}
 \usepackage{latexsym}
 \usepackage[spanish,activeacute]{babel}
-%\selectlanguage{spanish}
-%\usepackage[latin1]{inputenc}
 
 \usepackage{epsfig}
 \usepackage{graphicx}
@@ -13,7 +11,6 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{boxedminipage}
-%\usepackage{auto-pst-pdf}
 
 \usepackage{theorem}
 
@@ -162,42 +159,23 @@
 
 %%%%% Fin DeLP defs %%%%
 
-%%%%%%%Poner en castellano Apndice%%%%%%%%
-\renewcommand{\appendixname}{Ap�ndices}
-\renewcommand{\appendixtocname}{Ap�ndices}
-\renewcommand{\appendixpagename}{Ap�ndices}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \pagestyle{empty}
 
-
-
-\input{titulo}  %\clearemptydoublepage
-
-
-%\include{agradecimientos} %\clearemptydoublepage
-
-
+\input{titulo}  
 
 \pagenumbering{roman}  \setcounter{page}{1}
 
 
-
-%.....................resumen.........................
-
-%\include{resumen} %\clearemptydoublepage
-
 \tableofcontents \clearemptydoublepage
+
+\listoffigures
+\listoftables
 
 \pagestyle{fancyplain}
 
 \pagenumbering{arabic}   \setcounter{page}{1}
 
-\listoffigures
-\listoftables
 
-%\input{../introduccion/intro} \clearemptydoublepage %Capitulo 1
 \input{../introduccion/introduccion} 
 \input{../capitulo2/capitulo2} 
 \input{../capitulo3/capitulo3}

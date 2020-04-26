@@ -1,39 +1,52 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{CNBYM01}
 
-\bibitem{Bri95}
-S.~Brin.
+\bibitem[Aur91]{AUR91}
+{\sc Aurenhammer, F.}
+\newblock Voronoi diagrams -- a survey of a fundamental geometric data
+  structure.
+\newblock {\em ACM Computing Surveys 23}, 3 (1991).
+
+\bibitem[BNC01]{BNCsccc01}
+{\sc Bustos, B., Navarro, G., and Ch{\'a}vez, E.}
+\newblock Pivot selection techniques for proximity searching in metric spaces.
+\newblock In {\em Proc. of the XXI Conference of the Chilean Computer Science
+  Society (SCCC'01)\/} (2001), IEEE CS Press, pp.~33--40.
+
+\bibitem[Bri95]{Bri95}
+{\sc Brin, S.}
 \newblock Near neighbor search in large metric spaces.
-\newblock In {\em Proc. 21st Conference on Very Large Databases (VLDB'95)},
-  pages 574--584, 1995.
+\newblock In {\em Proc. 21st Conference on Very Large Databases (VLDB'95)\/}
+  (1995), pp.~574--584.
 
-\bibitem{CM97}
-E.~Ch{\'a}vez and J.~Marroqu{\'{\i}}n.
+\bibitem[CM97]{CM97}
+{\sc Ch{\'a}vez, E., and Marroqu{\'{\i}}n, J.}
 \newblock Proximity queries in metric spaces.
-\newblock In R.~Baeza-Yates, editor, {\em Proc. 4th South American Workshop on
-  String Processing (WSP'97)}, pages 21--36. Carleton University Press, 1997.
+\newblock In {\em Proc. 4th South American Workshop on String Processing
+  (WSP'97)\/} (1997), R.~Baeza-Yates, Ed., Carleton University Press,
+  pp.~21--36.
 
-\bibitem{cn00}
-E.~Ch{\'a}vez and {G.} Navarro.
+\bibitem[CN00]{cn00}
+{\sc Ch{\'a}vez, E., and Navarro, G.}
 \newblock An effective clustering algorithm to index high dimensional metric
   spaces.
 \newblock In {\em Proc. 7th International Symposium on String Processing and
-  Information Retrieval (SPIRE'00)}, pages 75--86. IEEE CS Press, 2000.
+  Information Retrieval (SPIRE'00)\/} (2000), IEEE CS Press, pp.~75--86.
 
-\bibitem{oursurvey}
-E.~Ch\'{a}vez, {G.} Navarro, R.~Baeza-Yates, and J.L. Marroqu\'{\i}n.
-\newblock Searching in metric spaces.
-\newblock {\em ACM Computing Surveys}, 33(3):273--321, September 2001.
-
-\bibitem{alenex}
-Edgar Ch\'avez and Gonzalo Navarro.
+\bibitem[CN01]{alenex}
+{\sc Ch\'avez, E., and Navarro, G.}
 \newblock A probabilistic spell for the curse of dimensionality.
 \newblock In {\em Proc. 3rd Workshop on Algorithm Engineering and Experiments
-  (ALENEX'01)}, LNCS, 2001.
+  (ALENEX'01)\/} (2001), LNCS.
 
-\bibitem{CPZ98a}
-P.~Ciaccia, M.~Patella, and P.~Zezula.
+\bibitem[CNBYM01]{oursurvey}
+{\sc Ch\'{a}vez, E., Navarro, G., Baeza-Yates, R., and Marroqu\'{\i}n, J.}
+\newblock Searching in metric spaces.
+\newblock {\em ACM Computing Surveys 33}, 3 (September 2001), 273--321.
+
+\bibitem[CPZ98]{CPZ98a}
+{\sc Ciaccia, P., Patella, M., and Zezula, P.}
 \newblock A cost model for similarity queries in metric spaces.
 \newblock In {\em Proc. 17th ACM SIGACT-SIGMOD-SIGART Symposium on Principles
-  of Database Systems (PODS'98)}, 1998.
+  of Database Systems (PODS'98)\/} (1998).
 
 \end{thebibliography}

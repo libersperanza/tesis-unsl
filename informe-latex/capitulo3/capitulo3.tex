@@ -2,7 +2,7 @@
 
 \section{Introducci\'on}
 
-El e-commerce (o comercio electr\'onico) es un modelo de negocio que gestiona compra y venta de productos y/o servicios y utiliza Internet como principal medio de intercambio. Esto tambi\'en incluye gesti\'on de cobros, pagos y distribuci\'on de productos. El desarrollo tecnol\'ogico ha permitido que las comunicaciones crezcan de una manera exponencial, impactando directamente en el crecimiento del comercio electr\'onico.\\
+El e-commerce (o comercio electr\'onico) es un modelo de negocio que gestiona compra y venta de productos y/o servicios, y utiliza Internet como principal medio de intercambio. Esto tambi\'en incluye gesti\'on de cobros, pagos y distribuci\'on de productos. El desarrollo tecnol\'ogico ha permitido que las comunicaciones crezcan de una manera exponencial, impactando directamente en el crecimiento del comercio electr\'onico.\\
 
 Dentro de los desaf\'ios que implica construir un sitio de e-commerce exitoso, sin duda uno de los m\'as importantes es contar con un cat\'alogo de productos bien organizado, donde el cliente no solo encuentre r\'apidamente lo que busca, sino que los resultados ofrecidos sean relevantes a lo que necesita.\\
 
@@ -14,7 +14,7 @@ Con el crecimiento de la web y del negocio electr\'onico, el volumen de datos e 
 
 La forma m\'as conocida y popular de almacenar informaci\'on se basa en las relaciones entre los distintos atributos (bases de datos relacionales). En \'este tipo de universo, las consultas vienen dadas por una especificaci\'on de criterios que deben cumplirse para que un objeto forme parte del resultado; pero ¿qu\'e pasa cuando en la consulta no podemos definir ese conjunto de criterios en forma determin\'istica?\\
 
-En el campo del e\-commerce, a menudo se necesita seleccionar una de varias alternativas sin tener un conocimiento exacto de cada una de ellas. La decisi\'on final,en estos casos, puede depender de las recomendaciones realizadas por el propio sistema. La recomendaci\'on de productos a clientes es un caso de recuperaci\'on de informaci\'on que no se puede abordar con la visi\'on cl\'asica de bases de datos relacionales.\\
+En el campo del e\-commerce, a menudo se necesita seleccionar una de varias alternativas sin tener un conocimiento exacto de cada una de ellas. La decisi\'on final, en estos casos, puede depender de las recomendaciones realizadas por el propio sistema. La recomendaci\'on de productos a clientes es un caso de recuperaci\'on de informaci\'on que no se puede abordar con la visi\'on cl\'asica de bases de datos relacionales.\\
 
 Los sistemas de recomendaciones son herramientas que generan sugerencias sobre un determinado objeto de estudio, a partir de las preferencias y opiniones dadas por los usuarios. El uso de estos sistemas va en aumento debido a que son muy \'utiles para evaluar y filtrar la gran cantidad  de informaci\'on disponible en la Web. El objetivo final es asistir a los usuarios en sus procesos  de b\'usqueda y recuperaci\'on de informaci\'on.\\
  
@@ -26,8 +26,6 @@ Las recomendaciones pretenden ser una forma de ayudar al usuario a encontrar pro
 El funcionamiento de un sistema de recomendaci\'on est\'a basado en cierta informaci\'on que es procesada por los algoritmos de filtrado. Dependiendo de la naturaleza de dicha informaci\'on, podemos clasificar estos algoritmos en: basados en contenido, colaborativos, sensibles al contexto, entre otros.\\
 
 En este trabajo nos hemos centrado en los algoritmos basados en contenido. Estos algoritmos filtran {\bf objetos o contenidos similares} a los que el usuario ya ha buscado, comprado o calificado positivamente. Por ejemplo, en las plataformas de reproducci\'on de m\'usica online, el software eval\'ua las piezas musicales analizando su estructura interna para encontrar piezas similares que podr\'ian tener una l\'inea de bajo parecida.\\
-
-%Los algoritmos colaborativos, en cambio, filtran objetos basados en usuarios que han valorado estos objetos de manera similar; es decir, si un usuario muestra inter\'es por determinado producto, el sistema lo recomienda a otros usuarios. Por ello, en este tipo de sistemas no es necesaria la informaci\'on del producto en s\'i. Un ejemplo de la utilizaci\'on de este sistema es Amazon.\\ Esto lo saco porque sino habria que explicar los otros también.
 
 Los sistemas de recomendaci\'on tienen aplicaci\'on en varias \'areas. Quiz\'as los tres sectores m\'as importantes son: los servicios de transmisi\'on audiovisual en l\'inea (como por ejmeplo Spotify o Netflix), las tiendas electr\'onicas (como Amazon) y los sistemas de publicidad basada en contenido.\\
 
@@ -42,6 +40,7 @@ El objetivo de este trabajo es, teniendo en mente un sistema de recomendaci\'on,
 Para lograr nuestro objetivo, primero organizamos los productos por categor\'ia con el enfoque cl\'asico de b\'usqueda exacta y luego dentro de cada categor\'ia aplicamos el enfoque de espacios m\'etricos. \\
 
 En consecuencia, la b\'usqueda de un producto se divide en dos etapas: 
+
 \begin{itemize}
     \item [1.] Filtramos por categor\'ia, realizando una búsqueda exacta.
     \item [2.] Realizamos la b\'usqueda por similitud sobre los productos que pertenecen a la categor\'ia elegida.
@@ -51,11 +50,9 @@ Para el filtrado por categor\'ia armamos un hashing lineal en memoria principal.
  
 Un punto crucial es la t\'ecnica de selecci\'on de pivotes usados para construir la firma de los productos. La forma en que los pivotes son seleccionados puede afectar dr\'asticamente la performance de un algoritmo. Una buena elecci\'on de pivotes puede en gran parte reducir los tiempos de b\'usqueda.\\
  
-En nuestro caso elegimos la t\'ecnica de selecci\'on incremental de pivotes \cite{} que ha demostrado ser eficiente en los espacios m\'etricos  normalmente usados por la comunidad cient\'ifica que trabaja en b\'usqueda por similitud. Esta t\'ecnica la comparamos con la selecci\'on aleatoria de pivotes, para poder tener una base de comparaci\'on sobre su desempeño en este caso de estudio. Explicamos a continuaci\'on ambas t\'ecnicas.\\
+En nuestro caso elegimos la t\'ecnica de selecci\'on incremental de pivotes \cite{BNCsccc01} que ha demostrado ser eficiente en los espacios m\'etricos  normalmente usados por la comunidad cient\'ifica que trabaja en b\'usqueda por similitud. Esta t\'ecnica la comparamos con la selecci\'on aleatoria de pivotes, para poder tener una base de comparaci\'on sobre su desempeño en este caso de estudio. Explicamos a continuaci\'on ambas t\'ecnicas.\\
  
 \section{T\'ecnicas de Selecci\'on de Pivotes Utilizadas}
- 
-%\subsection{Criterios de eficiencia}
 
 Para lograr minimizar el n\'umero de evaluaciones de distancia que se realizan al momento de hacer una b\'usqueda por rango, los pivotes elegidos deben descartar la mayor cantidad de elementos posibles antes de realizar una b\'usqueda dentro de una lista de elementos candidatos (Ver secci\'on 2.5.1). Esto significa que mientras más peque\~na sea la lista de elementos candidatos generados mejor ser\'a el conjunto de pivotes utilizado. \\
 
@@ -76,16 +73,9 @@ D([q],[x]) = max_{i=1}^k |d(q,p_i) - d(x,p_i)|
 \\
 
 Luego, obtenemos el espacio m\'etrico $(X,D)$ que resulta ser $(\Re^k, L_{\infty})$. \\
-%Comente esta parte porque no tenemos la ecuacion 2-6 definida en ningun lado
-%Dada una consulta por rango $(q,r)$ es f\'acil ver este nuevo espacio m\'etrico, que seg\'un la condici\'on de la ecuaci\'on 2-6, no se pueden excluir aquellos elementos  $x \in E$ que cumplen con:
-
-%\begin{equation}
-%D_{\{p_1,...,p_k\}}([q],[x]) \leq r
-%\end{equation}
 
 Para lograr que la cantidad de elementos elegidos sea peque\~na se debe maximizar la probabilidad de que $D_{\{p_1,...,p_k\}}([q],[x]) > r$. Una forma de lograr esto es maximizar la media de la distribuci\'on de distancias en $P$, la cual la llamaremos $\mu_p$.\\
  
-%\subsection{Estimaci\'on del $\mu_p$}
 
 \noindent La estimaci\'on del $\mu_p$ se realiza de la siguiente manera:\\
 
