@@ -1,3 +1,28 @@
 \chapter{Conclusiones}
 
-\section{Contribuciones}
+En este trabajo hemos abordado la aplicaci\'on del algoritmo de b\'usqueda por rango (y su variaci\'on de la b\'usqueda de k-vecinos) para obtener los objetos/ productos similares a uno dado un caso real de e-commerce, con el fin de estudiar el desempeño de dicho algoritmo comparando las t\'ecnicas de selecci\'on de pivotes aleatoria e incremental.\\
+
+Para poder estudiar el desempeño del algoritmo, se realizaron los siguientes pasos:
+
+\begin{enumerate}
+\item Se hizo un an\'alisis y particionado por categor\'ias de los productos existentes en el sitio de e-commerce de Mercado Libre.
+\item Se realiz\'o una aproximaci\'on experimental para determinar el radio de b\'usqueda ideal.
+\item Se construyeron \'indices utilizando las t\'ecnicas de selecci\'on aleatoria e incremental.
+\item Se implement\'o el algoritmo de b\'usqueda por rango y  se seleccion\'o como criterio para analizar su desempeño, la cantidad de evaluaciones de la funci\'on de distancia.
+\end{enumerate}
+
+Se ha demostrado experimentalmente que a medida que aumenta el n\'umero de pivotes que compone el \'indice utilizado para las b\'usquedas, la cantidad de evaluaciones de la funci\'on de distancia disminuye. Esto es independiente de la t\'ecnica de selecci\'on de pivotes utilizada para la construcci\'on de dicho \'indice y del tamaño de la base de datos analizada.\\
+
+Por otro lado, si analizamos los resultados experimentales de las t\'ecnicas de selecci\'on, no es posible observar una diferencia significativa en el comportamiento de ambas, por lo cual no podemos afirmar que una t\'ecnica es mejor que la otra. Esto se contrapone con las conclusiones expuestas en [Benjamin], donde queda demostrado que la t\'ecnica de selecci\'on incremental es mejor que la t\'ecnica de selecci\'on aleatoria.\\
+
+Como \'ultimo punto, relevando los mejores resultados obtenidos por cada t\'ecnica de selecci\'on en cada una de las categor\'ias, podemos determinar que la elevada cantidad de evaluaciones de la funci\'on de distancia hace imposible la aplicaci\'on de estas t\'ecnicas a un sistema de recomendaciones eficiente.\\
+
+Las conclusiones mencionadas pueden ser explicadas por la llamada maldici\'on de la dimensionalidad. La aproximaci\'on de los histogramas de distancia de los espacios conformados por cada una de las categor\'ias dieron indicios de que las mismas constitu\'ian espacios de alta dimensionalidad, donde est\'a demostrado que los algoritmos basados en pivotes no tienen buen desempeño [Benjamin]\\
+
+\section{Trabajos futuros}
+
+El trabajo realizado deja la puerta abierta para avanzar en distintos sentidos.\\
+
+Por un lado, se podr\'ia ampliar el software desarrollado para que pueda manejar estructuras en memoria secundaria; esto ser\'ia posible a trav\'es de un cambio de lenguaje que permita tener mayor control sobre instrucciones de bajo nivel y que tenga un menor uso de recursos.\\
+
+Por otro lado, ser\'ia interesante evaluar el comportamiento de los algoritmos basados en particiones compactas en este tipo de aplicaciones de la vida real.
