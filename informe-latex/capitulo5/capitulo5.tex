@@ -153,7 +153,7 @@ Por cada base de datos se eligi\'o al azar el 10\% de los t\'itulos como element
 
 En la figura \ref{fig:same-vs-diff-16Pivotes}, se muestra el ratio de comparaciones para las b\'usquedas con 16 pivotes. Para la t\'ecnica de selecci\'on incremental (a) se puede observar que se comporto mejor la pol\'itica \textit{Mismo grupo de pivotes para todas las categor\'ias} y para la t\'ecnica de selecci\'on aleatoria (b) fue mejor la pol\'itica \textit{Diferentes grupos de pivotes por categor\'ia}.\\
 
-En la figura \ref{fig:same-vs-diff-64Pivotes}, se visualiza el ratio de comparaciones para las b\'usquedas con 64 pivotes. Para ambas t\'ecnica de selecci\'on, incremental (a) y aleatoria (b), se puede observar que se comporto mejor la pol\'itica \textit{Diferentes grupos de pivotes por categor\'ia}. Esto es, el ratio de comparaciones realizadas directamente con los objetos de la base de datos es menor al usar diferentes pivotes por categor\'ia.\\
+En la figura \ref{fig:same-vs-diff-64Pivotes}, se visualiza el ratio de comparaciones para las b\'usquedas con 64 pivotes. Para ambas t\'ecnicas de selecci\'on, incremental (a) y aleatoria (b), se puede observar que se comporto mejor la pol\'itica \textit{Diferentes grupos de pivotes por categor\'ia}. Esto es, el ratio de comparaciones realizadas directamente con los objetos de la base de datos es menor al usar diferentes pivotes por categor\'ia.\\
 
 En base a estos resultados, seleccionamos la pol\'itica \textit{Diferentes grupos de pivotes por categor\'ia} para realizar la ejecuci\'on de la totalidad de los experimentos presentados en la siguiente secci\'on.\\
 
@@ -272,11 +272,11 @@ Para la t\'ecnica de selecci\'on de pivotes incremental (b), el comportamiento e
 En la figura \ref{fig:EDB-g2}, donde el tama\~no de las bases de datos van desde $19032$ a $46530$ elementos y los pivotes usados son $64, 128, 256, 512$ y $1024$, el ratio de comparaciones no tiene mucha variabilidad desde la base de datos mas chica a las mas grande.\
 Por ejemplo: para t\'ecnica de selecci\'on de pivotes aleatoria, 512 pivotes y una base de datos de 19.000 elementos el ratio de comparaciones es $0,58$ aproximadamente y para una base de datos de 46.000 elementos, el ratio es $0,67$. Estos valores son similares para el caso de t\'ecnica de selecci\'on de pivotes incremental.\\
 
-A nivel general, para t\'ecnica de selecci\'on de pivotes aleatoria, podemos ver que para la base de datos mas chica, el ratio de comparaciones varia entre $0,49$ y $0,79$; y para las base de datos mas grande, entre $0,6$ y $0,84$. Para t\'ecnica de selecci\'on de pivotes incremental los rangos de ratios de comparaciones estan entre $[0,5 - 0,77]$ y $[0,61 - 0,79]$. \\
+A nivel general, para t\'ecnica de selecci\'on de pivotes aleatoria, podemos ver que para la base de datos mas chica, el ratio de comparaciones varia entre $0,49$ y $0,79$; y para las bases de datos mas grande, entre $0,6$ y $0,84$. Para la t\'ecnica de selecci\'on de pivotes incremental los rangos de ratios de comparaciones estan entre $[0,5 - 0,77]$ y $[0,61 - 0,79]$. \\
 
 Para las figuras \ref{fig:EDB-g3} y \ref{fig:EDB-g4}, donde se muestran los grupos 3 y 4 respectivamente, el comportamiento es similar al de los grupos antes mencionados.\\
 
-A medida que el tama\~no de las base de datos aumenta, el ratio de comparaciones tambi\'en crece, aunque la variabilidad de este \'ultimo es muy baja. Esto es similar para ambas t\'ecnica de selecci\'on de pivotes.
+A medida que el tama\~no de las bases de datos aumenta, el ratio de comparaciones tambi\'en crece, aunque la variabilidad de este \'ultimo es muy baja. Esto es similar para ambas t\'ecnicas de selecci\'on de pivotes.
 
 \subsection{Comparaci\'on de las t\'ecnicas de selecci\'on de pivotes}
 
