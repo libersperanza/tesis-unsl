@@ -62,11 +62,16 @@
 \pagestyle{fancyplain}
 
 
-\lhead[\fancyplain{}{\bfseries\leftmark}]{\fancyplain{}{\bfseries\rightmark}}
+%\lhead[\fancyplain{}{\bfseries\leftmark}]{\fancyplain{}{\bfseries\rightmark}}
 
-\rhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries\thepage}}
+%\rhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries\thepage}}
 
-\chead{}\lfoot{}\rfoot{}\cfoot{}
+%\chead{}\lfoot{}\rfoot{}\cfoot{}
+
+\setlength{\footrulewidth}{0.2pt}
+\chead{}\lhead{}\rhead{}\cfoot{}\lfoot{}
+
+\rfoot[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries\thepage}}
 
 \DeclareUnicodeCharacter{FB01}{fi}
 \newcommand{\clearemptydoublepage}{\newpage\thispagestyle{empty}\cleardoublepage}
@@ -163,11 +168,10 @@
 
 \input{titulo}  
 
-\pagenumbering{roman}  \setcounter{page}{1}
+%\pagenumbering{roman}  \setcounter{page}{1}
 
 
-\tableofcontents \clearemptydoublepage
-
+\tableofcontents %\clearemptydoublepage
 \listoffigures
 \listoftables
 
