@@ -187,17 +187,6 @@ Vamos a presentar los resultados segmentados en cuatro grupos y analizaremos tre
 
 \subsection{Efecto de la cantidad de pivotes}
 
-A continuaci\'on vamos a analizar el efecto de la cantidad de pivotes sobre el ratio de comparaciones para cada base de datos. Cada l\'inea representa una base de datos y su descripci\'on est\'a determinada por la cantidad de elementos que contiene, como puede observarse en las gr\'aficas.\\
-
-En la figura \ref{fig:EP-g1}, observamos que tanto para selecci\'on de pivotes aleatoria (a) como para selecci\'on de pivotes incremental (b), para $16, 32, 64, 128$ y $256$ pivotes, a medida que aumenta el n\'umero de pivotes, el ratio de comparaciones disminuye. Tambi\'en vemos que las 3 bases de datos mas grandes tienen un comportamiento similar, es decir el ratio de comparaciones oscila entre $0,7$ y $0,93$ aproximadamente y para las 3 bases de datos mas chicas, oscila entre $0,4$ y $0,8$ aproximadamente.\\
-
-En la figura \ref{fig:EP-g2}, observamos que para los pivotes $64, 128, 256, 512$ y $1024$ ambas t\'ecnicas de selecci\'on de pivotes se comportan de manera similar, a mayor n\'umero de pivotes, menor ratio de comparaciones. El ratio de comparaciones est\'a entre $0,6$ y $0,8$ para todas las bases de datos excepto la $27788$ que se encuentra entre $0,4$ y $0,6$.\\
-
-En la figura \ref{fig:EP-g3}, observamos el mismo comportamiento que para los grupos 1 y 2. Para la mayor\'ia de las bases de datos y para ambas t\'ecnicas de selecci\'on, el ratio de comparaciones est\'a entre $0,6$ y $0,8$. Para la cantidad de pivotes de este grupo, $256, 512, 1024$ y $2048$, tambi\'en se cumple la tendencia de que a mayor n\'umero de pivotes menor ratio de comparaciones.\\
-
-En la figura \ref{fig:EP-g4}, observamos que a medida que aumenta el n\'umero de pivotes el ratio de comparaciones disminuye, de manera similar al resto de los grupos. Tambi\'en vemos que 3 de las 4 bases de datos que estamos analizando, para los pivotes 512, 1024 y 2048; el ratio de comparaciones est\'a entre $0,6$ y $0,75$ aproximadamente y para 4096 pivotes, entre $0,5$ $0,6$.\\
-
-A modo de resumen, analizando el efecto de la cantidad de pivotes en general para los cuatro grupos, vemos que cuando aumenta el n\'umero de pivotes decrementa el ratio de comparaciones pero las t\'ecnicas de selecci\'on aleatoria e incremental no muestran diferencias significativas entre s\'i.
 
 \begin{figure}[tb]
 \centering
@@ -207,7 +196,7 @@ A modo de resumen, analizando el efecto de la cantidad de pivotes en general par
 		\label{fig:EP-g1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[tb]
 \centering
 \subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes aleatoria]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_random_ep.eps}}
 \subfigure[\scriptsize T\'ecnica de selecci\'on de pivotes incremental]{\includegraphics[width=71.5mm]{imagenes/efecto_pivotes/g2_incremental_ep.eps}}
@@ -230,6 +219,18 @@ A modo de resumen, analizando el efecto de la cantidad de pivotes en general par
 		\caption{\small Grupo 4 - Efecto de la cantidad de pivotes sobre el ratio de comparaciones.}
 		\label{fig:EP-g4}
 \end{figure}
+
+A continuaci\'on vamos a analizar el efecto de la cantidad de pivotes sobre el ratio de comparaciones para cada base de datos. Cada l\'inea representa una base de datos y su descripci\'on est\'a determinada por la cantidad de elementos que contiene, como puede observarse en las gr\'aficas.\\
+
+En la figura \ref{fig:EP-g1}, observamos que tanto para selecci\'on de pivotes aleatoria (a) como para selecci\'on de pivotes incremental (b), para $16, 32, 64, 128$ y $256$ pivotes, a medida que aumenta el n\'umero de pivotes, el ratio de comparaciones disminuye. Tambi\'en vemos que las 3 bases de datos mas grandes tienen un comportamiento similar, es decir el ratio de comparaciones oscila entre $0,7$ y $0,93$ aproximadamente y para las 3 bases de datos mas chicas, oscila entre $0,4$ y $0,8$ aproximadamente.\\
+
+En la figura \ref{fig:EP-g2}, observamos que para los pivotes $64, 128, 256, 512$ y $1024$ ambas t\'ecnicas de selecci\'on de pivotes se comportan de manera similar, a mayor n\'umero de pivotes, menor ratio de comparaciones. El ratio de comparaciones est\'a entre $0,6$ y $0,8$ para todas las bases de datos excepto la $27788$ que se encuentra entre $0,4$ y $0,6$.\\
+
+En la figura \ref{fig:EP-g3}, observamos el mismo comportamiento que para los grupos 1 y 2. Para la mayor\'ia de las bases de datos y para ambas t\'ecnicas de selecci\'on, el ratio de comparaciones est\'a entre $0,6$ y $0,8$. Para la cantidad de pivotes de este grupo, $256, 512, 1024$ y $2048$, tambi\'en se cumple la tendencia de que a mayor n\'umero de pivotes menor ratio de comparaciones.\\
+
+En la figura \ref{fig:EP-g4}, observamos que a medida que aumenta el n\'umero de pivotes el ratio de comparaciones disminuye, de manera similar al resto de los grupos. Tambi\'en vemos que 3 de las 4 bases de datos que estamos analizando, para los pivotes 512, 1024 y 2048; el ratio de comparaciones est\'a entre $0,6$ y $0,75$ aproximadamente y para 4096 pivotes, entre $0,5$ $0,6$.\\
+
+A modo de resumen, analizando el efecto de la cantidad de pivotes en general para los cuatro grupos, vemos que cuando aumenta el n\'umero de pivotes decrementa el ratio de comparaciones pero las t\'ecnicas de selecci\'on aleatoria e incremental no muestran diferencias significativas entre s\'i.
 
 \subsection{Efecto del tamaño de la base de datos}
 
