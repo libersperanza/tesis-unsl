@@ -94,6 +94,8 @@ siguiente manera:\\
 \centerline{
     \em T= \#evaluaciones  de $d \times $ complejidad(d) +  tiempo extra de CPU + tiempo de  I/O
 }
+ \
+ \
  
 En muchas aplicaciones  la evaluaci\'on de la funci\'on $d$ es tan costosa que las dem\'as componentes de la f\'ormula anterior pueden ser despreciadas. Este es el modelo de costos  que usaremos en este trabajo.\\
 
@@ -323,7 +325,7 @@ Esto significa que, para cualquier elemento $p$ la distancia $d(x,y)$ no puede s
 \[
 D([x],[y]) = max_{1 \leq i \leq k} \{ |d(x,p_i) - d(y,p_i)|\} 
 \]
-
+\
 
 Esta funci\'on de distancia $D$ limita inferiormente a $d$ y en consecuencia puede usarse como distancia en el espacio cociente.\\
 
@@ -332,7 +334,7 @@ La relaci\'on de equivalencia definida por un conjunto de $k$ pivotes tambi\'en 
 \[
 max_{1 \leq i \leq k} \{ |d(x,p_i) - d(q,p_i)| \} = L_{\infty}(\delta(x),\delta(q)) \leq r 
 \]
-
+\
 
 Esto significa que hemos proyectado el espacio m\'etrico original $(X, d)$ en el espacio vectorial $\Re^k$ con la funci\'on de distancia $L_{\infty}$. La Figura \ref{piv1}  ilustra estas ideas para un conjunto de puntos usando s\'olo dos pivotes.\\
 
