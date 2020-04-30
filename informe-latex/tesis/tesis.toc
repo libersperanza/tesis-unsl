@@ -7,41 +7,41 @@
 \contentsline {section}{\numberline {2.1}Espacios M\'etricos}{5}%
 \contentsline {section}{\numberline {2.2}B\'usquedas por similitud}{6}%
 \contentsline {section}{\numberline {2.3}Ejemplos de Espacios M\'etricos}{8}%
-\contentsline {section}{\numberline {2.4}Funciones de Distancia}{9}%
-\contentsline {section}{\numberline {2.5}Algoritmos de Indexaci\'on}{12}%
+\contentsline {section}{\numberline {2.4}Funciones de Distancia}{10}%
+\contentsline {section}{\numberline {2.5}Algoritmos de Indexaci\'on}{13}%
 \contentsline {subsection}{\numberline {2.5.1}Un Modelo Unificado}{13}%
 \contentsline {subsection}{\numberline {2.5.2}Algoritmos Basados en Pivotes}{15}%
 \contentsline {subsection}{\numberline {2.5.3}Algoritmos Basados en Particiones Compactas}{16}%
 \contentsline {section}{\numberline {2.6}Dimensi\'on en Espacios M\'etricos}{18}%
-\contentsline {chapter}{\numberline {3}Una Aplicaci\'on de Espacios M\'etricos a Comercio Electr\'onico}{20}%
-\contentsline {section}{\numberline {3.1}Introducci\'on}{20}%
-\contentsline {section}{\numberline {3.2}Sistema de Recomendaci\'on}{20}%
-\contentsline {section}{\numberline {3.3}Problema abordado}{22}%
-\contentsline {section}{\numberline {3.4}T\'ecnicas de Selecci\'on de Pivotes Utilizadas}{23}%
-\contentsline {chapter}{\numberline {4}Detalles de implementaci\'on}{26}%
-\contentsline {section}{\numberline {4.1}Introducci\'on}{26}%
-\contentsline {section}{\numberline {4.2}Procesamiento inicial de los datos de entrada}{26}%
-\contentsline {section}{\numberline {4.3}Estructuras de datos}{27}%
-\contentsline {section}{\numberline {4.4}Software desarrollado}{28}%
-\contentsline {subsection}{\numberline {4.4.1}Creaci\'on de \'indices para las b\'usquedas}{29}%
-\contentsline {subsection}{\numberline {4.4.2}Busqueda por similitud}{31}%
-\contentsline {section}{\numberline {4.5}Re-particionado del universo}{33}%
-\contentsline {chapter}{\numberline {5}Evaluaci\'on experimental}{35}%
-\contentsline {section}{\numberline {5.1}Seteo Experimental}{35}%
-\contentsline {subsection}{\numberline {5.1.1}Elecci\'on de la cantidad de pivotes y agrupaci\'on de categor\'ias}{35}%
-\contentsline {subsection}{\numberline {5.1.2}Selecci\'on del rango de b\'usqueda}{36}%
-\contentsline {subsection}{\numberline {5.1.3}Criterio de eficiencia}{38}%
-\contentsline {subsection}{\numberline {5.1.4}Selecci\'on de los conjuntos de pivotes}{38}%
-\contentsline {section}{\numberline {5.2}Ejecuci\'on experimental}{40}%
-\contentsline {section}{\numberline {5.3}An\'alisis de resultados}{40}%
-\contentsline {subsection}{\numberline {5.3.1}Efecto de la cantidad de pivotes}{40}%
-\contentsline {subsection}{\numberline {5.3.2}Efecto del tamaño de la base de datos}{43}%
-\contentsline {subsection}{\numberline {5.3.3}Comparaci\'on de las t\'ecnicas de selecci\'on de pivotes}{45}%
-\contentsline {section}{\numberline {5.4}Histogramas de distancia}{47}%
+\contentsline {chapter}{\numberline {3}Una Aplicaci\'on de Espacios M\'etricos a Comercio Electr\'onico}{21}%
+\contentsline {section}{\numberline {3.1}Introducci\'on}{21}%
+\contentsline {section}{\numberline {3.2}Sistema de Recomendaci\'on}{21}%
+\contentsline {section}{\numberline {3.3}Problema abordado}{23}%
+\contentsline {section}{\numberline {3.4}T\'ecnicas de Selecci\'on de Pivotes Utilizadas}{24}%
+\contentsline {chapter}{\numberline {4}Detalles de implementaci\'on}{27}%
+\contentsline {section}{\numberline {4.1}Introducci\'on}{27}%
+\contentsline {section}{\numberline {4.2}Procesamiento inicial de los datos de entrada}{27}%
+\contentsline {section}{\numberline {4.3}Estructuras de datos}{28}%
+\contentsline {section}{\numberline {4.4}Software desarrollado}{29}%
+\contentsline {subsection}{\numberline {4.4.1}Creaci\'on de \'indices para las b\'usquedas}{30}%
+\contentsline {subsection}{\numberline {4.4.2}Busqueda por similitud}{32}%
+\contentsline {section}{\numberline {4.5}Re-particionado del universo}{34}%
+\contentsline {chapter}{\numberline {5}Evaluaci\'on experimental}{36}%
+\contentsline {section}{\numberline {5.1}Seteo Experimental}{36}%
+\contentsline {subsection}{\numberline {5.1.1}Elecci\'on de la cantidad de pivotes y agrupaci\'on de categor\'ias}{36}%
+\contentsline {subsection}{\numberline {5.1.2}Selecci\'on del rango de b\'usqueda}{37}%
+\contentsline {subsection}{\numberline {5.1.3}Criterio de eficiencia}{39}%
+\contentsline {subsection}{\numberline {5.1.4}Selecci\'on de los conjuntos de pivotes}{39}%
+\contentsline {section}{\numberline {5.2}Ejecuci\'on experimental}{41}%
+\contentsline {section}{\numberline {5.3}An\'alisis de resultados}{41}%
+\contentsline {subsection}{\numberline {5.3.1}Efecto de la cantidad de pivotes}{41}%
+\contentsline {subsection}{\numberline {5.3.2}Efecto del tamaño de la base de datos}{44}%
+\contentsline {subsection}{\numberline {5.3.3}Comparaci\'on de las t\'ecnicas de selecci\'on de pivotes}{46}%
+\contentsline {section}{\numberline {5.4}Histogramas de distancia}{48}%
 \contentsline {section}{\numberline {5.5}B\'usqueda de los k-vecinos}{49}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{50}%
-\contentsline {section}{\numberline {6.1}Trabajos futuros}{51}%
-\contentsline {chapter}{Anexos}{51}%
-\contentsline {chapter}{\numberline {A}T\'ecnicas de selecci\'on de pivotes}{53}%
-\contentsline {chapter}{\numberline {B}Histogramas de frecuencia}{58}%
-\contentsline {chapter}{Referencias}{58}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{51}%
+\contentsline {section}{\numberline {6.1}Trabajos futuros}{52}%
+\contentsline {chapter}{Anexos}{52}%
+\contentsline {chapter}{\numberline {A}T\'ecnicas de selecci\'on de pivotes}{54}%
+\contentsline {chapter}{\numberline {B}Histogramas de frecuencia}{59}%
+\contentsline {chapter}{Referencias}{59}%
