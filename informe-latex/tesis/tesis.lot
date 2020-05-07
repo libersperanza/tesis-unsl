@@ -4,14 +4,14 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla de grupos.\relax }}{37}%
-\contentsline {subtable}{\numberline {(a)}{\ignorespaces {\scriptsize Rebalse de categor\'ias}}}{37}%
-\contentsline {subtable}{\numberline {(b)}{\ignorespaces {\scriptsize Mapa de productos}}}{37}%
-\contentsline {subtable}{\numberline {(c)}{\ignorespaces {\scriptsize Mapa de pivotes por categor\'ias}}}{37}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces \small N\'umero de k-vecinos utilizados.\relax }}{38}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces \small Muestra para determinar el radio de b\'usqueda.\relax }}{38}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces \small Tabla de radio promedio.\relax }}{38}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces \small Resultados de la b\'usqueda de los \textit {k-vecinos} con $k=5$.\relax }}{50}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Tabla de grupos.\relax }}{36}%
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {\scriptsize Rebalse de categor\'ias}}}{36}%
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {\scriptsize Mapa de productos}}}{36}%
+\contentsline {subtable}{\numberline {(c)}{\ignorespaces {\scriptsize Mapa de pivotes por categor\'ias}}}{36}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces \small N\'umero de k-vecinos utilizados.\relax }}{37}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces \small Muestra para determinar el radio de b\'usqueda.\relax }}{37}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces \small Tabla de radio promedio.\relax }}{37}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces \small Resultados de la b\'usqueda de los \textit {k-vecinos} con $k=5$.\relax }}{49}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
