@@ -2,7 +2,7 @@
 
 En este trabajo hemos abordado el estudio del modelo de espacios m\'etricos con el fin de aplicarlo a un caso real de estudio. Específicamente hemos usado el enfoque de indexaci\'on basado en pivotes para resolver la b\'usqueda de productos similares a uno dado, en un entorno de comercio electr\'onico. Nos propusimos estudiar el comportamiento de las b\'usquedas por rango y de los $k$ vecinos comparando las t\'ecnicas de selecci\'on de pivotes incremental y aleatoria.\\
 
-Podemos resumir el trabajo realizado en los siguientes puntos:\\
+Podemos resumir el trabajo realizado en los siguientes puntos:
 
 \begin{enumerate}
 \item Se hizo un an\'alisis y particionado por categor\'ias de los productos existentes en el sitio de e-commerce de Mercado Libre.
@@ -19,12 +19,12 @@ Finalmente, teniendo en cuentas los mejores resultados obtenidos por cada t\'ecn
 
 Este trabajo no pretende ser concluyente en cuanto a dar respuestas definitivas sobre el caso estudiado, que de hecho es un problema complejo para abordar. El objetivo fue realizar una primera incursi\'on exploratoria al problema para obtener bases sobre las cuales seguir trabajando.\\
 
-Las conclusiones mencionadas pueden ser explicadas por la llamada maldici\'on de la dimensionalidad. La aproximaci\'on de los histogramas de distancia de los espacios conformados por cada una de las categor\'ias dieron indicios de que las mismas constitu\'ian espacios de alta dimensionalidad, donde est\'a demostrado que los algoritmos basados en pivotes no tienen buen desempeño \cite{BNCsccc01}\\
+Las conclusiones mencionadas pueden ser explicadas por la llamada maldici\'on de la dimensionalidad. La aproximaci\'on de los histogramas de distancia de los espacios conformados por cada una de las categor\'ias dieron indicios de que las mismas constitu\'ian espacios de alta dimensionalidad, donde est\'a demostrado que los algoritmos basados en pivotes no tienen buen desempeño \cite{BNCsccc01}.\\
 
-\section{Trabajos futuros}
+Por lo expuesto, varias son las aristas que se abren para el trabajo futuro:
 
-El trabajo realizado deja la puerta abierta para avanzar en distintos sentidos.\\
-
-Por un lado, se podr\'ia ampliar el software desarrollado para que pueda manejar estructuras en memoria secundaria; esto ser\'ia posible a trav\'es de un cambio de lenguaje que permita tener mayor control sobre instrucciones de bajo nivel y que tenga un menor uso de recursos.\\
-
-Por otro lado, ser\'ia interesante evaluar el comportamiento de los algoritmos basados en particiones compactas en este tipo de aplicaciones de la vida real.
+\begin{itemize}
+\item En funci\'on de que el espacio m\'etrico con el que se trabaja en este \'ambito es de alta dimensionalidad,  se deber\'ia estudiar el comportamiento de los algoritmos basado en particiones compactas con las distintas t\'ecnicas de selecci\'on de centros. Las variables a estudiar depender\'an de los \'indices elegidos pero b\'asicamente hay dos aspectos a considerar: cu\'al \'indice usar y  qu\'e t\'ecnicas de selecci\'on de centros aplicar.
+\item  En este trabajo restringimos nuestra aplicaci\'on a un volumen de datos que permitiera el manejo en memoria principal del \'indice, pero el volumen real de datos que maneja un sistema de comercio electr\'onico hace suponer debar\'an usarse t\'ecnicas de indexaci\'on para memoria secundaria. Este es otro aspecto a estudiar.
+\item En este trabajo hemos analizado el desempeño del \'indice usando como funci\'on de costo cantidad de evaluaciones de distancias realizadas, que es lo que normalmente se encuentra en bibliograf\'ia. Pero en un sistema de recomendaci\'on es muy importante que tan adecuada es la respuesta dada por el sistema, es decir, no s\'olo hay que estudiar el tiempo insumido en encontrar la respuesta sino tambi\'en medir la calidad de la respuesta encontrada. Este es otro punto a abordar en estudios futuros.
+\end{itemize}
