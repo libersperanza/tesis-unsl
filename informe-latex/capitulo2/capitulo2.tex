@@ -360,7 +360,7 @@ La idea en este caso es dividir el espacio en particiones o zonas lo m\'as compa
 
 Los Diagramas de Voronoi \cite{AUR91} han sido usados para b\'usquedas por proximidad en espacios vectoriales. Estos diagramas son una de las estructuras fundamentales dentro de la Geometr\'ia Computacional, de alguna forma ellos almacenan toda la informaci\'on referente a la proximidad entre puntos.\\
 
-Se elige un conjunto de m centros ${c_1,c_2,...,c_m}$. El resto de los objetos se asignan a la zona de su centro m\'as cercano. Cuando todos los objetos de la base de datos son centros, el concepto de partici\'on de Voronoi descrito coincide con el concepto de dominio de Dirichlet [3]. La Figura \ref{vor-del} ejemplifica este concepto en un espacio vectorial 
+Se elige un conjunto de m centros ${c_1,c_2,...,c_m}$. El resto de los objetos se asignan a la zona de su centro m\'as cercano. Cuando todos los objetos de la base de datos son centros, el concepto de partici\'on de Voronoi descrito coincide con el concepto de dominio de Dirichlet. La Figura \ref{vor-del} ejemplifica este concepto en un espacio vectorial 
 de dimensi\'on 2.\\
 
 
@@ -398,6 +398,15 @@ La distribuci\'on de distancias de un espacio m\'etrico se define como la probab
   {\footnotesize {\textsl {Histograma de distancias de un espacio m\'etrico}}}
 \label{defineH}
 \end{figure}
+\begin{figure}[tb]
+  \centerline{%
+    \psfig{file=imagenes/histog.eps,width=14cm}}
+    \caption [Histogramas de distancias de baja y
+               alta dimensionalidad]
+      { \textsl{\footnotesize Histogramas de distancias de baja dimensionalidad
+                  (izquierda), y  de alta dimensionalidad (derecha)}}
+  \label{dim1}
+  \end{figure}
 
 El histograma de distancias permite visualizar la distribuci\'on de los elementos del espacio m\'etrico y se menciona en varios art\'iculos como una medida fundamental relacionada a la dimensi\'on intr\'inseca del espacio \cite{Bri95, CM97, cn00,alenex,CPZ98a}. A medida que la dimensi\'on intr\'inseca de un espacio m\'etrico aumenta la media  $\mu$ del histograma crece y su varianza $\sigma^{2}$ se reduce.\\
 
@@ -414,13 +423,3 @@ La figura \ref{dim1} da una idea intuitiva de por qu\'e el problema de b\'usqued
 Consideremos una b\'usqueda $(q,r)_{d}$ y un \'indice basado en pivotes elegidos aleatoriamente. En la figura se ejemplifican dos posibles casos para el histograma local respecto del punto $p$. Si $p$ es un pivote, estas gr\'aficas representan dos posibles distribuciones para los valores de $d(q,p)$. La regla de eliminaci\'on dice que podemos descartar aquellos puntos $y$ tales que  $y \notin [d(p,q)-r, d(p,q) + r]$. Las \'areas sombreadas muestran  los puntos que no podr\'an descartarse. Esto significa que a medida que el histograma se concentra m\'as alrededor de su media disminuye la cantidad de puntos que pueden descartarse usando como dato $d(p,q)$.\\
 
 Este fen\'omeno es independiente de la naturaleza del espacio m\'etrico,  y nos brinda una forma de cuantificar cu\'an dif\'icil es una b\'usqueda sobre el mismo. Tal como se muestra experimental y anal\'iticamente en \cite{oursurvey}, todos los algoritmos degradan  sistem\'aticamente cuando la media $\rho$ del espacio se incrementa.\\
-
-\begin{figure}[tb]
-\centerline{%
-  \psfig{file=imagenes/histog.eps,width=14cm}}
-  \caption [Histogramas de distancias de baja y
-             alta dimensionalidad]
-    { \textsl{\footnotesize Histogramas de distancias de baja dimensionalidad
-                (izquierda), y  de alta dimensionalidad (derecha)}}
-\label{dim1}
-\end{figure}
