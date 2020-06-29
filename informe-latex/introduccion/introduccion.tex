@@ -7,7 +7,7 @@ A trav\'es del tiempo las bases de datos han evolucionado para incluir la capaci
 					
 En el \'ambito de \'este trabajo, nos interesan las b\'usquedas en donde se puedan recuperar objetos similares a uno dado. Este tipo de b\'usqueda se conoce con el nombre de b\'usqueda por similitud, y surge en diversas \'areas; tales como reconocimiento de voz, reconocimiento de im\'agenes, compresi\'on de texto, biolog\'ia computacional, entre otras.\\
 					
-Todas estas aplicaciones tienen algunas caracter\'isticas comunes. Existe un universo $X$ de objetos y una funci\'on de distancia $d: X \times X \rightarrow \Re$ que modela la similitud entre los objetos. El par $(X, d)$ es llamado espacio m\'etrico. La base de datos es un conjunto $U \subseteq X$, el cual se preprocesa a fin de resolver b\'usquedas por similitud eficientemente.\\
+Todas estas aplicaciones tienen algunas caracter\'isticas comunes. Existe un universo $X$ de objetos y una funci\'on de distancia $d: X \times X \rightarrow \mathbb{R}$ que modela la similitud entre los objetos. El par $(X, d)$ es llamado espacio m\'etrico. La base de datos es un conjunto $U \subseteq X$, el cual se preprocesa a fin de resolver b\'usquedas por similitud eficientemente.\\
 					
 Una de las consultas t\'ipicas en este nuevo modelo que implica recuperar objetos similares de una base de datos es la \textbf{b\'usqueda por rango}, que denotaremos con $(q, r)_d$. Dado un elemento de consulta $q$, al que llamaremos query y un radio de tolerancia $r$, una b\'usqueda por rango consiste en recuperar aquellos objetos de la base de datos cuya distancia a $q$ no sea mayor que $r$.\\
 
