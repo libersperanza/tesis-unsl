@@ -156,7 +156,7 @@ begin
 end
 \end{algorithm}
 
-Como se puede inferir entonces, el algoritmo de creaci\'on de indices particiona el universo de datos $U$ (los productos) a trav\'es de las categor\'ias hojas, resultando en multiples $U_i$ listas que potencialmente contienen elementos relevantes para una consulta.\\
+Como se puede inferir entonces, el algoritmo de creaci\'on de indices particiona el universo de datos $\mathcal{U}$ (los productos) a trav\'es de las categor\'ias hojas, resultando en multiples $U_i$ listas que potencialmente contienen elementos relevantes para una consulta.\\
 
 \subsection{Busqueda por similitud}
 
@@ -203,7 +203,7 @@ begin
 end
 \end{algorithm}
 
-La b\'usqueda de los k-vecinos utiliza una variaci\'on de la b\'usqueda por rango, comenzando con un valor incial $v$ e incrementando ese valor hasta llegar a la cantidad deseada de resultados.\\
+La b\'usqueda de los k-vecinos utiliza una variaci\'on de la b\'usqueda por rango, comenzando con un valor inicial $v$ para el radio e incrementando ese valor hasta llegar a la cantidad deseada de resultados.\\
 \begin{algorithm}[caption={B\'usqueda de los k-vecinos}, label={alg5}]
 busquedaKVecinos(String q, String categ, int radio, int k)
 begin
@@ -248,7 +248,7 @@ begin
    if(itemsTemp.size != k)
    begin
     /* Si el ultimo resultado de la biseccion obtuvo menos elementos,
-     * se debe hacer la b\'usqueda con el valor final del radio */
+     * se debe hacer la busqueda con el valor final del radio */
     if(itemsTemp.size < k)
      itemsTemp = busquedaPorRango(q, categ, radio)
     /* Se ordenan los elementos por su distancia y se seleccionan los k primeros */

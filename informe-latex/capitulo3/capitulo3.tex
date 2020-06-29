@@ -12,7 +12,7 @@ En este trabajo nos focalizamos en dicho problema, utilizando la b\'usqueda por 
 
 Con el crecimiento de la web y del negocio electr\'onico, el volumen de datos e informaci\'on que se maneja ha crecido exponencialmente, con lo cual las b\'usquedas se enfrentan a desaf\'ios de rendimiento y velocidad de respuesta, dejando en segundo plano la congruencia de datos que ofrecen los modelos relacionales (b\'usquedas exactas).\\
 
-La forma m\'as conocida y popular de almacenar informaci\'on se basa en las relaciones entre los distintos atributos (bases de datos relacionales). En \'este tipo de universo, las consultas vienen dadas por una especificaci\'on de criterios que deben cumplirse para que un objeto forme parte del resultado; pero ¿qu\'e pasa cuando en la consulta no podemos definir ese conjunto de criterios en forma determin\'istica?\\
+La forma m\'as conocida y popular de almacenar informaci\'on se basa en las relaciones entre los distintos atributos (bases de datos relacionales). En este tipo de universo, las consultas vienen dadas por una especificaci\'on de criterios que deben cumplirse para que un objeto forme parte del resultado; pero ¿qu\'e pasa cuando en la consulta no podemos definir ese conjunto de criterios en forma determin\'istica?\\
 
 En el campo del e\-commerce, a menudo se necesita seleccionar una de varias alternativas sin tener un conocimiento exacto de cada una de ellas. La decisi\'on final, en estos casos, puede depender de las recomendaciones realizadas por el propio sistema. La recomendaci\'on de productos a clientes es un caso de recuperaci\'on de informaci\'on que no se puede abordar con la visi\'on cl\'asica de bases de datos relacionales.\\
 
@@ -56,10 +56,10 @@ En nuestro caso elegimos la t\'ecnica de selecci\'on incremental de pivotes \cit
 
 Para lograr minimizar el n\'umero de evaluaciones de distancia que se realizan al momento de hacer una b\'usqueda por rango, los pivotes elegidos deben descartar la mayor cantidad de elementos posibles antes de realizar una b\'usqueda dentro de una lista de elementos candidatos (Ver secci\'on 2.5.1). Esto significa que mientras más peque\~na sea la lista de elementos candidatos generados mejor ser\'a el conjunto de pivotes utilizado. \\
 
-Sea $(X,d)$ un espacio m\'etrico. Un conjunto de pivotes $\{p_1,p_2,...,p_k\} \in X$ definen un espacio $P$ de tuplas de distancias entre pivotes y elementos del conjunto. Un elemento $x \in P$ se denotar\'a como $[x]$ que es igual a la siguiente ecuaci\'on:\\
+Sea $(\mathcal{X},d)$ un espacio m\'etrico. Un conjunto de pivotes $\{p_1,p_2,...,p_k\} \in \mathcal{X}$ definen un espacio $P$ de tuplas de distancias entre pivotes y elementos del conjunto. Un elemento $x \in P$ se denotar\'a como $[x]$ que es igual a la siguiente ecuaci\'on:\\
 
 \begin{equation}
-[x] = (d(x,p_1),d(x,p_2),........,d(x,p_k)), x \in X, [x] \in P
+[x] = (d(x,p_1),d(x,p_2),........,d(x,p_k)), x \in \mathcal{X}, [x] \in P
 \label{eq-mapeo}
 \end{equation}
 \\
@@ -72,7 +72,7 @@ D([q],[x]) = max_{i=1}^k |d(q,p_i) - d(x,p_i)|
 \end{equation}
 \\
 
-Luego, obtenemos el espacio m\'etrico $(X,D)$ que resulta ser $(\Re^k, L_{\infty})$. \\
+Luego, obtenemos el espacio m\'etrico $(P,D)$ que resulta ser $(\mathbb{R}^k, L_{\infty})$. \\
 
 Para lograr que la cantidad de elementos elegidos sea peque\~na se debe maximizar la probabilidad de que $D_{\{p_1,...,p_k\}}([q],[x]) > r$. Una forma de lograr esto es maximizar la media de la distribuci\'on de distancias en $P$, la cual la llamaremos $\mu_p$.\\
  
@@ -80,9 +80,9 @@ Para lograr que la cantidad de elementos elegidos sea peque\~na se debe maximiza
 \noindent La estimaci\'on del $\mu_p$ se realiza de la siguiente manera:\\
 
 \begin{itemize}
-	\item Elegir $A$ pares de elementos $\{(a_1,a'_1),(a_2,a'_2),.......,(a_A,a'_A)\}$ del conjunto $E$, distintos entre s\'i.
+	\item Elegir $A$ pares de elementos $\{(a_1,a'_1),(a_2,a'_2),.......,(a_A,a'_A)\}$ del conjunto $\mathcal{X}$, distintos entre s\'i.
 	\item Mapear los $A$ pares de elementos al espacio $P$ y calcular la distancia $D$ entre cada par de elementos, esto produce como resultado el conjunto finito de distancias $\{D_1,D_2,...,D_A\}$.
-	\item Luego de obtener las $A$ distancias se estima el valor de $p$ de la siguiente forma:
+	\item Luego de obtener las $A$ distancias se estima el valor de $\mu_p$ de la siguiente forma:
 \end{itemize}
 
 \begin{equation}
@@ -92,7 +92,7 @@ Para lograr que la cantidad de elementos elegidos sea peque\~na se debe maximiza
 
 De las ecuaciones \ref{eq-mapeo} y \ref{eq-met-esp}, se puede deducir que dados un par de elementos $(a,a')$ el costo de calcular $D([a],[a'])$ es $2k$ evaluaciones de la funci\'on $d$.\\
 
-Se se utilizan $A$ pares de elementos para estimar el valor de $\mu_p$ , se puede ver que el costo total de la estimaci\'on es de $2kA$ evaluaciones de la funci\'on $d$.\\
+Se utilizan $A$ pares de elementos para estimar el valor de $\mu_p$ , se puede ver que el costo total de la estimaci\'on es de $2kA$ evaluaciones de la funci\'on $d$.\\
 
 Teniendo estas ideas presentes, veamos en qu\'e consisten las dos t\'ecnicas de selecci\'on de pivotes utilizadas.\\
  \\
@@ -106,11 +106,11 @@ Claramente la principal ventaja de esta t\'ecnica es que el costo de optimizar l
  
 \noindent \textit{\textbf{Selecci\'on Incremental}}\\
 
-El m\'etodo consiste en elegir un pivote $p_1$ utilizando $A$ pares de elementos del espacio $E$ mapeados a $P$, tal que \'ese pivote maximice el $\mu_p$. Luego elegir un segundo pivote $p_2$, tal que $\{p_1,p_2\}$ maximicen $\mu_p$ pero $p_1$ ya queda fijo. Luego elegir un tercer pivote $p_3$, tal que $\{p_1,p_2,p_3\}$  maximicen $\mu_p$ pero con $p_1$ y  $p_2$ fijos. Repetir el proceso hasta elegir los $k$ pivotes.\\
+El m\'etodo consiste en elegir un pivote $p_1$ utilizando $A$ pares de elementos del espacio $\mathcal{X}$ mapeados a $P$, tal que \'ese pivote maximice el $\mu_p$. Luego elegir un segundo pivote $p_2$, tal que $\{p_1,p_2\}$ maximicen $\mu_p$ pero $p_1$ ya queda fijo. Luego elegir un tercer pivote $p_3$, tal que $\{p_1,p_2,p_3\}$  maximicen $\mu_p$ pero con $p_1$ y  $p_2$ fijos. Repetir el proceso hasta elegir los $k$ pivotes.\\
 
-En cada iteraci\'on se elige un pivote de una muestra de tama\~no $X$ del espacio $E$, dado que buscar un elemento que maximice $\mu_p$ dentro del todo el conjunto $E$  ser\'ia muy costoso.\\
+En cada iteraci\'on se elige un pivote de una muestra de tama\~no $T$ del espacio $\mathcal{X}$, dado que buscar un elemento que maximice $\mu_p$ dentro del todo el conjunto $\mathcal{X}$  ser\'ia muy costoso.\\
 
 
 Si bien en cada iteraci\'on se estima el $\mu_p$ con los $i$ pivotes seleccionados hasta el momento, no es necesario rehacer el c\'alculo completo si se almacena $D_{\{p_1,...,p_{i-1}\}}([a_r],[a'_r]) \forall r \in 1..A$, es decir, para cada valor de $r=1..A$ el valor m\'aximo de $|d(a'_r, p_j) - d(a_r, p_j)|, j = 1..i-1$. En este caso solo se calcula la distancia con respecto a los pivotes candidatos $|d(a'_r, p_{cand}) - d(a_r, p_{cand})|, r = 1..A$ y se toma el valor m\'aximo entre las dos distancias para el calculo de $D\{p_1, ...,p_i\}$.\\
 
-Notar que, si la muestra de donde se toman los pivotes candidatos es de tama\~no $X$, en cada iteraci\'on se realizan $2AX$ evaluaciones de la funci\'on $d$. Luego, si se eligen $k$ pivotes, el trabajo total realizado por el algoritmo tiene un costo de $2kAX$ evaluaciones de la funci\'on $d$.\\
+Notar que, si la muestra de donde se toman los pivotes candidatos es de tama\~no $T$, en cada iteraci\'on se realizan $2AT$ evaluaciones de la funci\'on $d$. Luego, si se eligen $k$ pivotes, el trabajo total realizado por el algoritmo tiene un costo de $2kAT$ evaluaciones de la funci\'on $d$.\\

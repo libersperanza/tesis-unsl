@@ -1,36 +1,35 @@
 \chapter{Conceptos Previos}
 
-Este cap\'itulo introduce el marco te\'orico del presente trabajo a trav\'es de la definici\'on de los siguientes conceptos: espacios m\'etricos (ejemplo: diccionario de palabras), medidas de distancia; se incluyen algunas de las medidas m\'as comunes utilizadas dentro de la tem\'atica a tratar, e introduciremos un modelo formal para las b\'usquedas por similitud.\\
+Este cap\'itulo introduce el marco te\'orico del presente trabajo a trav\'es de la definici\'on de los siguientes conceptos: espacios m\'etricos (ejemplo: diccionario de palabras), medidas de distancia; se incluyen algunas de las medidas m\'as comunes utilizadas dentro de la tem\'atica a tratar, e introduciremos un modelo formal para las b\'usquedas por similitud.
 
 \section{Espacios M\'etricos}
 
 En este trabajo se aborda el tema de b\'usqueda no convencional, es decir, dentro de un universo de datos, nos interesa encontrar aquellos objetos que son ``similares'' a un objeto dado. El modelo formal que abarca este tipo de b\'usquedas se denomina Espacio M\'etrico.\\
 
 Espacio M\'etrico:
-Sea $X$ un universo de objetos v\'alidos y sea $U \subseteq X$ un subconjunto finito de tama\~no $n$ sobre el que se realizar\'an b\'usquedas. Llamaremos $U$ a las base de datos, diccionario o simplemente conjunto de elementos. Definimos una funci\'on $d:(X \times X) \rightarrow \Re$ que denotar\'a una medida de distancia entre objetos de $X$, esto significa que a menor distancia m\'as cercanos o similares son los objetos. Esta funci\'on $d$ cumple con las propiedades caracter\'isticas de una funci\'on de distancia:
+Sea $\mathcal{X}$ un universo de objetos v\'alidos y sea $\mathcal{U} \subseteq \mathcal{X}$ un subconjunto finito de tama\~no $n$ sobre el que se realizar\'an b\'usquedas. Llamaremos $\mathcal{U}$ a las base de datos, diccionario o simplemente conjunto de elementos. Definimos una funci\'on $d:(\mathcal{X} \times \mathcal{X}) \rightarrow \mathbb R^+$ que denotar\'a una medida de distancia entre objetos de $\mathcal{X}$, esto significa que a menor distancia m\'as cercanos o similares son los objetos. Esta funci\'on $d$ cumple con las propiedades caracter\'isticas de una funci\'on de distancia:
 
 \begin{enumerate}
-\item [(a)] $\forall x,y \in X d(x,y) \geq 0$ (Positividad)
-\item [(b)] $\forall x,y \in X d(x,y) = d(y,x)$ (Simetr\'ia)
-\item [(c)] $\forall x \in X d(x,x) = 0 $ (Reflexividad)
+\item [(a)] $\forall x,y \in \mathcal{X}, \:d(x,y) \geq 0$ (Positividad)
+\item [(b)] $\forall x,y \in \mathcal{X}, \:d(x,y) = d(y,x)$ (Simetr\'ia)
+\item [(c)] $\forall x \in \mathcal{X}, \:d(x,x) = 0 $ (Reflexividad)
 \end{enumerate}
 en la mayor\'ia de los casos:
 \begin{enumerate}
-\item [(d)]  $\forall x,y \in X x \neq y \Rightarrow > 0$ (Positividad estricta)
+\item [(d)]  $\forall x,y \in \mathcal{X}, x \neq y \Rightarrow d(x,y) > 0$ (Positividad estricta)
 \end{enumerate}
 
 Estas propiedades s\'olo aseguran una definici\'on consistente de la funci\'on, pero no pueden usarse para evitar comparaciones durante una b\'usqueda por similitud. Para que la funci\'on $d$ sea realmente una m\'etrica debe satisfacer la siguiente propiedad:
 
 \begin{enumerate}
-\item  [(e)] $\forall x,y,z \in X d(x,y) \leq d(x,z) + d(y,z)$ (Desigualdad triangular)
+\item  [(e)] $\forall x,y,z \in \mathcal{X}\: d(x,y) \leq d(x,z) + d(y,z)$ (Desigualdad triangular)
 \end{enumerate}
 
-El par $X,d$ es llamado espacio m\'etrico. Si la funci\'on $d$ no satisface la propiedad de positividad estricta (d), entonces diremos que el espacio es pseudo m\'etrico. Estos casos pueden ser f\'acilmente resueltos; basta con adaptar las t\'ecnicas de espacios m\'etricos de manera tal que todos los objetos a distancia cero se identifiquen como un \'unico objeto. Esto funciona dado que $d(x,x) = 0 \Rightarrow \forall z, d(x,z) = d(y,z)$ (puede demostrarse utilizando la desigualdad triangular).\\
+El par $(\mathcal{X},d)$ es llamado espacio m\'etrico. Si la funci\'on $d$ no satisface la propiedad de positividad estricta (d), entonces diremos que el espacio es pseudo m\'etrico. Estos casos pueden ser f\'acilmente resueltos; basta con adaptar las t\'ecnicas de espacios m\'etricos de manera tal que todos los objetos a distancia cero se identifiquen como un \'unico objeto. Esto funciona dado que $d(x,y) = 0 \Rightarrow \forall z, d(x,z) = d(y,z)$ (puede demostrarse utilizando la desigualdad triangular).\\
 
 En algunos casos podemos tener cuasi m\'etricas donde no se cumpla la propiedad de simetr\'ia (b). En estos casos podemos definir a partir de la funci\'on $d$ una nueva funci\'on $d'$, que s\'i sea m\'etrica $d'(x,y) = d(x,y) + d(y,x)$.\\
 
-Finalmente podemos llegar a relajar la desigualdad triangular (e) permitiendo $d(x,y)  \leq \alpha d(x,z) +  \beta d(z,y) + \gamma$. En estos casos podemos seguir usando los mismos algoritmos de espacio m\'etrico, previo escalamiento.\\
-
+Finalmente podemos llegar a relajar la desigualdad triangular (e) permitiendo $d(x,y)  \leq \alpha d(x,z) +  \beta d(z,y) + \gamma$. En estos casos podemos seguir usando los mismos algoritmos de espacio m\'etrico, previo escalamiento.
 
 \section{B\'usquedas por similitud}
 B\'asicamente existen tres tipos de b\'usquedas de inter\'es en espacios m\'etricos \cite{oursurvey}:
@@ -47,8 +46,8 @@ B\'asicamente existen tres tipos de b\'usquedas de inter\'es en espacios m\'etri
           Son probablemente las m\'as comunes dentro de los espacios
            m\'etricos.  Los objetos pertenecientes a la respuesta pueden 
            ordenarse en base a su distancia de $q$, si es necesario.
-            N\'otese que el objeto $q$ no necesita existir en la base de datos $U$,
-            basta con que sea un elemento del universo $X$, 
+            N\'otese que el objeto $q$ no necesita existir en la base de datos $\mathcal{U}$,
+            basta con que sea un elemento del universo $\mathcal{X}$, 
 
    \item{\textbf{ B\'usqueda del vecino m\'as cercano $NN(q)$:}}
          Cuando se quiere realizar b\'usquedas por similitud sobre objetos 
@@ -80,7 +79,7 @@ B\'asicamente existen tres tipos de b\'usquedas de inter\'es en espacios m\'etri
           $A \subseteq \mathcal{U} $ tal que:
 
           \vspace{-3mm}
-         \[|A| =k \ \wedge \forall u \in A,\  v \in ( \mathcal{U} - A) :
+         \[|A| =k \ \wedge \forall u \in A,\:\forall  v \in ( \mathcal{U} - A) :
           \ d(q,u) \leq d(q,v)\]
           
           Cuando existen varios objetos a la misma distancia del $k$-\'esimo 
@@ -106,7 +105,6 @@ Hay dos casos principales a considerar: cuando el \'indice y los datos pueden se
 Para los algoritmos de indexaci\'on en memoria principal, el objetivo principal es reducir el n\'umero de c\'alculos de distancia (se adec\'ua al modelo que mencion\'aramos anteriormente).\\
 
 Para los algoritmos en memoria secundaria, adem\'as de realizar pocos c\'alculos de distancia, se requiere que tambi\'en realicen pocos accesos a disco. 
-
 
 \section{Ejemplos de Espacios M\'etricos}
 
@@ -137,13 +135,13 @@ Los espacios vectoriales $k$-dimensionales son un caso especial de espacios m\'e
 \end{figure}
 
 
-La Figura \ref{query-rango} ejemplifica b\'usquedas por rango $(q,r)_d$ sobre un conjunto de puntos en $\Re^2$, usando como funci\'on de distancia $L_2$ (izquierda) y $L_{\infty}$ (derecha), dos casos particulares de la distancia $L_p$. Las l\'ineas punteadas representan aquellos puntos que est\'an ex\'actamente a distancia $r$ de $q$, por lo tanto todos aquellos elementos que caen dentro de estas l\'ineas forman parte del resultado de la b\'usqueda. La distancia $L_2$, m\'as conocida como \textit{Distancia Euclidiana}, se corresponde con nuestra noci\'on de distancia espacial. Las b\'usquedas con distancia $L_{\infty}$ se corresponde con la b\'usqueda por rango cl\'asica, donde el rango es un hiper-rect\'angulo $k$ dimensional.\\
+La Figura \ref{query-rango} ejemplifica b\'usquedas por rango $(q,r)_d$ sobre un conjunto de puntos en $\mathbb R^2$, usando como funci\'on de distancia $L_2$ (izquierda) y $L_{\infty}$ (derecha), dos casos particulares de la distancia $L_p$. Las l\'ineas punteadas representan aquellos puntos que est\'an ex\'actamente a distancia $r$ de $q$, por lo tanto todos aquellos elementos que caen dentro de estas l\'ineas forman parte del resultado de la b\'usqueda. La distancia $L_2$, m\'as conocida como \textit{Distancia Euclidiana}, se corresponde con nuestra noci\'on de distancia espacial. Las b\'usquedas con distancia $L_{\infty}$ se corresponde con la b\'usqueda por rango cl\'asica, donde el rango es un hiper-rect\'angulo $k$ dimensional.\\
 
 En el \'ambito de espacios vectoriales existen soluciones eficientes para b\'usquedas por similitud, como por ejemplo: $KD-tree$, $R-tree$, $Quad tree$ y $X-tree$ entre otras. Estas t\'ecnicas usan informaci\'on sobre coordenadas para clasificar y agrupar puntos en el espacio. Desafortunadamente, las t\'ecnicas existentes son afectadas por la dimensi\'on del espacio vectorial. Por lo tanto, la complejidad de b\'usqueda por rango depende exponencialmente de la dimensi\'on del espacio.\\
  
 Los espacios vectoriales pueden presentar grandes diferencias entre su dimensi\'on representacional y su dimensi\'on intr\'inseca (es decir la dimensi\'on real en la que se pueden embeber los puntos manteniendo la distancia entre ellos). Por ejemplo, un plano embebido en un espacio de dimensi\'on 50, tiene una dimensi\'on representacional de 50 y una dimensi\'on intr\'inseca de 2.\\
 
-Por esta raz\'on, muchas veces se recurre a espacios m\'etricos generales, aun sabiendo que el problema de b\'usqueda es m\'as dif\'icil. No se debe descartar que tambi\'en es posible tratar un espacio vectorial como un espacio m\'etrico general usando solo la distancia entre los puntos. Una ventaja inmediata de esto es que toma peso la dimensi\'on intr\'inseca del espacio, independientemente de cualquier dimensi\'on representacional.\\
+Por esta raz\'on, muchas veces se recurre a espacios m\'etricos generales, aun sabiendo que el problema de b\'usqueda es m\'as dif\'icil. No se debe descartar que tambi\'en es posible tratar un espacio vectorial como un espacio m\'etrico general usando solo la distancia entre los puntos. Una ventaja inmediata de esto es que toma peso la dimensi\'on intr\'inseca del espacio, independientemente de cualquier dimensi\'on representacional.
 
 \section{Funciones de Distancia}
 
@@ -174,7 +172,7 @@ L_{\infty}((x_1,...,x_k), (y_1,...,y_k)) = max_{1 \leq i \leq k} |x_i - y_i |
 
 La funci\'on $L_{\infty}$ se conoce con el nombre de  distancia m\'axima, infinita o distancia de tablero de ajedrez.\\
 
-Estas funciones son utilizadas en varios casos donde los vectores num\'ericos tienen condenadas independientes, por ejemplo, en mediciones de experimentos cient\'ificos, observaciones ambientales, o el estudio de diferentes aspectos de procesos de negocios.\\
+Estas funciones son utilizadas en varios casos donde los vectores num\'ericos tienen coordenadas independientes, por ejemplo, en mediciones de experimentos cient\'ificos, observaciones ambientales, o el estudio de diferentes aspectos de procesos de negocios.\\
 
 \noindent \textbf{\textit{Distancia de  forma cuadr\'atica}}\\
 
@@ -190,7 +188,7 @@ d_M(\bar{x},\bar{y}) = \sqrt{(\bar{x} - \bar{y})^T \cdot M \cdot (\bar{x} - \bar
 
 El c\'alculo de \'esta distancia puede ser muy caro en t\'erminos computacionales, dependiendo de la dimensionalidad de los vectores.\\
 
-Notar que $M$ es la matr\'iz identidad, esta distancia se transforma en la distancia euclidiana.\\
+Notar que si $M$ es la matr\'iz identidad, esta distancia se transforma en la distancia euclidiana.\\
 
 \noindent \textbf{\textit{Distancia de Edici\'on}}\\
 
@@ -202,7 +200,7 @@ La cercan\'ia entre secuencias de s\'imbolos (cadenas) puede medirse de manera e
 \item  \textbf{delete}: eliminaci\'on del caracter $c$ en la posici\'on $i$ de la cadena $x$, en s\'imbolos:
   \[del(x,i)=x_1 x_2 \ldots x_{i-1} x_{i+1} \ldots x_n\]
 \item \textbf{replace}: sustituci\'on de un caracter $c$ de la cadena $x$ en la posici\'on $i$ por un nuevo caracter $c'$, en s\'imbolos:
-  \[repl(x,i,c)=x_1 x_2 \ldots x_{i-1}\ c' \ x_{i+1} \ldots x_n\]
+  \[repl(x,i,c')=x_1 x_2 \ldots x_{i-1}\ c' \ x_{i+1} \ldots x_n\]
 \end{itemize}
 
 
@@ -222,16 +220,16 @@ Si quisi\'eramos medir la distancia en un tipo diferente de datos, como lo son l
 \[
 d(A,B) = 1 - \frac{|A \cap B|}{|A\cup B|}
 \]
-Esta funci\'on se basa simplemente en la raz\'on entre las cardinalidades de la intersecci\'on y la uni\'on de los conjuntos comparados. Como un ejemplo de una aplicaci\'on que trabaja con conjuntos, supongamos que tenemos un registro con usuarios y direcciones de sitios web que visit\'o cada uno. Para evaluar la similitud en el comportamiento de cada usuario, podemos utilizar el coeficiente de Jaccard.\\
+Esta funci\'on se basa simplemente en la raz\'on entre las cardinalidades de la intersecci\'on y la uni\'on de los conjuntos comparados. Como un ejemplo de una aplicaci\'on que trabaja con conjuntos, supongamos que tenemos un registro con usuarios y direcciones de sitios web que visit\'o cada uno. Para evaluar la similitud en el comportamiento de cada usuario, podemos utilizar el coeficiente de Jaccard.
 
 
 \section{Algoritmos de Indexaci\'on}
 
-Los algoritmos de indexaci\'on sirven para organizar la informaci\'on o universo de datos en estructuras de datos o \'indices. Este pre proceso de la base de datos tiene como objetivo reducir el n\'umero de c\'alculos al momento de resolver una b\'usqueda. Un dise\~no eficiente de los \textit{algoritmos de indexaci\'on}, junto con la desigualdad triangular, permite descartar   elementos evitando comparar la query con cada uno de los elementos de la base o universo de datos. As\'i, dada una query, primero se recorre el \'indice para determinar un subconjunto de elementos candidatos a ser parte de la respuesta y luego se examinan esos conjuntos en forma exhaustiva para obtener la respuesta definitiva.\\
+Los algoritmos de indexaci\'on sirven para organizar la informaci\'on o universo de datos en estructuras de datos o \'indices. Este pre proceso de la base de datos tiene como objetivo reducir el n\'umero de c\'alculos al momento de resolver una b\'usqueda. Un dise\~no eficiente de los \textit{algoritmos de indexaci\'on}, junto con la desigualdad triangular, permite descartar   elementos evitando comparar la query con cada uno de los elementos de la base o universo de datos. As\'i, dada una query, primero se recorre el \'indice para determinar un subconjunto de elementos candidatos a ser parte de la respuesta y luego se examinan esos conjuntos en forma exhaustiva para obtener la respuesta definitiva.
 
 \subsection{Un Modelo Unificado}
 
-Todos los algoritmos de indexaci\'on particionan la base de datos $U$ en subconjuntos $U_I$. El \'indice permite identificar una lista de $U_i$ que potencialmente contiene elementos significativos para la consulta. Por consiguiente, la b\'usqueda se reduce a:
+Todos los algoritmos de indexaci\'on particionan la base de datos $\mathcal{U}$ en subconjuntos $\mathcal{U}_I$. El \'indice permite identificar una lista de $U_i$ que potencialmente contiene elementos significativos para la consulta. Por consiguiente, la b\'usqueda se reduce a:
 
 \begin{itemize}
 \item Recorrer el \'indice para obtener los  candidatos. El costo de este proceso se denomina \textit{complejidad interna}
@@ -252,38 +250,40 @@ Todos los algoritmos de indexaci\'on particionan la base de datos $U$ en subconj
 \label{modelo-gral-indices}
 \end{figure}
 
-La Figura \ref{modelo-gral-indices} ejemplifica este modelo general de indexaci\'on. La figura de la izquierda muestra la divisi\'on en clases de equivalencia del espacio m\'etrico. La figura de la derecha muestra las clases de equivalencia que potencialmente contienen elementos relevantes para una b\'usqueda $q(r,d)$.\\
+La Figura \ref{modelo-gral-indices} ejemplifica este modelo general de indexaci\'on. La figura de la izquierda muestra la divisi\'on en clases de equivalencia del espacio m\'etrico. La figura de la derecha muestra las clases de equivalencia que potencialmente contienen elementos relevantes para una b\'usqueda $(q,r)_d$.\\
 
 Para comprender totalmente el proceso de indexaci\'on se necesita entender adecuadamente los conceptos de relaci\'on de equivalencia y partici\'on de conjuntos. Aqu\'i, la relevancia de dichos conceptos se debe a la posibilidad de particionar un espacio m\'etrico en clases de equivalencias y obtener as\'i un nuevo espacio m\'etrico derivado del conjunto cociente.\\
 
-Toda partici\'on $\pi(X) = \{\pi_1, \pi_2,...., \pi_n\}$ de un conjunto $X$ induce una relaci\'on de equivalencia (que denotamos con \textasciitilde ). Inversamente toda relaci\'on de equivalencia induce una partici\'on:
+Toda partici\'on $\pi(\mathcal{X}) = \{\pi_1, \pi_2,...., \pi_n\}$ de un conjunto $\mathcal{X}$ induce una relaci\'on de equivalencia (que denotamos con $\sim$ ). Inversamente toda relaci\'on de equivalencia induce una partici\'on:
 
- \[
-\forall x,y  \in X: x ~ y  \Leftrightarrow x \mbox{ est\'a en la misma parte que } y
+\[
+\forall x,y  \in \mathcal{X}: x \sim y  \Leftrightarrow x \mbox{ est\'a en la misma parte que } y
 \]
 
 
 Las clases de equivalencia $[x]$ de esta relaci\'on se corresponden con las partes $\pi_i$ de la partici\'on $\pi$, es decir,
 
 \[
-\pi(X) = X/\textasciitilde
+\pi(\mathcal{X}) = \mathcal{X}/\sim
 \]
 
 
-Por consiguiente, los algoritmos de indexaci\'on existentes definen una relaci\'on de equivalencia sobre el espacio m\'etrico $X$. Las clases de equivalencia de $X$ en el conjunto cociente $\pi(X)$ pueden considerarse como elementos de un nuevo espacio m\'etrico, bajo alguna funci\'on de distancia $D: \pi(X)  \times \pi(X) \rightarrow  \Re^+$.\\
+Por consiguiente, los algoritmos de indexaci\'on existentes definen una relaci\'on de equivalencia sobre el espacio m\'etrico $X$. Las clases de equivalencia de $X$ en el conjunto cociente $\pi(X)$ pueden considerarse como elementos de un nuevo espacio m\'etrico, bajo alguna funci\'on de distancia $D: \pi(X)  \times \pi(X) \rightarrow  \mathbb R^+$.\\
 
 Ahora definimos la funci\'on $D_0$ que ser\'a de utilidad para encontrar la funci\'on $D$.
 
 \[
-D_0: 	\pi(X) \time \pi(X)  \rightarrow \Re^+
+D_0: 	\pi(\mathcal{X}) \times \pi(\mathcal{X})  \rightarrow \mathbb R^+
+\]
+\[
 D_0([x],[y]): \min_{x \in [x], y \in [y]}\{d(x,y)\}
 \]
 			
-$D_0$ representa la menor distancia entre un elemento de la clase $[x]$ y un elemento de la clase $[y]$. Esta distancia es el m\'aximo valor posible que mantiene el mapeo contractivo, es decir que $\forall x,y \in X : D_0([x],[y]) \leq d(x,y)$.\\
+$D_0$ representa la menor distancia entre un elemento de la clase $[x]$ y un elemento de la clase $[y]$. Esta distancia es el m\'aximo valor posible que mantiene el mapeo contractivo, es decir que $\forall x,y \in \mathcal{X} : D_0([x],[y]) \leq d(x,y)$.\\
 					
-$D_0$ no puede ser utilizada con la finalidad de indexaci\'on porque no satisface la desigualdad triangular pero nos aproxima a una soluci\'on dado que sabemos que cualquier funci\'on de distancia $D$, que adem\'as cumple con las propiedades para ser una m\'etrica, es una cota inferior de $D_0$ (manteniendo as\'i el mapeo contractivo) que nos sirve para definir un nuevo espacio m\'etrico. En otras palabras, esta nueva funci\'on $D$ debe cumplir que $\forall [x],[y] en \pi(X),  D([x],[y]) \leq D_0([x],[y])$.\\
+$D_0$ no puede ser utilizada con la finalidad de indexaci\'on porque no satisface la desigualdad triangular pero nos aproxima a una soluci\'on dado que sabemos que cualquier funci\'on de distancia $D$, que adem\'as cumple con las propiedades para ser una m\'etrica, es una cota inferior de $D_0$ (manteniendo as\'i el mapeo contractivo) que nos sirve para definir un nuevo espacio m\'etrico. En otras palabras, esta nueva funci\'on $D$ debe cumplir que $\forall [x],[y]\:en\:\pi(\mathcal{X}),  D([x],[y]) \leq D_0([x],[y])$.\\
 
-Luego, podemos convertir un problema de b\'usqueda en otro, que esperamos sea m\'as sencillo. Para una b\'usqueda $(q, r)_d$ primero, buscamos espacio $\pi(X, D)$ obteniendo como resultado $([q], r)_D = \{u \in  U/ D([u],[q]) \leq r\}$. Como $D_0$  es contractiva, podemos asegurar que $(q, r)_d \subseteq ([q], r)_D$.  Luego realizamos una b\'usqueda exhaustiva en $([q], r)_D$ a fin de determinar los elementos que forman parte de la respuesta a la consulta $(q, r)_d$.\\
+Luego, podemos convertir un problema de b\'usqueda en otro, que esperamos sea m\'as sencillo. Para una b\'usqueda $(q, r)_d$ primero, buscamos en el espacio $\pi(\mathcal{X}, D)$ obteniendo como resultado $([q], r)_D = \{u \in  \mathcal{U}/ D([u],[q]) \leq r\}$. Como $D_0$  es contractiva, podemos asegurar que $(q, r)_d \subseteq ([q], r)_D$.  Luego realizamos una b\'usqueda exhaustiva en $([q], r)_D$ a fin de determinar los elementos que forman parte de la respuesta a la consulta $(q, r)_d$.\\
 				
 Hay dos enfoques generales para crear estas relaciones de equivalencia: uno est\'a basado en pivotes y el otro se basa en particiones compactas o tipo Voronoi. Ambos se describen a continuaci\'on.
 
@@ -294,7 +294,7 @@ Los algoritmos de pivotes definen una relaci\'on de equivalencia basados en la d
 Sea $\{p_1, p_2,...,p_k\}$ un conjunto de pivotes, dos elementos son equivalentes si y s\'olo si est\'an a la misma distancia de todos los pivotes:
 
 \[
-x ~ p_i  y \Leftrightarrow d(x,p_i) = d(y,p_i) \forall_{i = 1....k}
+x \sim p_i \: y \Leftrightarrow d(x,p_i) = d(y,p_i) \forall_{i = 1....k}
 \]
 
 \begin{figure}[htb]
@@ -312,7 +312,7 @@ x ~ p_i  y \Leftrightarrow d(x,p_i) = d(y,p_i) \forall_{i = 1....k}
 
 Se puede ver que cada clase de equivalencia est\'a definida por la intersecci\'on de varias capas de esferas centradas en los puntos $p_i$ como se muestra en la Figura \ref{piv1}.\\
 
-Veamos ahora cu\'al ser\'ia una funci\'on de distancia $D$ para las clases de equivalencia.  Por la desigualdad triangular, para cualquier $x \in X$, se cumple que:
+Veamos ahora cu\'al ser\'ia una funci\'on de distancia $D$ para las clases de equivalencia.  Por la desigualdad triangular, para cualquier $x \in \mathcal{X}$, se cumple que:
 
 \begin{itemize}
 \item 1. $d(p,x) \leq d(p,y) + d(y,x) \Leftrightarrow d(p,x) - d(p,y) \leq d(y,x)$
@@ -320,7 +320,7 @@ Veamos ahora cu\'al ser\'ia una funci\'on de distancia $D$ para las clases de eq
 \item 3. $d(p,x) - d(p,y) \leq d(y,x) \wedge d(p,y) - d(p,x) \leq d(x,y) \Leftrightarrow |d(x,p) - d(y,p)| \leq d(x,y)$
 \end{itemize}
 
-Esto significa que, para cualquier elemento $p$ la distancia $d(x,y)$ no puede ser menor que $|d(x,p) - d(y,p)|$. Luego  $D([x],[y]) = |d(x,p) - d(y,p)|$  es un l\'imite inferior seguro para $D_0$. Si extendemos $D$ para $k$ los pivotes:
+Esto significa que, para cualquier elemento $p$ la distancia $d(x,y)$ no puede ser menor que $|d(x,p) - d(y,p)|$. Luego  $D([x],[y]) = |d(x,p) - d(y,p)|$  es un l\'imite inferior seguro para $D_0$. Si extendemos $D$ para los $k$ pivotes:
 
 \[
 D([x],[y]) = max_{1 \leq i \leq k} \{ |d(x,p_i) - d(y,p_i)|\} 
@@ -329,14 +329,14 @@ D([x],[y]) = max_{1 \leq i \leq k} \{ |d(x,p_i) - d(y,p_i)|\}
 
 Esta funci\'on de distancia $D$ limita inferiormente a $d$ y en consecuencia puede usarse como distancia en el espacio cociente.\\
 
-La relaci\'on de equivalencia definida por un conjunto de $k$ pivotes tambi\'en puede considerarse como una proyecci\'on al espacio vectorial $\Re^k$. La i-\'esima coordenada de un elemento es la distancia al i-\'esimo pivote. Luego, a cada elemento $x$ del espacio le corresponde el vector  $\delta(x) = (d(x,p_1),d(x,p_2),...,d(x,p_k)) \in \Re^k$. Entonces, dada un consulta de b\'usqueda $(q,r)_d$ debemos encontrar un conjunto de elementos candidatos $([q],r)_D = x : D([q],[x]) \leq r$. En este caso particular significa encontrar los elementos tales que:
+La relaci\'on de equivalencia definida por un conjunto de $k$ pivotes tambi\'en puede considerarse como una proyecci\'on al espacio vectorial $\mathbb R^k$. La i-\'esima coordenada de un elemento es la distancia al i-\'esimo pivote. Luego, a cada elemento $x$ del espacio le corresponde el vector  $\delta(x) = (d(x,p_1),d(x,p_2),...,d(x,p_k)) \in \mathbb R^k$. Entonces, dada un consulta de b\'usqueda $(q,r)_d$ debemos encontrar un conjunto de elementos candidatos $([q],r)_D = x : D([q],[x]) \leq r$. En este caso particular significa encontrar los elementos tales que:
 
 \[
 max_{1 \leq i \leq k} \{ |d(x,p_i) - d(q,p_i)| \} = L_{\infty}(\delta(x),\delta(q)) \leq r 
 \]
 \
 
-Esto significa que hemos proyectado el espacio m\'etrico original $(X, d)$ en el espacio vectorial $\Re^k$ con la funci\'on de distancia $L_{\infty}$. La Figura \ref{piv1}  ilustra estas ideas para un conjunto de puntos usando s\'olo dos pivotes.\\
+Esto significa que hemos proyectado el espacio m\'etrico original $(\mathcal{X}, d)$ en el espacio vectorial $\mathbb R^k$ con la funci\'on de distancia $L_{\infty}$. La Figura \ref{piv1}  ilustra estas ideas para un conjunto de puntos usando s\'olo dos pivotes.
 
 \subsection{Algoritmos Basados en Particiones Compactas}
 
@@ -366,7 +366,7 @@ de dimensi\'on 2.\\
 
 Al momento de realizar una consulta $(q, r)_d$, se eval\'uan las distancias entre $q$ y los $m$ centros, eligiendo el centro m\'as cercano a $q$, el cual se denominar\'a $c$.\\
 
-Si la bola de la consulta $(q, r)_d$ intersecta la zona de algun centro distinto a $c$, entonces se debe revisar exhaustivamente esa zona para ver si hay objetos que caigan dentro de la bola de consulta. Sea $x \in X$ un objeto perteneciente a la zona cuyo centro es $c_i$ y que se encuentra a distancia menor o igual que $r$ de la consulta $q$. Por la desigualdad triangular se tiene que:
+Si la bola de la consulta $(q, r)_d$ intersecta la zona de algun centro distinto a $c$, entonces se debe revisar exhaustivamente esa zona para ver si hay objetos que caigan dentro de la bola de consulta. Sea $x \in \mathcal{X}$ un objeto perteneciente a la zona cuyo centro es $c_i$ y que se encuentra a distancia menor o igual que $r$ de la consulta $q$. Por la desigualdad triangular se tiene que:
 
 \begin{enumerate}
 \item [1.] $d(c,x) \leq d(c,q) + d(q,x) \leq d(c,q) + r$
@@ -413,7 +413,7 @@ El histograma de distancias permite visualizar la distribuci\'on de los elemento
 \noindent En \cite{oursurvey} se define la dimensi\'on intr\'inseca de un espacio m\'etrico como:
 
 \[
-\gamma = \frac{\mu^2}{2\sigma^2}
+\rho = \frac{\mu^2}{2\sigma^2}
 \]
 
 Los par\'ametros $\mu$ y $\sigma^2$ son la media y la varianza, respectivamente, del histograma de distancias de los puntos que conforman dicho espacio m\'etrico.\\
