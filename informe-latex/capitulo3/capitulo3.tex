@@ -46,7 +46,7 @@ En consecuencia, la b\'usqueda de un producto se divide en dos etapas:
     \item [2.] Realizamos la b\'usqueda por similitud sobre los productos que pertenecen a la categor\'ia elegida.
  \end{itemize}
  
-Para el filtrado por categor\'ia armamos un hashing lineal en memoria principal. Para la búsqueda por similitud utilizamos el enfoque basado en pivotes: elegimos $k$ pivotes y para cada producto $x$ almacenamos su firma $(d(x,p_i), \ldots, d(xp_k)$ donde $p_i$ es el i\'esimo pivote y $d$ es la funci\'on de distancia de edici\'on. En el Cap\'itulo 4 brindamos una descripci\'on detallada de esta propuesta.\\
+Para el filtrado por categor\'ia armamos un hashing lineal en memoria principal. Para la búsqueda por similitud utilizamos el enfoque basado en pivotes: elegimos $k$ pivotes y para cada producto $x$ almacenamos su firma $(d(x,p_i), \ldots, d(x,p_k))$ donde $p_i$ es el i-\'esimo pivote y $d$ es la funci\'on de distancia de edici\'on. En el Cap\'itulo 4 brindamos una descripci\'on detallada de esta propuesta.\\
  
 Un punto crucial es la t\'ecnica de selecci\'on de pivotes usados para construir la firma de los productos. La forma en que los pivotes son seleccionados puede afectar dr\'asticamente la performance de un algoritmo. Una buena elecci\'on de pivotes puede en gran parte reducir los tiempos de b\'usqueda.\\
  

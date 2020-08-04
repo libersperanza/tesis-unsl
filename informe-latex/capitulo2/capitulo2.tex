@@ -74,7 +74,7 @@ B\'asicamente existen tres tipos de b\'usquedas de inter\'es en espacios m\'etri
    \item {\textbf{ B\'usqueda de los k-vecinos m\'as cercanos $NN_{k}(q)$:}}
          El concepto de vecino m\'as cercano puede generalizarse al caso 
          de b\'usqueda de los $k$ vecinos m\'as cercanos. Espec\'ificamente
-          $kNN(q)$ retorna los $k$ vecinos m\'as cercanos del objeto $q$, 
+          $NN_{k}(q)$ retorna los $k$ vecinos m\'as cercanos del objeto $q$, 
           Esto significa encontrar un conjunto
           $A \subseteq \mathcal{U} $ tal que:
 
@@ -149,7 +149,7 @@ Cuando hablamos de funciones de distancia, podemos dividirlas en dos grupos, de 
 
 \begin{itemize}
 \item \textbf{Discretas}: son  aquellas que retornan un valor discreto como valor de distancia, como por ejemplo la distancia de edici\'on.
-\item \textbf{Continuas}: son las que retornan un n\'umero real como distancia entreobjetos, como por ejemplo la distancia $L_2$ o distancia Euclidiana.
+\item \textbf{Continuas}: son las que retornan un n\'umero real como distancia entre objetos, como por ejemplo la distancia $L_2$ o distancia Euclidiana.
 \end{itemize}
 
 Describimos a continuaci\'on algunos ejemplos de funciones de distancia para espacios m\'etricos. \\
@@ -225,11 +225,11 @@ Esta funci\'on se basa simplemente en la raz\'on entre las cardinalidades de la 
 
 \section{Algoritmos de Indexaci\'on}
 
-Los algoritmos de indexaci\'on sirven para organizar la informaci\'on o universo de datos en estructuras de datos o \'indices. Este pre proceso de la base de datos tiene como objetivo reducir el n\'umero de c\'alculos al momento de resolver una b\'usqueda. Un dise\~no eficiente de los \textit{algoritmos de indexaci\'on}, junto con la desigualdad triangular, permite descartar   elementos evitando comparar la query con cada uno de los elementos de la base o universo de datos. As\'i, dada una query, primero se recorre el \'indice para determinar un subconjunto de elementos candidatos a ser parte de la respuesta y luego se examinan esos conjuntos en forma exhaustiva para obtener la respuesta definitiva.
+Los algoritmos de indexaci\'on sirven para organizar la informaci\'on o universo de datos en estructuras de datos o \'indices. Este pre proceso de la base de datos tiene como objetivo reducir el n\'umero de c\'alculos al momento de resolver una b\'usqueda. Un dise\~no eficiente de los \textit{algoritmos de indexaci\'on}, junto con la desigualdad triangular, permite descartar elementos evitando comparar la query con cada uno de los elementos de la base o universo de datos. As\'i, dada una query, primero se recorre el \'indice para determinar un subconjunto de elementos candidatos a ser parte de la respuesta y luego se examinan esos conjuntos en forma exhaustiva para obtener la respuesta definitiva.
 
 \subsection{Un Modelo Unificado}
 
-Todos los algoritmos de indexaci\'on particionan la base de datos $\mathcal{U}$ en subconjuntos $\mathcal{U}_I$. El \'indice permite identificar una lista de $U_i$ que potencialmente contiene elementos significativos para la consulta. Por consiguiente, la b\'usqueda se reduce a:
+Todos los algoritmos de indexaci\'on particionan la base de datos  $\mathcal{U}$ en subconjuntos $\mathcal{U}_I$. El \'indice permite identificar una lista de $U_i$ que potencialmente contiene elementos significativos para la consulta. Por consiguiente, la b\'usqueda se reduce a:
 
 \begin{itemize}
 \item Recorrer el \'indice para obtener los  candidatos. El costo de este proceso se denomina \textit{complejidad interna}
